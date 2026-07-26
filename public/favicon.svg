@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="8" fill="#f8f8f6"/>
+  <path d="M14 8h36v6h6v36h-6v6H14v-6H8V14h6V8Z" fill="#2024c8" opacity=".12"/>
+  <rect x="13" y="13" width="38" height="38" fill="#ffffff" stroke="#2024c8" stroke-width="4"/>
+  <path d="M9 17V9h30" fill="none" stroke="#2024c8" stroke-width="3"/>
+  <path d="M55 47v8H25" fill="none" stroke="#2024c8" stroke-width="3"/>
+  <text x="32" y="39" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#2024c8">DG</text>
+</svg>
