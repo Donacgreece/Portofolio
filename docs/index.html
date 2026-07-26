@@ -758,11 +758,11 @@
       </a>
 
       <div class="nav-links">
-        <a href="#about"><span>[A]</span> About</a>
-        <a href="#experience"><span>[E]</span> Experience</a>
-        <a href="#projects"><span>[P]</span> Projects</a>
-        <a href="#skills"><span>[S]</span> Skills</a>
-        <a href="#contact"><span>[C]</span> Contact</a>
+        <a href="#about" aria-keyshortcuts="A" title="Keyboard shortcut: A"><span>[A]</span> About</a>
+        <a href="#experience" aria-keyshortcuts="E" title="Keyboard shortcut: E"><span>[E]</span> Experience</a>
+        <a href="#projects" aria-keyshortcuts="P" title="Keyboard shortcut: P"><span>[P]</span> Projects</a>
+        <a href="#skills" aria-keyshortcuts="S" title="Keyboard shortcut: S"><span>[S]</span> Skills</a>
+        <a href="#contact" aria-keyshortcuts="C" title="Keyboard shortcut: C"><span>[C]</span> Contact</a>
       </div>
 
       <div class="nav-actions">
@@ -772,11 +772,11 @@
       </div>
 
       <div class="mobile-nav" id="mobileNav">
-        <a href="#about">[A] About</a>
-        <a href="#experience">[E] Experience</a>
-        <a href="#projects">[P] Projects</a>
-        <a href="#skills">[S] Skills</a>
-        <a href="#contact">[C] Contact</a>
+        <a href="#about" aria-keyshortcuts="A">[A] About</a>
+        <a href="#experience" aria-keyshortcuts="E">[E] Experience</a>
+        <a href="#projects" aria-keyshortcuts="P">[P] Projects</a>
+        <a href="#skills" aria-keyshortcuts="S">[S] Skills</a>
+        <a href="#contact" aria-keyshortcuts="C">[C] Contact</a>
       </div>
     </nav>
   </header>
@@ -1255,7 +1255,33 @@ print(monitor(<span class="str">"network"</span>))</pre>
     });
 
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape') closeMenu();
+      if (event.key === 'Escape') {
+        closeMenu();
+        return;
+      }
+
+      const activeElement = document.activeElement;
+      const isTyping = activeElement && (
+        activeElement.matches('input, textarea, select') ||
+        activeElement.isContentEditable
+      );
+
+      if (event.defaultPrevented || event.repeat || event.ctrlKey || event.altKey || event.metaKey || isTyping) return;
+
+      const shortcuts = {
+        a: 'about',
+        e: 'experience',
+        p: 'projects',
+        s: 'skills',
+        c: 'contact'
+      };
+      const sectionId = shortcuts[event.key.toLowerCase()];
+      if (!sectionId) return;
+
+      event.preventDefault();
+      closeMenu();
+      document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.pushState(null, '', `#${sectionId}`);
     });
 
     window.addEventListener('resize', () => {
