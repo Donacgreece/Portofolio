@@ -765,53 +765,45 @@
     }
 
     @container system-card (max-width: 640px) {
-      .system-canvas {
-        min-height: 0;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        align-items: stretch;
-        padding: 20px;
-      }
-      .system-line { display: none; }
-      .system-core {
-        position: static;
-        grid-column: 1 / -1;
-        justify-self: center;
-        width: 144px;
-        height: 144px;
-        transform: none;
-      }
-      .system-node,
-      .system-node.n1,
-      .system-node.n2,
-      .system-node.n3,
-      .system-node.n4,
-      .system-node.n5 {
-        position: static;
-        width: auto;
-        min-width: 0;
-        min-height: 88px;
-        transform: none;
-      }
-      .system-node.n1 { order: 1; }
-      .system-node.n2 { order: 2; }
-      .system-node.n5 { grid-column: 1 / -1; order: 3; }
-      .system-node.n3 { order: 4; }
-      .system-node.n4 { order: 5; }
+      .system-canvas { min-height: 430px; padding: 0; }
+      .system-core { width: 140px; height: 140px; padding: 17px; }
+      .system-node { width: 120px; min-height: 70px; padding: 11px; }
+      .system-node.n1 { left: 14px; top: 56px; }
+      .system-node.n2 { right: 14px; top: 56px; }
+      .system-node.n3 { left: 14px; bottom: 48px; }
+      .system-node.n4 { right: 14px; bottom: 48px; }
+      .system-node.n5 { top: 16px; }
+      .system-line { width: 34%; }
+      .system-line.l5 { width: 23%; }
+    }
+
+    @container system-card (max-width: 500px) {
+      .system-canvas { min-height: 410px; }
+      .system-core { width: 116px; height: 116px; padding: 13px; }
+      .system-core b { font-size: 17px; }
+      .system-core span { font-size: 9px; }
+      .system-node { width: 100px; min-height: 64px; padding: 9px; }
+      .system-node b { font-size: 11px; }
+      .system-node span { font-size: 8.5px; }
+      .system-node.n1 { left: 8px; top: 64px; }
+      .system-node.n2 { right: 8px; top: 64px; }
+      .system-node.n3 { left: 8px; bottom: 42px; }
+      .system-node.n4 { right: 8px; bottom: 42px; }
+      .system-node.n5 { top: 12px; }
     }
 
     @container system-card (max-width: 390px) {
-      .system-canvas { grid-template-columns: minmax(0, 1fr); padding: 14px; }
-      .system-core,
-      .system-node.n5 { grid-column: auto; }
-      .system-core { width: 132px; height: 132px; }
-      .system-node,
-      .system-node.n1,
-      .system-node.n2,
-      .system-node.n3,
-      .system-node.n4,
-      .system-node.n5 { min-height: 0; }
+      .system-canvas { min-height: 400px; }
+      .system-core { width: 104px; height: 104px; padding: 11px; }
+      .system-core b { font-size: 15px; }
+      .system-node { width: 90px; min-height: 58px; padding: 7px; }
+      .system-node b { font-size: 10px; }
+      .system-node span { margin-top: 3px; font-size: 7.8px; line-height: 1.28; }
+      .system-node.n1 { left: 5px; top: 68px; }
+      .system-node.n2 { right: 5px; top: 68px; }
+      .system-node.n3 { left: 5px; bottom: 38px; }
+      .system-node.n4 { right: 5px; bottom: 38px; }
+      .system-node.n5 { top: 8px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
