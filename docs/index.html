@@ -119,6 +119,115 @@
     .nav-links a:focus-visible { text-decoration: underline; text-underline-offset: 5px; }
     .nav-links span { opacity: .65; }
     .nav-actions { display: flex; align-items: center; justify-content: flex-end; gap: 9px; }
+    .button.command-trigger {
+      min-width: 64px;
+      padding-inline: 12px;
+      gap: 7px;
+      color: var(--brand);
+      background: var(--surface);
+      border-color: var(--line-strong);
+      font: 700 11px/1 var(--mono);
+    }
+    .button.command-trigger:hover,
+    .button.command-trigger:focus-visible { border-color: var(--brand); background: var(--brand-soft); }
+
+    .command-backdrop {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      display: grid;
+      align-items: start;
+      justify-items: center;
+      padding: min(17vh, 150px) 20px 40px;
+      background: rgba(18, 18, 34, .54);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .18s ease, visibility .18s ease;
+    }
+    .command-backdrop.open { opacity: 1; visibility: visible; }
+    .command-palette {
+      width: min(100%, 650px);
+      overflow: hidden;
+      border: 1px solid rgba(201, 201, 223, .9);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: 0 28px 90px rgba(17, 19, 92, .28);
+      transform: translateY(-10px) scale(.985);
+      transition: transform .18s ease;
+    }
+    .command-backdrop.open .command-palette { transform: none; }
+    .command-search-wrap {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 17px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .command-search-icon { color: var(--brand); font: 700 19px/1 var(--mono); }
+    .command-search {
+      width: 100%;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      background: transparent;
+      font: 600 17px/1.4 var(--sans);
+    }
+    .command-search::placeholder { color: var(--soft); }
+    .command-key {
+      padding: 5px 7px;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      color: var(--muted);
+      background: var(--bg);
+      font: 700 10px/1 var(--mono);
+    }
+    .command-list { max-height: min(430px, 55vh); overflow-y: auto; padding: 8px; }
+    .command-item {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 0;
+      border-radius: 10px;
+      color: var(--text);
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+    .command-item:hover,
+    .command-item.active { color: var(--brand-dark); background: var(--brand-soft); }
+    .command-item-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface);
+      font: 800 12px/1 var(--mono);
+    }
+    .command-item-copy { min-width: 0; }
+    .command-item-copy b { display: block; margin-bottom: 3px; font-size: 14px; }
+    .command-item-copy span { display: block; overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .command-item-arrow { color: var(--soft); font: 700 16px/1 var(--mono); }
+    .command-empty { padding: 34px 20px; color: var(--muted); text-align: center; font-size: 14px; }
+    .command-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 18px;
+      border-top: 1px solid var(--line);
+      color: var(--soft);
+      background: var(--bg);
+      font: 600 10px/1.4 var(--mono);
+    }
+    body.command-open { overflow: hidden; }
     .icon-button,
     .button {
       min-height: 42px;
@@ -703,6 +812,10 @@
       .brand span { display: none; }
       .nav-actions .button:not(.primary) { display: none; }
       .nav-actions .language-switch { display: inline-flex; }
+      .nav-actions .command-trigger { min-width: 42px; display: inline-flex; padding-inline: 9px; }
+      .command-trigger .command-trigger-label { display: none; }
+      .command-backdrop { padding: 82px 12px 24px; }
+      .command-footer span:last-child { display: none; }
       .mobile-nav { right: -2px; }
       .hero { padding: 58px 0 54px; }
       .hero-grid { grid-template-columns: 1fr; gap: 34px; }
@@ -843,6 +956,19 @@
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
 
+  <div class="command-backdrop" id="commandBackdrop" aria-hidden="true">
+    <div class="command-palette" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
+      <h2 class="sr-only" id="commandTitle">Quick navigation</h2>
+      <div class="command-search-wrap">
+        <span class="command-search-icon" aria-hidden="true">&gt;_</span>
+        <input class="command-search" id="commandSearch" type="search" autocomplete="off" spellcheck="false" aria-controls="commandList">
+        <kbd class="command-key">ESC</kbd>
+      </div>
+      <div class="command-list" id="commandList" role="listbox"></div>
+      <div class="command-footer"><span id="commandHint"></span><span>Ctrl K &nbsp;·&nbsp; ↑↓ &nbsp;·&nbsp; Enter</span></div>
+    </div>
+  </div>
+
   <header class="site-header">
     <nav class="nav" aria-label="Primary navigation">
       <a class="brand" href="#top" aria-label="Dimitris Galatsanos home">
@@ -866,6 +992,7 @@
       </div>
 
       <div class="nav-actions">
+        <button class="button command-trigger" id="commandToggle" type="button" aria-haspopup="dialog" aria-controls="commandBackdrop"><span aria-hidden="true">⌘</span><span class="command-trigger-label">Ctrl K</span></button>
         <a class="button language-switch" href="gr/" data-language="el" aria-label="View portfolio in Greek">GR</a>
         <a class="button" href="https://www.linkedin.com/in/dgalatsanos/" target="_blank" rel="noreferrer">LinkedIn</a>
         <a class="button primary" href="Dimitris_Galatsanos_CV.pdf" download>Download CV</a>
@@ -1379,6 +1506,130 @@ print(monitor(<span class="str">"network"</span>))</pre>
   <script>
     const menuToggle = document.getElementById('menuToggle');
     const mobileNav = document.getElementById('mobileNav');
+
+    (() => {
+      const backdrop = document.getElementById('commandBackdrop');
+      const palette = backdrop.querySelector('.command-palette');
+      const toggle = document.getElementById('commandToggle');
+      const search = document.getElementById('commandSearch');
+      const list = document.getElementById('commandList');
+      const title = document.getElementById('commandTitle');
+      const hint = document.getElementById('commandHint');
+      const isGreek = document.documentElement.lang === 'el';
+      const text = isGreek ? {
+        title: 'Γρήγορη πλοήγηση', placeholder: 'Αναζήτηση στο portfolio…', hint: 'Πλοήγηση με το πληκτρολόγιο', empty: 'Δεν βρέθηκαν αποτελέσματα',
+        section: 'Μετάβαση στην ενότητα', external: 'Άνοιγμα εξωτερικού συνδέσμου', download: 'Λήψη αρχείου'
+      } : {
+        title: 'Quick navigation', placeholder: 'Search portfolio…', hint: 'Keyboard navigation', empty: 'No results found',
+        section: 'Go to section', external: 'Open external link', download: 'Download file'
+      };
+      const commands = isGreek ? [
+        { label: 'Έργα', detail: text.section, icon: 'PR', target: '#projects' },
+        { label: 'Εμπειρία', detail: text.section, icon: 'EX', target: '#experience' },
+        { label: 'Δεξιότητες', detail: text.section, icon: 'SK', target: '#skills' },
+        { label: 'Λήψη βιογραφικού', detail: text.download, icon: 'CV', action: 'cv' },
+        { label: 'GitHub', detail: text.external, icon: 'GH', target: 'https://github.com/Donacgreece', external: true },
+        { label: 'Επικοινωνία', detail: text.section, icon: 'CO', target: '#contact' }
+      ] : [
+        { label: 'Projects', detail: text.section, icon: 'PR', target: '#projects' },
+        { label: 'Experience', detail: text.section, icon: 'EX', target: '#experience' },
+        { label: 'Skills', detail: text.section, icon: 'SK', target: '#skills' },
+        { label: 'Download CV', detail: text.download, icon: 'CV', action: 'cv' },
+        { label: 'GitHub', detail: text.external, icon: 'GH', target: 'https://github.com/Donacgreece', external: true },
+        { label: 'Contact', detail: text.section, icon: 'CO', target: '#contact' }
+      ];
+      let visible = commands;
+      let activeIndex = 0;
+      let previousFocus = null;
+
+      title.textContent = text.title;
+      search.placeholder = text.placeholder;
+      search.setAttribute('aria-label', text.placeholder);
+      hint.textContent = text.hint;
+      toggle.setAttribute('aria-label', text.title);
+
+      function render() {
+        if (!visible.length) {
+          list.innerHTML = `<div class="command-empty">${text.empty}</div>`;
+          return;
+        }
+        list.innerHTML = visible.map((command, index) => `
+          <button class="command-item${index === activeIndex ? ' active' : ''}" type="button" role="option" aria-selected="${index === activeIndex}" data-index="${index}">
+            <span class="command-item-icon" aria-hidden="true">${command.icon}</span>
+            <span class="command-item-copy"><b>${command.label}</b><span>${command.detail}</span></span>
+            <span class="command-item-arrow" aria-hidden="true">${command.external ? '↗' : command.action === 'cv' ? '↓' : '→'}</span>
+          </button>`).join('');
+        list.querySelector('.active')?.scrollIntoView({ block: 'nearest' });
+      }
+
+      function openPalette() {
+        previousFocus = document.activeElement;
+        backdrop.classList.add('open');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('command-open');
+        search.value = '';
+        visible = commands;
+        activeIndex = 0;
+        render();
+        requestAnimationFrame(() => search.focus());
+      }
+
+      function closePalette() {
+        backdrop.classList.remove('open');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('command-open');
+        previousFocus?.focus();
+      }
+
+      function run(command) {
+        closePalette();
+        if (command.action === 'cv') {
+          document.querySelector('a[download][href*="Dimitris_Galatsanos_CV"]')?.click();
+        } else if (command.external) {
+          window.open(command.target, '_blank', 'noopener,noreferrer');
+        } else {
+          document.querySelector(command.target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', command.target);
+        }
+      }
+
+      toggle.addEventListener('click', openPalette);
+      search.addEventListener('input', () => {
+        const query = search.value.trim().toLocaleLowerCase(document.documentElement.lang);
+        visible = commands.filter(command => `${command.label} ${command.detail}`.toLocaleLowerCase(document.documentElement.lang).includes(query));
+        activeIndex = 0;
+        render();
+      });
+      list.addEventListener('mousemove', event => {
+        const item = event.target.closest('.command-item');
+        if (!item) return;
+        activeIndex = Number(item.dataset.index);
+        render();
+      });
+      list.addEventListener('click', event => {
+        const item = event.target.closest('.command-item');
+        if (item) run(visible[Number(item.dataset.index)]);
+      });
+      backdrop.addEventListener('mousedown', event => { if (!palette.contains(event.target)) closePalette(); });
+      document.addEventListener('keydown', event => {
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+          event.preventDefault();
+          backdrop.classList.contains('open') ? closePalette() : openPalette();
+          return;
+        }
+        if (!backdrop.classList.contains('open')) return;
+        if (event.key === 'Escape') { event.preventDefault(); closePalette(); }
+        if (event.key === 'ArrowDown' && visible.length) { event.preventDefault(); activeIndex = (activeIndex + 1) % visible.length; render(); }
+        if (event.key === 'ArrowUp' && visible.length) { event.preventDefault(); activeIndex = (activeIndex - 1 + visible.length) % visible.length; render(); }
+        if (event.key === 'Enter' && visible[activeIndex]) { event.preventDefault(); run(visible[activeIndex]); }
+        if (event.key === 'Tab') {
+          const focusable = [search, ...list.querySelectorAll('button')];
+          const next = event.shiftKey ? focusable.indexOf(document.activeElement) - 1 : focusable.indexOf(document.activeElement) + 1;
+          if (next < 0 || next >= focusable.length) { event.preventDefault(); focusable[event.shiftKey ? focusable.length - 1 : 0]?.focus(); }
+        }
+      });
+      render();
+    })();
 
     function closeMenu() {
       mobileNav.classList.remove('open');
