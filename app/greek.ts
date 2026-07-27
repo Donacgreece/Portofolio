@@ -242,8 +242,8 @@ export function translatePortfolioToGreek(source: string) {
   for (const [english, greek] of translations) result = result.replaceAll(english, greek);
   return result
     .replace('<html lang="en">', '<html lang="el">')
-    .replaceAll('href="Dimitris_Galatsanos_CV.pdf"', 'href="/Dimitris_Galatsanos_CV_GR.pdf"')
-    .replace('href="/gr" data-language="el" aria-label="View portfolio in Greek">GR</a>', 'href="/" data-language="en" aria-label="Προβολή portfolio στα Αγγλικά">EN</a>')
-    .replace('href="/gr" data-language="el">[GR] Ελληνικά</a>', 'href="/" data-language="en">[EN] English</a>')
-    .replace("if (location.pathname === '/' && localStorage.getItem('portfolio-language') === 'el') location.replace('/gr');", "");
+    .replaceAll('href="Dimitris_Galatsanos_CV.pdf"', 'href="../Dimitris_Galatsanos_CV_GR.pdf"')
+    .replace('href="gr/" data-language="el" aria-label="View portfolio in Greek">GR</a>', 'href="../" data-language="en" aria-label="Προβολή portfolio στα Αγγλικά">EN</a>')
+    .replace('href="gr/" data-language="el">[GR] Ελληνικά</a>', 'href="../" data-language="en">[EN] English</a>')
+    .replace("if (!location.pathname.replace(/\\/$/, '').endsWith('/gr') && localStorage.getItem('portfolio-language') === 'el') location.replace('gr/');", "");
 }
