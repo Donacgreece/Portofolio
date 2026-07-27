@@ -635,33 +635,33 @@
     .contact-links a:hover span:last-child { transform: translateX(4px); }
     .contact-links span:last-child { transition: transform .18s ease; }
 
-    .ping-runner { padding: 104px 0; color: #f6f6ff; background: #0d1037; overflow: hidden; }
+    .ping-runner { padding: 104px 0; color: var(--text); background: var(--bg); overflow: hidden; }
     .runner-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(280px, 4fr); gap: 56px; align-items: end; margin-bottom: 34px; }
-    .runner-kicker { color: #8f92ff; font: 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
-    .runner-head h2 { max-width: 800px; margin: 12px 0 0; font-size: clamp(48px, 6vw, 82px); line-height: .92; letter-spacing: -.055em; }
-    .runner-head p { margin: 0; color: #b8badc; font-size: 17px; line-height: 1.65; }
-    .runner-shell { position: relative; border: 1px solid rgba(143,146,255,.38); border-radius: 20px; background: #171b58; box-shadow: 0 30px 90px rgba(0,0,0,.34); overflow: hidden; }
-    .runner-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 18px; border-bottom: 1px solid rgba(143,146,255,.24); background: rgba(8,10,38,.6); font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
-    .runner-status { display: flex; align-items: center; gap: 9px; color: #c8caff; }
+    .runner-kicker { color: var(--brand); font: 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .runner-head h2 { max-width: 800px; margin: 12px 0 0; color: var(--brand); font-size: clamp(48px, 6vw, 82px); line-height: .92; letter-spacing: -.055em; }
+    .runner-head p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.65; }
+    .runner-shell { position: relative; border: 1px solid var(--line-strong); border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+    .runner-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 18px; border-bottom: 1px solid var(--line-strong); background: var(--brand-soft); font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .runner-status { display: flex; align-items: center; gap: 9px; color: var(--brand-dark); }
     .runner-status::before { width: 8px; height: 8px; border-radius: 50%; background: #63f2b0; box-shadow: 0 0 14px rgba(99,242,176,.8); content: ""; }
-    .runner-stats { display: flex; gap: 28px; color: #8f92c7; }
-    .runner-stats strong { margin-left: 8px; color: #fff; font-weight: 700; }
+    .runner-stats { display: flex; gap: 28px; color: var(--soft); }
+    .runner-stats strong { margin-left: 8px; color: var(--brand); font-weight: 700; }
     .runner-stage { position: relative; aspect-ratio: 16 / 6.4; min-height: 310px; cursor: pointer; touch-action: manipulation; }
     #pingRunnerCanvas { display: block; width: 100%; height: 100%; }
-    .runner-overlay { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; padding: 28px; text-align: center; background: linear-gradient(180deg, rgba(13,16,55,.06), rgba(13,16,55,.3)); transition: opacity .2s ease, visibility .2s ease; }
+    .runner-overlay { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; padding: 28px; text-align: center; background: linear-gradient(180deg, rgba(23,26,164,.05), rgba(23,26,164,.28)); transition: opacity .2s ease, visibility .2s ease; }
     .runner-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .runner-mark { display: grid; width: 66px; height: 66px; margin-bottom: 18px; place-items: center; border: 3px solid #fff; color: #fff; background: #292fd0; box-shadow: 8px 8px 0 rgba(143,146,255,.28); font: 800 28px var(--mono); }
+    .runner-mark { display: grid; width: 66px; height: 66px; margin-bottom: 18px; place-items: center; border: 3px solid #fff; color: #fff; background: var(--brand); box-shadow: 8px 8px 0 rgba(228,229,255,.42); font: 800 28px var(--mono); }
     .runner-overlay h3 { margin: 0; color: #fff; font: 800 clamp(34px, 5vw, 66px)/.9 var(--mono); letter-spacing: -.08em; text-transform: uppercase; }
-    .runner-overlay p { margin: 16px 0 22px; color: #c8caff; font: 13px/1.55 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
-    .runner-play { min-width: 190px; padding: 14px 20px; border: 1px solid #fff; color: #111441; background: #fff; cursor: pointer; font: 800 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; box-shadow: 6px 6px 0 #5d62ef; transition: transform .16s ease, box-shadow .16s ease; }
-    .runner-play:hover { transform: translate(2px,2px); box-shadow: 4px 4px 0 #5d62ef; }
+    .runner-overlay p { margin: 16px 0 22px; color: #e4e5ff; font: 13px/1.55 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+    .runner-play { min-width: 190px; padding: 14px 20px; border: 1px solid #fff; color: var(--brand-dark); background: #fff; cursor: pointer; font: 800 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; box-shadow: 6px 6px 0 #8f92ff; transition: transform .16s ease, box-shadow .16s ease; }
+    .runner-play:hover { transform: translate(2px,2px); box-shadow: 4px 4px 0 #8f92ff; }
     .runner-play:focus-visible, .runner-control:focus-visible { outline: 3px solid #63f2b0; outline-offset: 3px; }
-    .runner-controls { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 16px 18px; border-top: 1px solid rgba(143,146,255,.24); color: #8f92c7; background: #101443; font: 11px var(--mono); }
+    .runner-controls { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 16px 18px; border-top: 1px solid var(--line-strong); color: var(--muted); background: var(--surface); font: 11px var(--mono); }
     .runner-keymap { display: flex; flex-wrap: wrap; gap: 18px; }
     .runner-keymap span { display: inline-flex; align-items: center; gap: 8px; }
-    .runner-keymap kbd { min-width: 32px; padding: 6px 8px; border: 1px solid #5f64bf; border-bottom-width: 3px; border-radius: 5px; color: #fff; background: #252a76; text-align: center; font: 10px var(--mono); }
-    .runner-control { padding: 9px 13px; border: 1px solid #5f64bf; border-radius: 5px; color: #fff; background: transparent; cursor: pointer; font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
-    .runner-note { margin: 18px 0 0; color: #7f82b2; font: 10px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+    .runner-keymap kbd { min-width: 32px; padding: 6px 8px; border: 1px solid var(--brand); border-bottom-width: 3px; border-radius: 5px; color: #fff; background: var(--brand); text-align: center; font: 10px var(--mono); }
+    .runner-control { padding: 9px 13px; border: 1px solid var(--brand); border-radius: 5px; color: var(--brand); background: transparent; cursor: pointer; font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .runner-note { margin: 18px 0 0; color: var(--soft); font: 10px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
 
     footer { color: var(--soft); background: var(--bg); }
     .footer-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font: 11px var(--mono); }
@@ -1262,20 +1262,6 @@ print(monitor(<span class="str">"network"</span>))</pre>
       </div>
     </section>
 
-    <section class="contact" id="contact">
-      <div class="shell contact-grid">
-        <div class="reveal">
-          <h2>Ας δημιουργήσουμε συστήματα που λειτουργούν καλύτερα.</h2>
-          <p>Διαθέσιμος για ρόλους σε συστήματα IT, λειτουργία υποδομών, αυτοματισμούς και τεχνικά προϊόντα, όπου η αξιοπιστία, η υπευθυνότητα και η πρακτική μηχανική έχουν σημασία.</p>
-        </div>
-        <div class="contact-links reveal">
-          <a href="mailto:galatsanos@gmail.com"><span>Email</span><span>galatsanos@gmail.com ↗</span></a>
-          <a href="https://www.linkedin.com/in/dgalatsanos/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span>Άνοιγμα προφίλ ↗</span></a>
-          <a href="/Dimitris_Galatsanos_CV_GR.pdf" download><span>Βιογραφικό σημείωμα</span><span>Λήψη PDF ↓</span></a>
-        </div>
-      </div>
-    </section>
-
     <section class="ping-runner" id="ping-runner" aria-labelledby="runner-title">
       <div class="shell">
         <div class="runner-head reveal">
@@ -1315,6 +1301,20 @@ print(monitor(<span class="str">"network"</span>))</pre>
         </div>
         <p class="runner-note">Runs locally in your browser · No tracking · Ρεκόρ score stays on this device</p>
         <div class="sr-only" id="runnerAnnouncement" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="shell contact-grid">
+        <div class="reveal">
+          <h2>Ας δημιουργήσουμε συστήματα που λειτουργούν καλύτερα.</h2>
+          <p>Διαθέσιμος για ρόλους σε συστήματα IT, λειτουργία υποδομών, αυτοματισμούς και τεχνικά προϊόντα, όπου η αξιοπιστία, η υπευθυνότητα και η πρακτική μηχανική έχουν σημασία.</p>
+        </div>
+        <div class="contact-links reveal">
+          <a href="mailto:galatsanos@gmail.com"><span>Email</span><span>galatsanos@gmail.com ↗</span></a>
+          <a href="https://www.linkedin.com/in/dgalatsanos/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span>Άνοιγμα προφίλ ↗</span></a>
+          <a href="/Dimitris_Galatsanos_CV_GR.pdf" download><span>Βιογραφικό σημείωμα</span><span>Λήψη PDF ↓</span></a>
+        </div>
       </div>
     </section>
   </main>
@@ -1492,24 +1492,24 @@ print(monitor(<span class="str">"network"</span>))</pre>
 
       function drawCloud(c) {
         const x = c.x, y = c.y, s = c.s;
-        pixelRect(x, y + 18*s, 120*s, 18*s, '#303681'); pixelRect(x + 18*s, y + 8*s, 70*s, 18*s, '#303681'); pixelRect(x + 42*s, y, 32*s, 14*s, '#3b4298');
+        pixelRect(x, y + 18*s, 120*s, 18*s, '#777bf0'); pixelRect(x + 18*s, y + 8*s, 70*s, 18*s, '#777bf0'); pixelRect(x + 42*s, y, 32*s, 14*s, '#9b9eff');
       }
 
       function drawPlayer() {
         const bob = player.grounded && state === 'running' ? Math.sin(player.frame) * 2 : 0;
         const x = player.x, y = player.y + bob;
-        pixelRect(x + 8, y, 30, 7, '#aeb0ff'); pixelRect(x, y + 7, 45, 35, '#f6f6ff'); pixelRect(x + 7, y + 14, 31, 19, '#252a76');
+        pixelRect(x + 8, y, 30, 7, '#c9caff'); pixelRect(x, y + 7, 45, 35, '#f5f5f1'); pixelRect(x + 7, y + 14, 31, 19, '#171aa4');
         pixelRect(x + 13, y + 20, 5, 6, '#63f2b0'); pixelRect(x + 27, y + 20, 5, 6, '#63f2b0');
-        pixelRect(x + 8, y + 42, 10, 14, '#8f92ff'); pixelRect(x + 30, y + 42, 10, 14, '#8f92ff');
-        pixelRect(x + 45, y + 15, 6, 15, '#5d62ef');
+        pixelRect(x + 8, y + 42, 10, 14, '#bfc1ff'); pixelRect(x + 30, y + 42, 10, 14, '#bfc1ff');
+        pixelRect(x + 45, y + 15, 6, 15, '#8f92ff');
       }
 
       function drawObstacle(o) {
         if (o.type === 'server') {
-          pixelRect(o.x, o.y, o.w, o.h, '#585db7'); pixelRect(o.x + 6, o.y + 8, o.w - 12, 16, '#181d5b'); pixelRect(o.x + 10, o.y + 13, 6, 6, '#ff667e');
-          pixelRect(o.x + 6, o.y + 31, o.w - 12, 16, '#181d5b'); pixelRect(o.x + 10, o.y + 36, 6, 6, '#ff667e'); pixelRect(o.x + 6, o.y + 54, o.w - 12, 16, '#181d5b');
+          pixelRect(o.x, o.y, o.w, o.h, '#9b9eff'); pixelRect(o.x + 6, o.y + 8, o.w - 12, 16, '#171aa4'); pixelRect(o.x + 10, o.y + 13, 6, 6, '#ff7890');
+          pixelRect(o.x + 6, o.y + 31, o.w - 12, 16, '#171aa4'); pixelRect(o.x + 10, o.y + 36, 6, 6, '#ff7890'); pixelRect(o.x + 6, o.y + 54, o.w - 12, 16, '#171aa4');
         } else {
-          pixelRect(o.x + 7, o.y + 12, o.w - 14, o.h - 12, '#5d62ef'); pixelRect(o.x, o.y + 23, o.w, o.h - 23, '#454a9c');
+          pixelRect(o.x + 7, o.y + 12, o.w - 14, o.h - 12, '#8f92ff'); pixelRect(o.x, o.y + 23, o.w, o.h - 23, '#666be1');
           pixelRect(o.x + 22, o.y, 7, 29, '#ff667e'); pixelRect(o.x + 34, o.y + 35, 7, 7, '#ff667e');
         }
       }
@@ -1522,10 +1522,10 @@ print(monitor(<span class="str">"network"</span>))</pre>
 
       function draw() {
         ctx.imageSmoothingEnabled = false;
-        const gradient = ctx.createLinearGradient(0,0,0,H); gradient.addColorStop(0,'#171b58'); gradient.addColorStop(1,'#101443'); ctx.fillStyle = gradient; ctx.fillRect(0,0,W,H);
+        const gradient = ctx.createLinearGradient(0,0,0,H); gradient.addColorStop(0,'#2d31d4'); gradient.addColorStop(1,'#171aa4'); ctx.fillStyle = gradient; ctx.fillRect(0,0,W,H);
         ctx.globalAlpha = .45; clouds.forEach(drawCloud); ctx.globalAlpha = 1;
-        for (let x = -((score * 9) % 90); x < W; x += 90) pixelRect(x, groundY + 42, 48, 5, '#3b4298');
-        pixelRect(0, groundY, W, 7, '#8f92ff'); pixelRect(0, groundY + 7, W, 4, '#242978');
+        for (let x = -((score * 9) % 90); x < W; x += 90) pixelRect(x, groundY + 42, 48, 5, '#777bf0');
+        pixelRect(0, groundY, W, 7, '#f5f5f1'); pixelRect(0, groundY + 7, W, 4, '#8f92ff');
         obstacles.forEach(drawObstacle); signals.forEach(drawSignal); drawPlayer();
         sparks.forEach(p => { ctx.globalAlpha = Math.max(0, p.life * 2); pixelRect(p.x, p.y, 5, 5, '#63f2b0'); }); ctx.globalAlpha = 1;
       }
