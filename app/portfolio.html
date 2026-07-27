@@ -232,6 +232,8 @@
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 
     .system-card {
+      container-name: system-card;
+      container-type: inline-size;
       min-height: 470px;
       display: flex;
       flex-direction: column;
@@ -760,6 +762,56 @@
       .flow-arrow { transform: rotate(90deg); }
       .product-stack { grid-template-columns: 1fr; }
       .editorial-map { grid-template-columns: 1fr; }
+    }
+
+    @container system-card (max-width: 640px) {
+      .system-canvas {
+        min-height: 0;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        align-items: stretch;
+        padding: 20px;
+      }
+      .system-line { display: none; }
+      .system-core {
+        position: static;
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: 144px;
+        height: 144px;
+        transform: none;
+      }
+      .system-node,
+      .system-node.n1,
+      .system-node.n2,
+      .system-node.n3,
+      .system-node.n4,
+      .system-node.n5 {
+        position: static;
+        width: auto;
+        min-width: 0;
+        min-height: 88px;
+        transform: none;
+      }
+      .system-node.n1 { order: 1; }
+      .system-node.n2 { order: 2; }
+      .system-node.n5 { grid-column: 1 / -1; order: 3; }
+      .system-node.n3 { order: 4; }
+      .system-node.n4 { order: 5; }
+    }
+
+    @container system-card (max-width: 390px) {
+      .system-canvas { grid-template-columns: minmax(0, 1fr); padding: 14px; }
+      .system-core,
+      .system-node.n5 { grid-column: auto; }
+      .system-core { width: 132px; height: 132px; }
+      .system-node,
+      .system-node.n1,
+      .system-node.n2,
+      .system-node.n3,
+      .system-node.n4,
+      .system-node.n5 { min-height: 0; }
     }
 
     @media (prefers-reduced-motion: reduce) {
