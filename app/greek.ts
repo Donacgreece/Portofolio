@@ -8,7 +8,7 @@ const translations: Array<[string, string]> = [
   ["> Projects<", "> Έργα<"],
   ["> Skills<", "> Δεξιότητες<"],
   ["> Contact<", "> Επικοινωνία<"],
-  ["Download CV", "CV (EN)"],
+  ["Download CV", "Λήψη CV"],
   ["Open navigation", "Άνοιγμα πλοήγησης"],
   ["Close navigation", "Κλείσιμο πλοήγησης"],
   ["IT systems, infrastructure and automation", "Συστήματα IT, υποδομές και αυτοματισμοί"],
@@ -176,7 +176,7 @@ const translations: Array<[string, string]> = [
   ["Available for IT systems, infrastructure operations, automation and technical product roles where reliability, ownership and practical engineering matter.", "Διαθέσιμος για ρόλους σε συστήματα IT, λειτουργία υποδομών, αυτοματισμούς και τεχνικά προϊόντα, όπου η αξιοπιστία, η υπευθυνότητα και η πρακτική μηχανική έχουν σημασία."],
   ["Open profile", "Άνοιγμα προφίλ"],
   ["Curriculum Vitae", "Βιογραφικό σημείωμα"],
-  ["Download PDF", "Λήψη PDF (EN)"],
+  ["Download PDF", "Λήψη PDF"],
   ["IT Systems Engineer · Automation · Infrastructure Operations", "Μηχανικός Συστημάτων IT · Αυτοματισμοί · Λειτουργία Υποδομών"],
   ["[A] About", "[A] Σχετικά"], ["[E] Experience", "[E] Εμπειρία"],
   ["[P] Projects", "[P] Έργα"], ["[S] Skills", "[S] Δεξιότητες"], ["[C] Contact", "[C] Επικοινωνία"],
@@ -234,7 +234,7 @@ export function translatePortfolioToGreek(source: string) {
   for (const [english, greek] of translations) result = result.replaceAll(english, greek);
   return result
     .replace('<html lang="en">', '<html lang="el">')
-    .replaceAll('href="Dimitris_Galatsanos_CV.pdf"', 'href="/Dimitris_Galatsanos_CV.pdf"')
+    .replaceAll('href="Dimitris_Galatsanos_CV.pdf"', 'href="/Dimitris_Galatsanos_CV_GR.pdf"')
     .replace('href="/gr" data-language="el" aria-label="View portfolio in Greek">GR</a>', 'href="/" data-language="en" aria-label="Προβολή portfolio στα Αγγλικά">EN</a>')
     .replace('href="/gr" data-language="el">[GR] Ελληνικά</a>', 'href="/" data-language="en">[EN] English</a>')
     .replace("if (location.pathname === '/' && localStorage.getItem('portfolio-language') === 'el') location.replace('/gr');", "");
