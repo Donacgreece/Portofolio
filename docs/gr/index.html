@@ -767,6 +767,8 @@
     .runner-keymap span { display: inline-flex; align-items: center; gap: 8px; }
     .runner-keymap kbd { min-width: 32px; padding: 6px 8px; border: 1px solid var(--brand); border-bottom-width: 3px; border-radius: 5px; color: #fff; background: var(--brand); text-align: center; font: 10px var(--mono); }
     .runner-control { padding: 9px 13px; border: 1px solid var(--brand); border-radius: 5px; color: var(--brand); background: transparent; cursor: pointer; font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .runner-control-actions { display: flex; align-items: center; gap: 9px; }
+    .runner-sound[aria-pressed="true"] { color: #fff; background: var(--brand); }
     .runner-note { margin: 18px 0 0; color: var(--soft); font: 10px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
 
     footer { color: var(--soft); background: var(--bg); }
@@ -852,6 +854,8 @@
       .runner-toolbar { align-items: flex-start; }
       .runner-stats { gap: 14px; }
       .runner-controls { align-items: stretch; flex-direction: column; }
+      .runner-control-actions { width: 100%; }
+      .runner-control-actions .runner-control { flex: 1; }
       .runner-control { min-height: 44px; }
       .footer-inner { padding: 24px 0; flex-direction: column; align-items: flex-start; }
     }
@@ -1459,7 +1463,10 @@ print(monitor(<span class="str">"network"</span>))</pre>
               <span><kbd>P</kbd> Παύση</span>
               <span><kbd>Tap</kbd> Κινητό</span>
             </div>
-            <button class="runner-control" id="runnerΠαύση" type="button">Παύση</button>
+            <div class="runner-control-actions">
+              <button class="runner-control runner-sound" id="runnerSound" type="button" aria-pressed="false">Sound off</button>
+              <button class="runner-control" id="runnerΠαύση" type="button">Παύση</button>
+            </div>
           </div>
         </div>
         <p class="runner-note">Runs locally in your browser · No tracking · Ρεκόρ score stays on this device</p>
@@ -1675,6 +1682,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
       const overlay = document.getElementById('runnerOverlay');
       const playButton = document.getElementById('runnerPlay');
       const pauseButton = document.getElementById('runnerΠαύση');
+      const soundButton = document.getElementById('runnerSound');
       const scoreNode = document.getElementById('runnerΣκορ');
       const bestNode = document.getElementById('runnerΡεκόρ');
       const messageNode = document.getElementById('runnerMessage');
@@ -1687,11 +1695,52 @@ print(monitor(<span class="str">"network"</span>))</pre>
       const lang = document.documentElement.lang === 'el' ? 'el' : 'en';
       const copy = lang === 'el' ? {
         ready: 'Κράτησέ το online', prompt: 'Πήδα πάνω από βλάβες. Μάζεψε πακέτα σήματος.', start: 'Έναρξη',
-        over: 'Η σύνδεση χάθηκε', final: 'Τελικό σκορ', retry: 'Νέα προσπάθεια', pause: 'Παύση', resume: 'Συνέχεια', paused: 'Σε παύση'
+        over: 'Η σύνδεση χάθηκε', final: 'Τελικό σκορ', retry: 'Νέα προσπάθεια', pause: 'Παύση', resume: 'Συνέχεια', paused: 'Σε παύση', soundOn: 'Ήχος on', soundOff: 'Ήχος off'
       } : {
         ready: 'Κράτησέ το online', prompt: 'Πήδα πάνω από βλάβες. Μάζεψε πακέτα σήματος.', start: 'Έναρξη',
-        over: 'Connection lost', final: 'Final score', retry: 'Run again', pause: 'Παύση', resume: 'Resume', paused: 'Παύσηd'
+        over: 'Connection lost', final: 'Final score', retry: 'Run again', pause: 'Παύση', resume: 'Resume', paused: 'Παύσηd', soundOn: 'Sound on', soundOff: 'Sound off'
       };
+      let audioContext = null;
+      let soundEnabled = localStorage.getItem('ping-runner-sound') === 'on';
+
+      function ensureAudio() {
+        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioContext.state === 'suspended') audioContext.resume();
+        return audioContext;
+      }
+
+      function tone(frequency, duration, options = {}) {
+        if (!soundEnabled) return;
+        const audio = ensureAudio();
+        const oscillator = audio.createOscillator();
+        const gain = audio.createGain();
+        const startAt = audio.currentTime + (options.delay || 0);
+        oscillator.type = options.type || 'square';
+        oscillator.frequency.setValueAtTime(frequency, startAt);
+        if (options.endFrequency) oscillator.frequency.exponentialRampToValueAtTime(options.endFrequency, startAt + duration);
+        gain.gain.setValueAtTime(.0001, startAt);
+        gain.gain.exponentialRampToValueAtTime(options.volume || .055, startAt + .012);
+        gain.gain.exponentialRampToValueAtTime(.0001, startAt + duration);
+        oscillator.connect(gain).connect(audio.destination);
+        oscillator.start(startAt);
+        oscillator.stop(startAt + duration + .02);
+      }
+
+      function playSound(name) {
+        if (!soundEnabled) return;
+        if (name === 'start') { tone(260, .09, { endFrequency: 390 }); tone(390, .11, { endFrequency: 560, delay: .08 }); }
+        if (name === 'jump') tone(230, .13, { endFrequency: 620, type: 'square', volume: .045 });
+        if (name === 'collect') { tone(660, .07, { endFrequency: 880, volume: .045 }); tone(990, .1, { delay: .065, volume: .04 }); }
+        if (name === 'collision') { tone(170, .24, { endFrequency: 65, type: 'sawtooth', volume: .06 }); tone(92, .28, { delay: .08, type: 'square', volume: .035 }); }
+        if (name === 'pause') tone(280, .08, { endFrequency: 210, volume: .035 });
+        if (name === 'resume') tone(220, .09, { endFrequency: 340, volume: .035 });
+        if (name === 'best') { tone(520, .09, { delay: .28 }); tone(660, .09, { delay: .37 }); tone(880, .18, { delay: .46 }); }
+      }
+
+      function updateSoundButton() {
+        soundButton.textContent = soundEnabled ? copy.soundOn : copy.soundOff;
+        soundButton.setAttribute('aria-pressed', String(soundEnabled));
+      }
       let best = Number(localStorage.getItem('ping-runner-best') || 0);
       let state = 'ready';
       let score = 0;
@@ -1720,24 +1769,26 @@ print(monitor(<span class="str">"network"</span>))</pre>
 
       function start() {
         reset(); state = 'running'; overlay.classList.add('hidden'); pauseButton.textContent = copy.pause;
-        announcement.textContent = copy.start; last = performance.now(); active = true;
+        announcement.textContent = copy.start; last = performance.now(); active = true; playSound('start');
       }
 
       function end() {
         state = 'over'; active = false;
+        const isNewΡεκόρ = Math.floor(score) > best;
         best = Math.max(best, Math.floor(score));
         localStorage.setItem('ping-runner-best', String(best)); updateHud();
         messageNode.textContent = copy.over; promptNode.textContent = `${copy.final}: ${pad(score)}`; playButton.textContent = copy.retry;
         overlay.classList.remove('hidden'); announcement.textContent = `${copy.over}. ${copy.final}: ${pad(score)}`;
+        playSound('collision'); if (isNewΡεκόρ) playSound('best');
       }
 
       function toggleΠαύση() {
         if (state === 'running') {
           state = 'paused'; active = false; pauseButton.textContent = copy.resume;
           messageNode.textContent = copy.paused; promptNode.textContent = copy.prompt; playButton.textContent = copy.resume;
-          overlay.classList.remove('hidden'); announcement.textContent = copy.paused;
+          overlay.classList.remove('hidden'); announcement.textContent = copy.paused; playSound('pause');
         } else if (state === 'paused') {
-          state = 'running'; active = true; last = performance.now(); pauseButton.textContent = copy.pause; overlay.classList.add('hidden');
+          state = 'running'; active = true; last = performance.now(); pauseButton.textContent = copy.pause; overlay.classList.add('hidden'); playSound('resume');
         }
       }
 
@@ -1746,6 +1797,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
         if (state === 'paused') return toggleΠαύση();
         if (player.grounded) {
           player.vy = reducedMotion ? -700 : -790; player.grounded = false;
+          playSound('jump');
           for (let i = 0; i < 7; i++) sparks.push({ x: player.x + 12, y: groundY - 5, vx: -60 - Math.random() * 90, vy: -30 - Math.random() * 70, life: .45 });
         }
       }
@@ -1783,6 +1835,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
           const box = { x: item.x - item.r, y: item.y - item.r, w: item.r * 2, h: item.r * 2 };
           if (hit(playerBox, box)) {
             score += 25;
+            playSound('collect');
             for (let i = 0; i < 10; i++) sparks.push({ x: item.x, y: item.y, vx: (Math.random() - .5) * 260, vy: (Math.random() - .5) * 240, life: .5 });
             return false;
           }
@@ -1842,6 +1895,12 @@ print(monitor(<span class="str">"network"</span>))</pre>
 
       playButton.addEventListener('click', () => state === 'paused' ? toggleΠαύση() : start());
       pauseButton.addEventListener('click', toggleΠαύση);
+      soundButton.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        localStorage.setItem('ping-runner-sound', soundEnabled ? 'on' : 'off');
+        updateSoundButton();
+        if (soundEnabled) { ensureAudio(); playSound('resume'); }
+      });
       stage.addEventListener('pointerdown', event => { if (!event.target.closest('button')) jump(); });
       document.addEventListener('keydown', event => {
         if (event.code === 'Space' || event.code === 'ArrowUp' || event.code === 'KeyW') {
@@ -1851,7 +1910,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
         if (event.code === 'KeyP' && state !== 'ready' && state !== 'over') toggleΠαύση();
       });
       document.addEventListener('visibilitychange', () => { if (document.hidden && state === 'running') toggleΠαύση(); });
-      messageNode.textContent = copy.ready; promptNode.textContent = copy.prompt; playButton.textContent = copy.start; pauseButton.textContent = copy.pause;
+      messageNode.textContent = copy.ready; promptNode.textContent = copy.prompt; playButton.textContent = copy.start; pauseButton.textContent = copy.pause; updateSoundButton();
       updateHud(); draw(); requestAnimationFrame(loop);
     })();
   </script>
