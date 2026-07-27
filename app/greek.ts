@@ -227,6 +227,14 @@ const translations: Array<[string, string]> = [
   ["Identify recurring friction and build repeatable solutions.", "Εντοπίζω επαναλαμβανόμενα προβλήματα και δημιουργώ επαναλήψιμες λύσεις."],
   ["Why return a value instead of printing inside the function?", "Γιατί να επιστρέψουμε μια τιμή αντί να κάνουμε print μέσα στη συνάρτηση;"],
   ["Returning keeps the function reusable. You can print, test or store the result later.", "Η επιστροφή τιμής διατηρεί τη συνάρτηση επαναχρησιμοποιήσιμη. Μπορείτε αργότερα να εκτυπώσετε, να ελέγξετε ή να αποθηκεύσετε το αποτέλεσμα."],
+  ["[PLAY] Interactive system check", "[PLAY] Διαδραστικός έλεγχος συστήματος"],
+  ["Keep the network alive. Jump over outages, collect clean signals and stay online for as long as you can.", "Κράτησε το δίκτυο ζωντανό. Πήδα πάνω από βλάβες, μάζεψε καθαρά σήματα και μείνε online όσο περισσότερο μπορείς."],
+  ["Network online", "Δίκτυο online"],
+  ["Score", "Σκορ"], ["Best", "Ρεκόρ"],
+  ["Keep it online", "Κράτησέ το online"],
+  ["Jump over outages. Collect signal packets.", "Πήδα πάνω από βλάβες. Μάζεψε πακέτα σήματος."],
+  ["Start run", "Έναρξη"], ["Jump", "Πήδημα"], ["Pause", "Παύση"], ["Mobile", "Κινητό"],
+  ["Runs locally in your browser · No tracking · Best score stays on this device", "Τρέχει τοπικά στον browser · Χωρίς tracking · Το ρεκόρ μένει σε αυτή τη συσκευή"],
 ];
 
 export function translatePortfolioToGreek(source: string) {

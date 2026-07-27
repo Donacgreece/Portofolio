@@ -54,6 +54,7 @@
     button { font: inherit; }
     img { max-width: 100%; }
     ::selection { color: #fff; background: var(--brand); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
     .skip-link {
       position: fixed;
@@ -634,6 +635,34 @@
     .contact-links a:hover span:last-child { transform: translateX(4px); }
     .contact-links span:last-child { transition: transform .18s ease; }
 
+    .ping-runner { padding: 104px 0; color: #f6f6ff; background: #0d1037; overflow: hidden; }
+    .runner-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(280px, 4fr); gap: 56px; align-items: end; margin-bottom: 34px; }
+    .runner-kicker { color: #8f92ff; font: 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .runner-head h2 { max-width: 800px; margin: 12px 0 0; font-size: clamp(48px, 6vw, 82px); line-height: .92; letter-spacing: -.055em; }
+    .runner-head p { margin: 0; color: #b8badc; font-size: 17px; line-height: 1.65; }
+    .runner-shell { position: relative; border: 1px solid rgba(143,146,255,.38); border-radius: 20px; background: #171b58; box-shadow: 0 30px 90px rgba(0,0,0,.34); overflow: hidden; }
+    .runner-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 18px; border-bottom: 1px solid rgba(143,146,255,.24); background: rgba(8,10,38,.6); font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .runner-status { display: flex; align-items: center; gap: 9px; color: #c8caff; }
+    .runner-status::before { width: 8px; height: 8px; border-radius: 50%; background: #63f2b0; box-shadow: 0 0 14px rgba(99,242,176,.8); content: ""; }
+    .runner-stats { display: flex; gap: 28px; color: #8f92c7; }
+    .runner-stats strong { margin-left: 8px; color: #fff; font-weight: 700; }
+    .runner-stage { position: relative; aspect-ratio: 16 / 6.4; min-height: 310px; cursor: pointer; touch-action: manipulation; }
+    #pingRunnerCanvas { display: block; width: 100%; height: 100%; }
+    .runner-overlay { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; padding: 28px; text-align: center; background: linear-gradient(180deg, rgba(13,16,55,.06), rgba(13,16,55,.3)); transition: opacity .2s ease, visibility .2s ease; }
+    .runner-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .runner-mark { display: grid; width: 66px; height: 66px; margin-bottom: 18px; place-items: center; border: 3px solid #fff; color: #fff; background: #292fd0; box-shadow: 8px 8px 0 rgba(143,146,255,.28); font: 800 28px var(--mono); }
+    .runner-overlay h3 { margin: 0; color: #fff; font: 800 clamp(34px, 5vw, 66px)/.9 var(--mono); letter-spacing: -.08em; text-transform: uppercase; }
+    .runner-overlay p { margin: 16px 0 22px; color: #c8caff; font: 13px/1.55 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+    .runner-play { min-width: 190px; padding: 14px 20px; border: 1px solid #fff; color: #111441; background: #fff; cursor: pointer; font: 800 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; box-shadow: 6px 6px 0 #5d62ef; transition: transform .16s ease, box-shadow .16s ease; }
+    .runner-play:hover { transform: translate(2px,2px); box-shadow: 4px 4px 0 #5d62ef; }
+    .runner-play:focus-visible, .runner-control:focus-visible { outline: 3px solid #63f2b0; outline-offset: 3px; }
+    .runner-controls { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 16px 18px; border-top: 1px solid rgba(143,146,255,.24); color: #8f92c7; background: #101443; font: 11px var(--mono); }
+    .runner-keymap { display: flex; flex-wrap: wrap; gap: 18px; }
+    .runner-keymap span { display: inline-flex; align-items: center; gap: 8px; }
+    .runner-keymap kbd { min-width: 32px; padding: 6px 8px; border: 1px solid #5f64bf; border-bottom-width: 3px; border-radius: 5px; color: #fff; background: #252a76; text-align: center; font: 10px var(--mono); }
+    .runner-control { padding: 9px 13px; border: 1px solid #5f64bf; border-radius: 5px; color: #fff; background: transparent; cursor: pointer; font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .runner-note { margin: 18px 0 0; color: #7f82b2; font: 10px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+
     footer { color: var(--soft); background: var(--bg); }
     .footer-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font: 11px var(--mono); }
 
@@ -648,7 +677,8 @@
       .hero-grid,
       .experience-layout,
       .project-wide,
-      .contact-grid { grid-template-columns: 1fr; }
+      .contact-grid,
+      .runner-head { grid-template-columns: 1fr; }
       .hero-grid { gap: 48px; }
       .system-card { min-height: 470px; }
       .capabilities-grid { grid-template-columns: 1fr 1fr; }
@@ -708,6 +738,13 @@
       .skill-card { min-height: 360px; }
       .contact { padding: 78px 0; }
       .contact-grid { gap: 42px; }
+      .ping-runner { padding: 78px 0; }
+      .runner-head { gap: 20px; }
+      .runner-stage { min-height: 300px; aspect-ratio: auto; }
+      .runner-toolbar { align-items: flex-start; }
+      .runner-stats { gap: 14px; }
+      .runner-controls { align-items: stretch; flex-direction: column; }
+      .runner-control { min-height: 44px; }
       .footer-inner { padding: 24px 0; flex-direction: column; align-items: flex-start; }
     }
 
@@ -1227,6 +1264,48 @@ print(monitor(<span class="str">"network"</span>))</pre>
         </div>
       </div>
     </section>
+
+    <section class="ping-runner" id="ping-runner" aria-labelledby="runner-title">
+      <div class="shell">
+        <div class="runner-head reveal">
+          <div>
+            <div class="runner-kicker">[PLAY] Interactive system check</div>
+            <h2 id="runner-title">Ping Runner</h2>
+          </div>
+          <p>Keep the network alive. Jump over outages, collect clean signals and stay online for as long as you can.</p>
+        </div>
+
+        <div class="runner-shell reveal">
+          <div class="runner-toolbar">
+            <div class="runner-status">Network online</div>
+            <div class="runner-stats">
+              <span>Score<strong id="runnerScore">00000</strong></span>
+              <span>Best<strong id="runnerBest">00000</strong></span>
+            </div>
+          </div>
+          <div class="runner-stage" id="runnerStage">
+            <canvas id="pingRunnerCanvas" width="1280" height="500" aria-label="Ping Runner game area"></canvas>
+            <div class="runner-overlay" id="runnerOverlay">
+              <div class="runner-mark" aria-hidden="true">P</div>
+              <h3 id="runnerMessage">Keep it online</h3>
+              <p id="runnerPrompt">Jump over outages. Collect signal packets.</p>
+              <button class="runner-play" id="runnerPlay" type="button">Start run</button>
+            </div>
+          </div>
+          <div class="runner-controls">
+            <div class="runner-keymap" aria-label="Game controls">
+              <span><kbd>Space</kbd> Jump</span>
+              <span><kbd>↑</kbd> Jump</span>
+              <span><kbd>P</kbd> Pause</span>
+              <span><kbd>Tap</kbd> Mobile</span>
+            </div>
+            <button class="runner-control" id="runnerPause" type="button">Pause</button>
+          </div>
+        </div>
+        <p class="runner-note">Runs locally in your browser · No tracking · Best score stays on this device</p>
+        <div class="sr-only" id="runnerAnnouncement" aria-live="polite"></div>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -1271,6 +1350,194 @@ print(monitor(<span class="str">"network"</span>))</pre>
     document.getElementById('year').textContent = new Date().getFullYear();
     document.querySelectorAll('[data-language]').forEach(link => link.addEventListener('click', () => localStorage.setItem('portfolio-language', link.dataset.language)));
     if (location.pathname === '/' && localStorage.getItem('portfolio-language') === 'el') location.replace('/gr');
+
+    (() => {
+      const canvas = document.getElementById('pingRunnerCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const stage = document.getElementById('runnerStage');
+      const overlay = document.getElementById('runnerOverlay');
+      const playButton = document.getElementById('runnerPlay');
+      const pauseButton = document.getElementById('runnerPause');
+      const scoreNode = document.getElementById('runnerScore');
+      const bestNode = document.getElementById('runnerBest');
+      const messageNode = document.getElementById('runnerMessage');
+      const promptNode = document.getElementById('runnerPrompt');
+      const announcement = document.getElementById('runnerAnnouncement');
+      const W = canvas.width;
+      const H = canvas.height;
+      const groundY = 405;
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const lang = document.documentElement.lang === 'el' ? 'el' : 'en';
+      const copy = lang === 'el' ? {
+        ready: 'Κράτησέ το online', prompt: 'Πήδα πάνω από βλάβες. Μάζεψε πακέτα σήματος.', start: 'Έναρξη',
+        over: 'Η σύνδεση χάθηκε', final: 'Τελικό σκορ', retry: 'Νέα προσπάθεια', pause: 'Παύση', resume: 'Συνέχεια', paused: 'Σε παύση'
+      } : {
+        ready: 'Keep it online', prompt: 'Jump over outages. Collect signal packets.', start: 'Start run',
+        over: 'Connection lost', final: 'Final score', retry: 'Run again', pause: 'Pause', resume: 'Resume', paused: 'Paused'
+      };
+      let best = Number(localStorage.getItem('ping-runner-best') || 0);
+      let state = 'ready';
+      let score = 0;
+      let speed = 355;
+      let spawnTimer = 1.2;
+      let signalTimer = 2.4;
+      let last = performance.now();
+      let active = false;
+      let obstacles = [];
+      let signals = [];
+      let sparks = [];
+      let clouds = [
+        { x: 170, y: 110, s: 1 }, { x: 610, y: 76, s: .7 }, { x: 1010, y: 132, s: 1.15 }
+      ];
+      const player = { x: 150, y: groundY - 58, w: 50, h: 58, vy: 0, grounded: true, frame: 0 };
+
+      const pad = value => String(Math.max(0, Math.floor(value))).padStart(5, '0');
+      const updateHud = () => { scoreNode.textContent = pad(score); bestNode.textContent = pad(best); };
+
+      function reset() {
+        score = 0; speed = reducedMotion ? 315 : 355; spawnTimer = 1.1; signalTimer = 2.2;
+        obstacles = []; signals = []; sparks = [];
+        Object.assign(player, { y: groundY - 58, vy: 0, grounded: true, frame: 0 });
+        updateHud();
+      }
+
+      function start() {
+        reset(); state = 'running'; overlay.classList.add('hidden'); pauseButton.textContent = copy.pause;
+        announcement.textContent = copy.start; last = performance.now(); active = true;
+      }
+
+      function end() {
+        state = 'over'; active = false;
+        best = Math.max(best, Math.floor(score));
+        localStorage.setItem('ping-runner-best', String(best)); updateHud();
+        messageNode.textContent = copy.over; promptNode.textContent = `${copy.final}: ${pad(score)}`; playButton.textContent = copy.retry;
+        overlay.classList.remove('hidden'); announcement.textContent = `${copy.over}. ${copy.final}: ${pad(score)}`;
+      }
+
+      function togglePause() {
+        if (state === 'running') {
+          state = 'paused'; active = false; pauseButton.textContent = copy.resume;
+          messageNode.textContent = copy.paused; promptNode.textContent = copy.prompt; playButton.textContent = copy.resume;
+          overlay.classList.remove('hidden'); announcement.textContent = copy.paused;
+        } else if (state === 'paused') {
+          state = 'running'; active = true; last = performance.now(); pauseButton.textContent = copy.pause; overlay.classList.add('hidden');
+        }
+      }
+
+      function jump() {
+        if (state === 'ready' || state === 'over') return start();
+        if (state === 'paused') return togglePause();
+        if (player.grounded) {
+          player.vy = reducedMotion ? -700 : -790; player.grounded = false;
+          for (let i = 0; i < 7; i++) sparks.push({ x: player.x + 12, y: groundY - 5, vx: -60 - Math.random() * 90, vy: -30 - Math.random() * 70, life: .45 });
+        }
+      }
+
+      function spawnObstacle() {
+        const tall = Math.random() > .58;
+        const h = tall ? 80 : 52;
+        obstacles.push({ x: W + 30, y: groundY - h, w: tall ? 48 : 62, h, type: tall ? 'server' : 'outage' });
+        spawnTimer = Math.max(.68, 1.42 - speed / 820) + Math.random() * .7;
+      }
+
+      function spawnSignal() {
+        signals.push({ x: W + 30, y: groundY - 110 - Math.random() * 95, r: 15, pulse: Math.random() * Math.PI * 2 });
+        signalTimer = 2.6 + Math.random() * 2.4;
+      }
+
+      function hit(a, b, inset = 0) {
+        return a.x + inset < b.x + b.w && a.x + a.w - inset > b.x && a.y + inset < b.y + b.h && a.y + a.h - inset > b.y;
+      }
+
+      function update(dt) {
+        if (state !== 'running') return;
+        score += dt * 10; speed = Math.min(620, speed + dt * 5.2); spawnTimer -= dt; signalTimer -= dt;
+        if (spawnTimer <= 0) spawnObstacle(); if (signalTimer <= 0) spawnSignal();
+        player.vy += 2050 * dt; player.y += player.vy * dt;
+        if (player.y >= groundY - player.h) { player.y = groundY - player.h; player.vy = 0; player.grounded = true; }
+        player.frame += dt * (speed / 55);
+        obstacles.forEach(item => item.x -= speed * dt);
+        signals.forEach(item => { item.x -= speed * dt; item.pulse += dt * 5; });
+        sparks.forEach(p => { p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 300 * dt; p.life -= dt; });
+        clouds.forEach(c => { c.x -= speed * dt * .035; if (c.x < -150) c.x = W + 100 + Math.random() * 200; });
+        const playerBox = { x: player.x + 7, y: player.y + 5, w: player.w - 14, h: player.h - 8 };
+        if (obstacles.some(item => hit(playerBox, item, 3))) return end();
+        signals = signals.filter(item => {
+          const box = { x: item.x - item.r, y: item.y - item.r, w: item.r * 2, h: item.r * 2 };
+          if (hit(playerBox, box)) {
+            score += 25;
+            for (let i = 0; i < 10; i++) sparks.push({ x: item.x, y: item.y, vx: (Math.random() - .5) * 260, vy: (Math.random() - .5) * 240, life: .5 });
+            return false;
+          }
+          return item.x > -40;
+        });
+        obstacles = obstacles.filter(item => item.x > -100);
+        sparks = sparks.filter(p => p.life > 0);
+        updateHud();
+      }
+
+      function pixelRect(x, y, w, h, color) { ctx.fillStyle = color; ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); }
+
+      function drawCloud(c) {
+        const x = c.x, y = c.y, s = c.s;
+        pixelRect(x, y + 18*s, 120*s, 18*s, '#303681'); pixelRect(x + 18*s, y + 8*s, 70*s, 18*s, '#303681'); pixelRect(x + 42*s, y, 32*s, 14*s, '#3b4298');
+      }
+
+      function drawPlayer() {
+        const bob = player.grounded && state === 'running' ? Math.sin(player.frame) * 2 : 0;
+        const x = player.x, y = player.y + bob;
+        pixelRect(x + 8, y, 30, 7, '#aeb0ff'); pixelRect(x, y + 7, 45, 35, '#f6f6ff'); pixelRect(x + 7, y + 14, 31, 19, '#252a76');
+        pixelRect(x + 13, y + 20, 5, 6, '#63f2b0'); pixelRect(x + 27, y + 20, 5, 6, '#63f2b0');
+        pixelRect(x + 8, y + 42, 10, 14, '#8f92ff'); pixelRect(x + 30, y + 42, 10, 14, '#8f92ff');
+        pixelRect(x + 45, y + 15, 6, 15, '#5d62ef');
+      }
+
+      function drawObstacle(o) {
+        if (o.type === 'server') {
+          pixelRect(o.x, o.y, o.w, o.h, '#585db7'); pixelRect(o.x + 6, o.y + 8, o.w - 12, 16, '#181d5b'); pixelRect(o.x + 10, o.y + 13, 6, 6, '#ff667e');
+          pixelRect(o.x + 6, o.y + 31, o.w - 12, 16, '#181d5b'); pixelRect(o.x + 10, o.y + 36, 6, 6, '#ff667e'); pixelRect(o.x + 6, o.y + 54, o.w - 12, 16, '#181d5b');
+        } else {
+          pixelRect(o.x + 7, o.y + 12, o.w - 14, o.h - 12, '#5d62ef'); pixelRect(o.x, o.y + 23, o.w, o.h - 23, '#454a9c');
+          pixelRect(o.x + 22, o.y, 7, 29, '#ff667e'); pixelRect(o.x + 34, o.y + 35, 7, 7, '#ff667e');
+        }
+      }
+
+      function drawSignal(s) {
+        const glow = 3 + Math.sin(s.pulse) * 2;
+        ctx.strokeStyle = '#63f2b0'; ctx.lineWidth = 4; ctx.strokeRect(Math.round(s.x - 11 - glow/2), Math.round(s.y - 11 - glow/2), 22 + glow, 22 + glow);
+        pixelRect(s.x - 4, s.y - 4, 8, 8, '#f6f6ff');
+      }
+
+      function draw() {
+        ctx.imageSmoothingEnabled = false;
+        const gradient = ctx.createLinearGradient(0,0,0,H); gradient.addColorStop(0,'#171b58'); gradient.addColorStop(1,'#101443'); ctx.fillStyle = gradient; ctx.fillRect(0,0,W,H);
+        ctx.globalAlpha = .45; clouds.forEach(drawCloud); ctx.globalAlpha = 1;
+        for (let x = -((score * 9) % 90); x < W; x += 90) pixelRect(x, groundY + 42, 48, 5, '#3b4298');
+        pixelRect(0, groundY, W, 7, '#8f92ff'); pixelRect(0, groundY + 7, W, 4, '#242978');
+        obstacles.forEach(drawObstacle); signals.forEach(drawSignal); drawPlayer();
+        sparks.forEach(p => { ctx.globalAlpha = Math.max(0, p.life * 2); pixelRect(p.x, p.y, 5, 5, '#63f2b0'); }); ctx.globalAlpha = 1;
+      }
+
+      function loop(now) {
+        const dt = Math.min(.032, (now - last) / 1000); last = now;
+        if (active) update(dt); draw(); requestAnimationFrame(loop);
+      }
+
+      playButton.addEventListener('click', () => state === 'paused' ? togglePause() : start());
+      pauseButton.addEventListener('click', togglePause);
+      stage.addEventListener('pointerdown', event => { if (!event.target.closest('button')) jump(); });
+      document.addEventListener('keydown', event => {
+        if (event.code === 'Space' || event.code === 'ArrowUp' || event.code === 'KeyW') {
+          const rect = stage.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < innerHeight) { event.preventDefault(); jump(); }
+        }
+        if (event.code === 'KeyP' && state !== 'ready' && state !== 'over') togglePause();
+      });
+      document.addEventListener('visibilitychange', () => { if (document.hidden && state === 'running') togglePause(); });
+      messageNode.textContent = copy.ready; promptNode.textContent = copy.prompt; playButton.textContent = copy.start; pauseButton.textContent = copy.pause;
+      updateHud(); draw(); requestAnimationFrame(loop);
+    })();
   </script>
 </body>
 </html>
