@@ -12,7 +12,7 @@ const translations: Array<[string, string]> = [
   ["Open navigation", "Άνοιγμα πλοήγησης"],
   ["Close navigation", "Κλείσιμο πλοήγησης"],
   ["IT systems, infrastructure and automation", "Συστήματα IT, υποδομές και αυτοματισμοί"],
-  ["Reliable infrastructure. Practical automation. Useful products.", "Αξιόπιστες υποδομές. Πρακτικοί αυτοματισμοί. Χρήσιμα προϊόντα."],
+  ["Reliable infrastructure. Practical automation. Useful products.", "Υποδομές με αξιοπιστία. Αυτοματισμοί με ουσία."],
   ["IT Systems Engineer with more than 20 years of technology experience, combining hands-on infrastructure operations, monitoring, incident response and software development in business-critical environments.", "Μηχανικός Συστημάτων Πληροφορικής με περισσότερα από 20 χρόνια εμπειρίας στην τεχνολογία, συνδυάζοντας πρακτική διαχείριση υποδομών, παρακολούθηση συστημάτων, απόκριση σε συμβάντα και ανάπτυξη λογισμικού σε επιχειρησιακά κρίσιμα περιβάλλοντα."],
   ["Explore projects", "Δείτε τα έργα"],
   ["Contact me", "Επικοινωνήστε μαζί μου"],
@@ -29,7 +29,7 @@ const translations: Array<[string, string]> = [
   ["operational ownership enabled", "επιχειρησιακή υπευθυνότητα ενεργή"],
   ["automation and product thinking connected", "αυτοματισμοί και product thinking συνδεδεμένα"],
   ["[A] What I do", "[A] Τι κάνω"],
-  ["Three disciplines, one operational mindset.", "Τρεις τομείς, μία επιχειρησιακή νοοτροπία."],
+  ["Three disciplines, one operational mindset.", "Υποδομές, αυτοματισμοί, λογισμικό."],
   ["I work across infrastructure, automation and software because the most useful solutions often sit between those areas. The goal is always the same, reduce friction, improve visibility and keep services dependable.", "Εργάζομαι σε υποδομές, αυτοματισμούς και λογισμικό, επειδή οι πιο χρήσιμες λύσεις βρίσκονται συχνά ανάμεσα σε αυτούς τους τομείς. Ο στόχος παραμένει ο ίδιος: λιγότερη τριβή, καλύτερη ορατότητα και αξιόπιστες υπηρεσίες."],
   ["01 / OPERATE", "01 / ΛΕΙΤΟΥΡΓΙΑ"],
   ["Keep critical services stable.", "Διατηρώ σταθερές τις κρίσιμες υπηρεσίες."],
@@ -61,7 +61,7 @@ const translations: Array<[string, string]> = [
   ["business logic", "επιχειρησιακή λογική"],
   ["audit trails", "ίχνη ελέγχου"],
   ["Deployments, monitoring, backups and support", "Deployments, monitoring, αντίγραφα ασφαλείας και υποστήριξη"],
-  ["Operational ownership with engineering depth.", "Επιχειρησιακή υπευθυνότητα με τεχνικό βάθος."],
+  ["Operational ownership with engineering depth.", "Τεχνική ευθύνη στην πράξη."],
   ["My work combines hands-on infrastructure support, incident leadership, vendor coordination, automation and technical documentation in environments where downtime has immediate business impact.", "Η εργασία μου συνδυάζει πρακτική υποστήριξη υποδομών, διαχείριση συμβάντων, συντονισμό προμηθευτών, αυτοματισμούς και τεχνική τεκμηρίωση σε περιβάλλοντα όπου η διακοπή λειτουργίας έχει άμεσο επιχειρηματικό αντίκτυπο."],
   ["JAN 2024", "ΙΑΝ 2024"], ["MAR 2023", "ΜΑΡ 2023"], ["JAN 2019", "ΙΑΝ 2019"],
   ["TO PRESENT", "ΕΩΣ ΣΗΜΕΡΑ"], ["TO DEC 2023", "ΕΩΣ ΔΕΚ 2023"],
@@ -87,7 +87,8 @@ const translations: Array<[string, string]> = [
   ["major independent products", "σημαντικά ανεξάρτητα προϊόντα"],
   ["working languages", "γλώσσες εργασίας"],
   ["Infrastructure scope", "Πεδίο υποδομών"],
-  ["Products grounded in real operational needs.", "Προϊόντα βασισμένα σε πραγματικές επιχειρησιακές ανάγκες."],
+  ["Products grounded in real operational needs.", "Λογισμικό για πραγματικές ανάγκες."],
+  ["Προϊόντα grounded in real operational needs.", "Λογισμικό για πραγματικές ανάγκες."],
   ["Each project started from a practical problem. The result is software designed around reliability, usability, maintainability and the realities of day-to-day operations.", "Κάθε έργο ξεκίνησε από ένα πρακτικό πρόβλημα. Το αποτέλεσμα είναι λογισμικό σχεδιασμένο για αξιοπιστία, χρηστικότητα, συντηρησιμότητα και τις πραγματικές ανάγκες της καθημερινής λειτουργίας."],
   ["01 / FLAGSHIP PRODUCT", "01 / ΚΥΡΙΟ ΠΡΟΪΟΝ"],
   ["Private hospitality platform", "Ιδιωτική πλατφόρμα εστίασης"],
@@ -155,7 +156,7 @@ const translations: Array<[string, string]> = [
   ["Editorial product lifecycle", "Κύκλος ζωής συντακτικού προϊόντος"],
   ["plan to delivery", "από τον σχεδιασμό στην παράδοση"],
   ["Plan", "Σχεδιασμός"], ["Produce", "Παραγωγή"], ["Manage", "Διαχείριση"], ["Deliver", "Παράδοση"],
-  ["A complete stack for systems, networks, automation and software.", "Ένα πλήρες stack για συστήματα, δίκτυα, αυτοματισμούς και λογισμικό."],
+  ["A complete stack for systems, networks, automation and software.", "Τεχνογνωσία από άκρο σε άκρο."],
   ["The strongest part of my profile is the combination. I can diagnose infrastructure, coordinate incidents, automate recurring work and build software that directly supports operations.", "Το ισχυρότερο στοιχείο του προφίλ μου είναι ο συνδυασμός. Μπορώ να διαγνώσω υποδομές, να συντονίσω συμβάντα, να αυτοματοποιήσω επαναλαμβανόμενες εργασίες και να αναπτύξω λογισμικό που υποστηρίζει άμεσα τη λειτουργία."],
   ["Microsoft ecosystem", "Οικοσύστημα Microsoft"],
   ["Networking and connectivity", "Δικτύωση και συνδεσιμότητα"],
@@ -164,7 +165,7 @@ const translations: Array<[string, string]> = [
   ["Software and data", "Λογισμικό και δεδομένα"],
   ["Leadership and delivery", "Ηγεσία και παράδοση"],
   ["[Q] Credentials", "[Q] Προσόντα"],
-  ["Education, certifications and professional foundation.", "Εκπαίδευση, πιστοποιήσεις και επαγγελματικές βάσεις."],
+  ["Education, certifications and professional foundation.", "Σπουδές και πιστοποιήσεις."],
   ["Education", "Εκπαίδευση"],
   ["Hellenic Open University", "Ελληνικό Ανοικτό Πανεπιστήμιο"],
   ["Undergraduate studies in Computer Engineering, commenced October 2022.", "Προπτυχιακές σπουδές στη Μηχανική Υπολογιστών, με έναρξη τον Οκτώβριο του 2022."],
@@ -172,7 +173,7 @@ const translations: Array<[string, string]> = [
   ["Additional development", "Πρόσθετη κατάρτιση"],
   ["Python and continuous learning", "Python και συνεχής μάθηση"],
   ["Greek native, English professional working proficiency", "Ελληνικά μητρική γλώσσα, Αγγλικά επαγγελματικό επίπεδο"],
-  ["Let’s build systems that work better.", "Ας δημιουργήσουμε συστήματα που λειτουργούν καλύτερα."],
+  ["Let’s build systems that work better.", "Ας βελτιώσουμε τα συστήματά σας."],
   ["Available for IT systems, infrastructure operations, automation and technical product roles where reliability, ownership and practical engineering matter.", "Διαθέσιμος για ρόλους σε συστήματα IT, λειτουργία υποδομών, αυτοματισμούς και τεχνικά προϊόντα, όπου η αξιοπιστία, η υπευθυνότητα και η πρακτική μηχανική έχουν σημασία."],
   ["Open profile", "Άνοιγμα προφίλ"],
   ["Curriculum Vitae", "Βιογραφικό σημείωμα"],
@@ -244,6 +245,5 @@ export function translatePortfolioToGreek(source: string) {
     .replace('<html lang="en">', '<html lang="el">')
     .replaceAll('href="Dimitris_Galatsanos_CV.pdf"', 'href="../Dimitris_Galatsanos_CV_GR.pdf"')
     .replace('href="gr/" data-language="el" aria-label="View portfolio in Greek">GR</a>', 'href="../" data-language="en" aria-label="Προβολή portfolio στα Αγγλικά">EN</a>')
-    .replace('href="gr/" data-language="el">[GR] Ελληνικά</a>', 'href="../" data-language="en">[EN] English</a>')
-    .replace("if (!location.pathname.replace(/\\/$/, '').endsWith('/gr') && localStorage.getItem('portfolio-language') === 'el') location.replace('gr/');", "");
+    .replace('href="gr/" data-language="el">[GR] Ελληνικά</a>', 'href="../" data-language="en">[EN] English</a>');
 }

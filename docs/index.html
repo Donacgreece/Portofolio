@@ -361,6 +361,9 @@
       font-size: 19px;
       line-height: 1.65;
     }
+    html[lang="el"] h1 { max-width: 800px; font-size: clamp(42px, 4.2vw, 62px); line-height: 1.04; letter-spacing: -.045em; }
+    html[lang="el"] .section-title { max-width: 860px; font-size: clamp(38px, 4.35vw, 64px); line-height: 1.04; letter-spacing: -.045em; }
+    html[lang="el"] .contact h2 { font-size: clamp(46px, 5.2vw, 76px); line-height: 1; }
 
     .capabilities { padding: 72px 0 108px; }
     .capabilities-grid {
@@ -1358,8 +1361,15 @@ print(monitor(<span class="str">"network"</span>))</pre>
     });
 
     document.getElementById('year').textContent = new Date().getFullYear();
-    document.querySelectorAll('[data-language]').forEach(link => link.addEventListener('click', () => localStorage.setItem('portfolio-language', link.dataset.language)));
-    if (!location.pathname.replace(/\/$/, '').endsWith('/gr') && localStorage.getItem('portfolio-language') === 'el') location.replace('gr/');
+    const pathParts = location.pathname.split('/').filter(Boolean);
+    const portfolioBase = location.hostname.endsWith('.github.io') ? `/${pathParts[0] || 'Portofolio'}/` : '/';
+    document.querySelectorAll('[data-language]').forEach(link => link.addEventListener('click', event => {
+      event.preventDefault();
+      const language = link.dataset.language;
+      localStorage.setItem('portfolio-language', language);
+      location.assign(language === 'el' ? `${portfolioBase}gr/` : portfolioBase);
+    }));
+    if (document.documentElement.lang === 'en' && localStorage.getItem('portfolio-language') === 'el') location.replace(`${portfolioBase}gr/`);
 
     (() => {
       const canvas = document.getElementById('pingRunnerCanvas');
