@@ -119,18 +119,6 @@
     .nav-links a:focus-visible { text-decoration: underline; text-underline-offset: 5px; }
     .nav-links span { opacity: .65; }
     .nav-actions { display: flex; align-items: center; justify-content: flex-end; gap: 9px; }
-    .button.command-trigger {
-      min-width: 64px;
-      padding-inline: 12px;
-      gap: 7px;
-      color: var(--brand);
-      background: var(--surface);
-      border-color: var(--line-strong);
-      font: 700 11px/1 var(--mono);
-    }
-    .button.command-trigger:hover,
-    .button.command-trigger:focus-visible { border-color: var(--brand); background: var(--brand-soft); }
-
     .command-backdrop {
       position: fixed;
       z-index: 1000;
@@ -812,8 +800,6 @@
       .brand span { display: none; }
       .nav-actions .button:not(.primary) { display: none; }
       .nav-actions .language-switch { display: inline-flex; }
-      .nav-actions .command-trigger { min-width: 42px; display: inline-flex; padding-inline: 9px; }
-      .command-trigger .command-trigger-label { display: none; }
       .command-backdrop { padding: 82px 12px 24px; }
       .command-footer span:last-child { display: none; }
       .mobile-nav { right: -2px; }
@@ -992,7 +978,6 @@
       </div>
 
       <div class="nav-actions">
-        <button class="button command-trigger" id="commandToggle" type="button" aria-haspopup="dialog" aria-controls="commandBackdrop"><span aria-hidden="true">⌘</span><span class="command-trigger-label">Ctrl K</span></button>
         <a class="button language-switch" href="gr/" data-language="el" aria-label="View portfolio in Greek">GR</a>
         <a class="button" href="https://www.linkedin.com/in/dgalatsanos/" target="_blank" rel="noreferrer">LinkedIn</a>
         <a class="button primary" href="Dimitris_Galatsanos_CV.pdf" download>Download CV</a>
@@ -1510,12 +1495,11 @@ print(monitor(<span class="str">"network"</span>))</pre>
     (() => {
       const backdrop = document.getElementById('commandBackdrop');
       const palette = backdrop.querySelector('.command-palette');
-      const toggle = document.getElementById('commandToggle');
       const search = document.getElementById('commandSearch');
       const list = document.getElementById('commandList');
       const title = document.getElementById('commandTitle');
       const hint = document.getElementById('commandHint');
-      const isGreek = document.documentElement.lang === 'el';
+      const isGreek = document.documentElement.lang.toLowerCase().startsWith('el') || location.pathname.split('/').includes('gr');
       const text = isGreek ? {
         title: 'Γρήγορη πλοήγηση', placeholder: 'Αναζήτηση στο portfolio…', hint: 'Πλοήγηση με το πληκτρολόγιο', empty: 'Δεν βρέθηκαν αποτελέσματα',
         section: 'Μετάβαση στην ενότητα', external: 'Άνοιγμα εξωτερικού συνδέσμου', download: 'Λήψη αρχείου'
@@ -1546,7 +1530,6 @@ print(monitor(<span class="str">"network"</span>))</pre>
       search.placeholder = text.placeholder;
       search.setAttribute('aria-label', text.placeholder);
       hint.textContent = text.hint;
-      toggle.setAttribute('aria-label', text.title);
 
       function render() {
         if (!visible.length) {
@@ -1593,7 +1576,6 @@ print(monitor(<span class="str">"network"</span>))</pre>
         }
       }
 
-      toggle.addEventListener('click', openPalette);
       search.addEventListener('input', () => {
         const query = search.value.trim().toLocaleLowerCase(document.documentElement.lang);
         visible = commands.filter(command => `${command.label} ${command.detail}`.toLocaleLowerCase(document.documentElement.lang).includes(query));
