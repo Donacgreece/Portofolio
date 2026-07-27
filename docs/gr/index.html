@@ -366,6 +366,10 @@
     html[lang="el"] h1 { max-width: 800px; font-size: clamp(42px, 4.2vw, 62px); line-height: 1.04; letter-spacing: -.045em; }
     html[lang="el"] .section-title { max-width: 860px; font-size: clamp(38px, 4.35vw, 64px); line-height: 1.04; letter-spacing: -.045em; }
     html[lang="el"] .contact h2 { font-size: clamp(46px, 5.2vw, 76px); line-height: 1; }
+    html[lang="el"] .system-core b { font-size: 18px; }
+    html[lang="el"] .system-core span { font-size: 10px; }
+    html[lang="el"] .system-node b { font-size: 12px; }
+    html[lang="el"] .system-node span { font-size: 9px; line-height: 1.32; }
 
     .capabilities { padding: 72px 0 108px; }
     .capabilities-grid {
@@ -898,11 +902,11 @@
           <div class="system-canvas">
             <span class="system-line l1"></span><span class="system-line l2"></span><span class="system-line l3"></span><span class="system-line l4"></span><span class="system-line l5"></span>
             <div class="system-core"><div><b>Λειτουργίες IT</b><span>αξιοπιστία · υπευθυνότητα · παράδοση</span></div></div>
-            <div class="system-node n1"><b>Ταυτότητα</b><span>Windows Server, Active Directory, Microsoft 365, Entra ID</span></div>
-            <div class="system-node n2"><b>Δικτύωση</b><span>VLANs, switching, Wi-Fi, VoIP, LAN and WAN</span></div>
-            <div class="system-node n3"><b>Παρακολούθηση</b><span>Zabbix, PingOS, ειδοποιήσεις και ορατότητα υπηρεσιών</span></div>
-            <div class="system-node n4"><b>Αυτοματισμοί</b><span>PowerShell, Python, Power Automate and APIs</span></div>
-            <div class="system-node n5"><b>Προϊόντα</b><span>Flask, React, SQLite, PWA and προσαρμοσμένες πλατφόρμες CMS</span></div>
+            <div class="system-node n1"><b>Πρόσβαση</b><span>Windows Server · AD · M365 · Entra</span></div>
+            <div class="system-node n2"><b>Δίκτυα</b><span>VLAN · Switching · Wi-Fi · VoIP · WAN</span></div>
+            <div class="system-node n3"><b>Monitoring</b><span>Zabbix · PingOS · Alerts</span></div>
+            <div class="system-node n4"><b>Automation</b><span>PowerShell · Python · Power Automate</span></div>
+            <div class="system-node n5"><b>Εφαρμογές</b><span>Flask · React · SQLite · PWA</span></div>
           </div>
           <div class="system-console">
             <p><span class="cmd">$ profile --status</span></p>
@@ -933,7 +937,7 @@
               <div class="widget">
                 <div class="widget-title"><strong>Υγεία υπηρεσιών</strong><span>ζωντανή επιχειρησιακή εικόνα</span></div>
                 <div class="service-list">
-                  <div class="service-row"><b>Ταυτότητα and access</b><span>ΟΜΑΛΗ ΛΕΙΤΟΥΡΓΙΑ</span></div>
+                  <div class="service-row"><b>Ταυτότητα και πρόσβαση</b><span>ΟΜΑΛΗ ΛΕΙΤΟΥΡΓΙΑ</span></div>
                   <div class="service-row"><b>Δίκτυο και Wi-Fi</b><span>ΟΜΑΛΗ ΛΕΙΤΟΥΡΓΙΑ</span></div>
                   <div class="service-row"><b>Συστήματα επισκεπτών</b><span>ΟΜΑΛΗ ΛΕΙΤΟΥΡΓΙΑ</span></div>
                   <div class="service-row"><b>Εκτυπώσεις και τηλεφωνία</b><span>ΟΜΑΛΗ ΛΕΙΤΟΥΡΓΙΑ</span></div>
@@ -948,7 +952,7 @@
             <p>Χρησιμοποιώ PowerShell, Python, monitoring και εργαλεία ειδοποιήσεων για να αντικαθιστώ τους χειροκίνητους ελέγχους με επαναλήψιμες και παρατηρήσιμες διαδικασίες.</p>
             <div class="capability-visual">
               <div class="widget">
-                <div class="widget-title"><strong>Αυτοματισμοί path</strong><span>από τον εντοπισμό στην ενέργεια</span></div>
+                <div class="widget-title"><strong>Ροή αυτοματισμού</strong><span>από τον εντοπισμό στην ενέργεια</span></div>
                 <div class="automation-flow">
                   <div class="flow-box"><b>Παρατήρηση</b><span>Zabbix, logs, έλεγχοι υπηρεσιών</span></div>
                   <div class="flow-arrow">→</div>
@@ -1093,14 +1097,14 @@
                 <div class="arch-column">
                   <span class="arch-label">Χώρος εξυπηρέτησης</span>
                   <div class="arch-box"><b>Τραπέζια και κρατήσεις</b><span>Χωρητικότητα, χώροι, διαθεσιμότητα και ημερήσιες κρατήσεις</span></div>
-                  <div class="arch-box"><b>Παραγγελίες και πληρωμές</b><span>Προϊόντα, quantities, notes, status and history</span></div>
+                  <div class="arch-box"><b>Παραγγελίες και πληρωμές</b><span>Προϊόντα, ποσότητες, σημειώσεις, κατάσταση και ιστορικό</span></div>
                   <div class="arch-box"><b>Χρήστες και sessions</b><span>Πρόσβαση με PIN, ρόλοι και timeout αδράνειας</span></div>
                 </div>
                 <div class="arch-column">
                   <span class="arch-label">Πυρήνας εφαρμογής</span>
                   <div class="arch-box core"><b>Επίπεδο υπηρεσιών Flask</b><span>Routes, validation, επιχειρησιακοί κανόνες και ενέργειες JSON</span></div>
                   <div class="arch-link">SQLite transactions</div>
-                  <div class="arch-box core"><b>Λειτουργική βάση δεδομένων</b><span>Προϊόντα, VAT, orders, printers, settings and receipts</span></div>
+                  <div class="arch-box core"><b>Λειτουργική βάση δεδομένων</b><span>Εφαρμογές, VAT, orders, printers, settings and receipts</span></div>
                   <div class="arch-box audit"><b>Έλεγχος και ανάκτηση</b><span>Αρχεία διαγραφών, backups, exports και ασφαλής επαναφορά</span></div>
                 </div>
                 <div class="arch-column">
@@ -1129,7 +1133,7 @@
                 <div class="project-actions"><a class="button" href="https://github.com/Donacgreece/PingOS" target="_blank" rel="noreferrer">Προβολή κώδικα στο GitHub <span aria-hidden="true">↗</span></a></div>
               </div>
               <div class="project-visual-panel">
-                <div class="panel-title"><strong>Παρακολούθηση workflow</strong><span>τέσσερα στάδια</span></div>
+                <div class="panel-title"><strong>Ροή παρακολούθησης</strong><span>τέσσερα στάδια</span></div>
                 <div class="process-visual">
                   <div class="process-step"><small>01</small><b>Φόρτωση</b><span>Απογραφή συσκευών Excel</span></div>
                   <div class="process-step"><small>02</small><b>Έλεγχος</b><span>Παράλληλοι ping workers</span></div>
@@ -1216,14 +1220,14 @@ print(monitor(<span class="str">"network"</span>))</pre>
             <div class="skill-card-header"><div class="skill-icon">MS</div><h3>Οικοσύστημα Microsoft</h3></div>
             <div class="skill-chip-list"><span class="skill-chip">Windows Server</span><span class="skill-chip">Active Directory</span><span class="skill-chip">Group Policy</span><span class="skill-chip">Microsoft 365</span><span class="skill-chip">Entra ID</span><span class="skill-chip">Azure</span></div>
             <div class="skill-focus">
-              <div class="focus-row"><b>Ταυτότητα and access</b><p>Διαχείριση χρηστών, ομάδων, δικαιωμάτων και κύκλου ζωής λογαριασμών.</p></div>
+              <div class="focus-row"><b>Ταυτότητα και πρόσβαση</b><p>Διαχείριση χρηστών, ομάδων, δικαιωμάτων και κύκλου ζωής λογαριασμών.</p></div>
               <div class="focus-row"><b>Λειτουργία tenant</b><p>Αδειοδότηση, πρόσβαση, υποστήριξη endpoints και βασικές αρχές ασφάλειας.</p></div>
               <div class="focus-row"><b>Αντιμετώπιση προβλημάτων υπηρεσιών</b><p>Πρακτική διάγνωση σε περιβάλλοντα Windows και Microsoft cloud.</p></div>
             </div>
           </article>
 
           <article class="skill-card reveal">
-            <div class="skill-card-header"><div class="skill-icon">NET</div><h3>Δικτύωση and connectivity</h3></div>
+            <div class="skill-card-header"><div class="skill-icon">NET</div><h3>Δικτύωση και συνδεσιμότητα</h3></div>
             <div class="skill-chip-list"><span class="skill-chip">TCP/IP</span><span class="skill-chip">DHCP</span><span class="skill-chip">DNS</span><span class="skill-chip">VLANs</span><span class="skill-chip">Switching</span><span class="skill-chip">Aruba Central</span><span class="skill-chip">VoIP</span><span class="skill-chip">LAN/WAN</span></div>
             <div class="skill-focus">
               <div class="focus-row"><b>Διάγνωση VLAN και θυρών</b><p>Αντιμετώπιση προβλημάτων access, trunk και λανθασμένης ανάθεσης VLAN.</p></div>
@@ -1233,7 +1237,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
           </article>
 
           <article class="skill-card reveal">
-            <div class="skill-card-header"><div class="skill-icon">OPS</div><h3>Παρακολούθηση and automation</h3></div>
+            <div class="skill-card-header"><div class="skill-icon">OPS</div><h3>Παρακολούθηση και αυτοματισμοί</h3></div>
             <div class="skill-chip-list"><span class="skill-chip">Zabbix</span><span class="skill-chip">PowerShell</span><span class="skill-chip">Python</span><span class="skill-chip">Power Automate</span><span class="skill-chip">Teams Alerts</span><span class="skill-chip">SMTP</span><span class="skill-chip">Logging</span></div>
             <div class="skill-focus">
               <div class="focus-row"><b>Προληπτική ορατότητα</b><p>Έλεγχοι διαθεσιμότητας, ερμηνεία ειδοποιήσεων και επιχειρησιακό monitoring.</p></div>
@@ -1293,7 +1297,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
             <ul class="credential-list">
               <li>MS-102: Configure Your Microsoft 365 Tenant</li>
               <li>Διαχείριση Your Microsoft 365 Tenant</li>
-              <li>Security, Compliance and Ταυτότητα Fundamentals</li>
+              <li>Security, Compliance and Πρόσβαση Fundamentals</li>
             </ul>
           </article>
           <article class="credential-card reveal">
@@ -1369,7 +1373,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
   <footer>
     <div class="shell footer-inner">
       <span>© <span id="year"></span> Dimitris Galatsanos</span>
-      <span>IT Systems Engineer · Αυτοματισμοί · Infrastructure Λειτουργία</span>
+      <span>Μηχανικός Συστημάτων IT · Αυτοματισμοί · Λειτουργία Υποδομών</span>
     </div>
   </footer>
 
