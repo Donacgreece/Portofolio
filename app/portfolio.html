@@ -663,6 +663,7 @@
       .nav { width: min(calc(100% - 24px), 1540px); min-height: 68px; gap: 10px; }
       .brand span { display: none; }
       .nav-actions .button:not(.primary) { display: none; }
+      .nav-actions .language-switch { display: inline-flex; }
       .mobile-nav { right: -2px; }
       .hero { padding: 58px 0 54px; }
       .hero-grid { grid-template-columns: 1fr; gap: 34px; }
@@ -767,6 +768,7 @@
       </div>
 
       <div class="nav-actions">
+        <a class="button language-switch" href="/gr" data-language="el" aria-label="View portfolio in Greek">GR</a>
         <a class="button" href="https://www.linkedin.com/in/dgalatsanos/" target="_blank" rel="noreferrer">LinkedIn</a>
         <a class="button primary" href="Dimitris_Galatsanos_CV.pdf" download>Download CV</a>
         <button class="icon-button menu-button" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
@@ -778,6 +780,7 @@
         <a href="#projects">[P] Projects</a>
         <a href="#skills">[S] Skills</a>
         <a href="#contact">[C] Contact</a>
+        <a href="/gr" data-language="el">[GR] Ελληνικά</a>
       </div>
     </nav>
   </header>
@@ -1265,6 +1268,8 @@ print(monitor(<span class="str">"network"</span>))</pre>
     });
 
     document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('[data-language]').forEach(link => link.addEventListener('click', () => localStorage.setItem('portfolio-language', link.dataset.language)));
+    if (location.pathname === '/' && localStorage.getItem('portfolio-language') === 'el') location.replace('/gr');
   </script>
 </body>
 </html>
