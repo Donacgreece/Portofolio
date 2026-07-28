@@ -1679,8 +1679,29 @@ print(monitor(<span class="str">"network"</span>))</pre>
     document.getElementById('year').textContent = new Date().getFullYear();
     const pathParts = location.pathname.split('/').filter(Boolean);
     const portfolioBase = location.hostname.endsWith('.github.io') ? `/${pathParts[0] || 'Portofolio'}/` : '/';
+    const languagePositionKey = 'portfolio-language-position';
+    const captureLanguagePosition = () => {
+      const headerOffset = document.querySelector('.site-header')?.offsetHeight || 0;
+      const sections = [...document.querySelectorAll('main section[id]')];
+      const section = sections.filter(item => item.offsetTop <= window.scrollY + headerOffset + 2).at(-1);
+      sessionStorage.setItem(languagePositionKey, JSON.stringify({ section: section?.id || 'top', offset: window.scrollY - (section?.offsetTop || 0), createdAt: Date.now() }));
+    };
+    let savedLanguagePosition = null;
+    try { savedLanguagePosition = JSON.parse(sessionStorage.getItem(languagePositionKey) || 'null'); } catch {}
+    sessionStorage.removeItem(languagePositionKey);
+    const restoreLanguagePosition = () => {
+      if (!savedLanguagePosition || Date.now() - savedLanguagePosition.createdAt > 15000) return;
+      const section = document.getElementById(savedLanguagePosition.section);
+      window.scrollTo({ top: Math.max(0, (section?.offsetTop || 0) + Number(savedLanguagePosition.offset || 0)), behavior: 'instant' });
+    };
+    if (savedLanguagePosition) {
+      history.scrollRestoration = 'manual';
+      requestAnimationFrame(() => requestAnimationFrame(restoreLanguagePosition));
+      window.addEventListener('load', restoreLanguagePosition, { once: true });
+    }
     document.querySelectorAll('[data-language]').forEach(link => link.addEventListener('click', event => {
       event.preventDefault();
+      captureLanguagePosition();
       const language = link.dataset.language;
       localStorage.setItem('portfolio-language', language);
       location.assign(language === 'el' ? `${portfolioBase}gr/` : portfolioBase);
