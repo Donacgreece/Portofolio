@@ -2,7 +2,7 @@
 title: Πώς δημιούργησα το TableMaster με Flask
 date: 2026-07-28
 excerpt: Από την καθημερινή λειτουργία ενός εστιατορίου σε μια ολοκληρωμένη πλατφόρμα
-category: Automation
+category: Projects
 tags:
   - Python
   - Flask
