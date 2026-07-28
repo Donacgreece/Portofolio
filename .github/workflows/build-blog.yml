@@ -1,0 +1,33 @@
+name: Build portfolio blog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/blog/**"
+      - "scripts/generate-blog.mjs"
+      - "docs/admin/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-blog:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate blog pages
+        run: node scripts/generate-blog.mjs
+      - name: Commit generated pages
+        run: |
+          git config user.name "Dimitris Galatsanos"
+          git config user.email "galatsanos@gmail.com"
+          git add docs/blog docs/gr/blog docs/rss.xml docs/gr/rss.xml docs/sitemap-blog.xml
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish blog content"
+          git push

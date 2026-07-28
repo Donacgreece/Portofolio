@@ -1,0 +1,53 @@
+backend:
+  name: github
+  repo: Donacgreece/Portofolio
+  branch: main
+  base_url: https://portfolio-cms-auth.YOUR-CLOUDFLARE-SUBDOMAIN.workers.dev
+  auth_endpoint: /auth
+  use_graphql: true
+
+site_url: https://donacgreece.github.io/Portofolio/
+display_url: https://donacgreece.github.io/Portofolio/
+logo_url: https://donacgreece.github.io/Portofolio/favicon.svg
+publish_mode: editorial_workflow
+locale: el
+
+media_folder: docs/blog-media
+public_folder: /Portofolio/blog-media
+
+collections:
+  - name: posts_gr
+    label: Ελληνικά άρθρα
+    label_singular: Ελληνικό άρθρο
+    folder: content/blog/gr
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} · {{date}}"
+    fields: &post_fields
+      - { label: Τίτλος, name: title, widget: string }
+      - { label: Ημερομηνία δημοσίευσης, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: Σύντομη περιγραφή, name: excerpt, widget: text, hint: "Εμφανίζεται στην κάρτα του άρθρου και στις μηχανές αναζήτησης." }
+      - { label: Κατηγορία, name: category, widget: select, options: [Monitoring, Automation, Infrastructure, Networking, Development, Operations] }
+      - { label: Tags, name: tags, widget: list, allow_add: true, collapsed: false }
+      - { label: Εικόνα εξωφύλλου, name: cover, widget: image, required: false }
+      - { label: Προτεινόμενο άρθρο, name: featured, widget: boolean, default: false }
+      - { label: Κλειδί μετάφρασης, name: translation_key, widget: string, required: false, hint: "Το ίδιο κλειδί συνδέει την ελληνική και την αγγλική έκδοση." }
+      - { label: Κείμενο, name: body, widget: markdown }
+
+  - name: posts_en
+    label: English articles
+    label_singular: English article
+    folder: content/blog/en
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} · {{date}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Publish date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: Short description, name: excerpt, widget: text, hint: "Used on the article card and by search engines." }
+      - { label: Category, name: category, widget: select, options: [Monitoring, Automation, Infrastructure, Networking, Development, Operations] }
+      - { label: Tags, name: tags, widget: list, allow_add: true, collapsed: false }
+      - { label: Cover image, name: cover, widget: image, required: false }
+      - { label: Featured article, name: featured, widget: boolean, default: false }
+      - { label: Translation key, name: translation_key, widget: string, required: false, hint: "Use the same key to connect the Greek and English versions." }
+      - { label: Article, name: body, widget: markdown }

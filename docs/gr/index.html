@@ -9,9 +9,9 @@
   <meta property="og:description" content="Infrastructure, automation and software products built for real operations.">
   <meta property="og:type" content="website">
   <title>Δημήτρης Γαλατσάνος | Μηχανικός Συστημάτων Πληροφορικής</title>
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="favicon-64.png">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../favicon-64.png">
   <style>
     :root {
       --bg: #f5f5f1;
@@ -979,6 +979,7 @@
         <a href="#experience"><span>[E]</span> Εμπειρία</a>
         <a href="#projects"><span>[P]</span> Έργα</a>
         <a href="#skills"><span>[S]</span> Δεξιότητες</a>
+        <a href="blog/"><span>[B]</span> Blog</a>
         <a href="#contact"><span>[C]</span> Επικοινωνία</a>
       </div>
 
@@ -994,6 +995,7 @@
         <a href="#experience">[E] Εμπειρία</a>
         <a href="#projects">[P] Έργα</a>
         <a href="#skills">[S] Δεξιότητες</a>
+        <a href="blog/">[B] Blog</a>
         <a href="#contact">[C] Επικοινωνία</a>
         <a href="../" data-language="en">[EN] English</a>
       </div>
@@ -1519,6 +1521,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
         { label: 'Έργα', detail: text.section, icon: 'PR', target: '#projects' },
         { label: 'Εμπειρία', detail: text.section, icon: 'EX', target: '#experience' },
         { label: 'Δεξιότητες', detail: text.section, icon: 'SK', target: '#skills' },
+        { label: 'Άρθρα', detail: text.section, icon: 'BL', target: 'blog/' },
         { label: 'Λήψη βιογραφικού', detail: text.download, icon: 'CV', action: 'cv' },
         { label: 'GitHub', detail: text.external, icon: 'GH', target: 'https://github.com/Donacgreece', external: true },
         { label: 'Επικοινωνία', detail: text.section, icon: 'CO', target: '#contact' }
@@ -1526,6 +1529,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
         { label: 'Projects', detail: text.section, icon: 'PR', target: '#projects' },
         { label: 'Experience', detail: text.section, icon: 'EX', target: '#experience' },
         { label: 'Skills', detail: text.section, icon: 'SK', target: '#skills' },
+        { label: 'Blog', detail: text.section, icon: 'BL', target: 'blog/' },
         { label: 'Λήψη CV', detail: text.download, icon: 'CV', action: 'cv' },
         { label: 'GitHub', detail: text.external, icon: 'GH', target: 'https://github.com/Donacgreece', external: true },
         { label: 'Contact', detail: text.section, icon: 'CO', target: '#contact' }
@@ -1578,9 +1582,11 @@ print(monitor(<span class="str">"network"</span>))</pre>
           document.querySelector('a[download][href*="Dimitris_Galatsanos_CV"]')?.click();
         } else if (command.external) {
           window.open(command.target, '_blank', 'noopener,noreferrer');
-        } else {
+        } else if (command.target.startsWith('#')) {
           document.querySelector(command.target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           history.replaceState(null, '', command.target);
+        } else {
+          location.assign(command.target);
         }
       }
 
@@ -1626,13 +1632,17 @@ print(monitor(<span class="str">"network"</span>))</pre>
       if (document.getElementById('commandBackdrop').classList.contains('open')) return;
       const target = event.target;
       if (target instanceof HTMLElement && (target.matches('input, textarea, select') || target.isContentEditable)) return;
-      const shortcuts = { a: '#about', e: '#experience', p: '#projects', s: '#skills', c: '#contact' };
+      const shortcuts = { a: '#about', e: '#experience', p: '#projects', s: '#skills', b: 'blog/', c: '#contact' };
       const section = shortcuts[event.key.toLowerCase()];
       if (!section) return;
       event.preventDefault();
       event.stopImmediatePropagation();
-      document.querySelector(section)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      history.replaceState(null, '', section);
+      if (section.startsWith('#')) {
+        document.querySelector(section)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', section);
+      } else {
+        location.assign(section);
+      }
     });
 
     function closeMenu() {

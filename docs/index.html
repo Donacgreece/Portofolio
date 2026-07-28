@@ -978,6 +978,7 @@
         <a href="#experience"><span>[E]</span> Experience</a>
         <a href="#projects"><span>[P]</span> Projects</a>
         <a href="#skills"><span>[S]</span> Skills</a>
+        <a href="blog/"><span>[B]</span> Blog</a>
         <a href="#contact"><span>[C]</span> Contact</a>
       </div>
 
@@ -993,6 +994,7 @@
         <a href="#experience">[E] Experience</a>
         <a href="#projects">[P] Projects</a>
         <a href="#skills">[S] Skills</a>
+        <a href="blog/">[B] Blog</a>
         <a href="#contact">[C] Contact</a>
         <a href="gr/" data-language="el">[GR] Ελληνικά</a>
       </div>
@@ -1518,6 +1520,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
         { label: 'Έργα', detail: text.section, icon: 'PR', target: '#projects' },
         { label: 'Εμπειρία', detail: text.section, icon: 'EX', target: '#experience' },
         { label: 'Δεξιότητες', detail: text.section, icon: 'SK', target: '#skills' },
+        { label: 'Άρθρα', detail: text.section, icon: 'BL', target: 'blog/' },
         { label: 'Λήψη βιογραφικού', detail: text.download, icon: 'CV', action: 'cv' },
         { label: 'GitHub', detail: text.external, icon: 'GH', target: 'https://github.com/Donacgreece', external: true },
         { label: 'Επικοινωνία', detail: text.section, icon: 'CO', target: '#contact' }
@@ -1525,6 +1528,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
         { label: 'Projects', detail: text.section, icon: 'PR', target: '#projects' },
         { label: 'Experience', detail: text.section, icon: 'EX', target: '#experience' },
         { label: 'Skills', detail: text.section, icon: 'SK', target: '#skills' },
+        { label: 'Blog', detail: text.section, icon: 'BL', target: 'blog/' },
         { label: 'Download CV', detail: text.download, icon: 'CV', action: 'cv' },
         { label: 'GitHub', detail: text.external, icon: 'GH', target: 'https://github.com/Donacgreece', external: true },
         { label: 'Contact', detail: text.section, icon: 'CO', target: '#contact' }
@@ -1577,9 +1581,11 @@ print(monitor(<span class="str">"network"</span>))</pre>
           document.querySelector('a[download][href*="Dimitris_Galatsanos_CV"]')?.click();
         } else if (command.external) {
           window.open(command.target, '_blank', 'noopener,noreferrer');
-        } else {
+        } else if (command.target.startsWith('#')) {
           document.querySelector(command.target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           history.replaceState(null, '', command.target);
+        } else {
+          location.assign(command.target);
         }
       }
 
@@ -1625,13 +1631,17 @@ print(monitor(<span class="str">"network"</span>))</pre>
       if (document.getElementById('commandBackdrop').classList.contains('open')) return;
       const target = event.target;
       if (target instanceof HTMLElement && (target.matches('input, textarea, select') || target.isContentEditable)) return;
-      const shortcuts = { a: '#about', e: '#experience', p: '#projects', s: '#skills', c: '#contact' };
+      const shortcuts = { a: '#about', e: '#experience', p: '#projects', s: '#skills', b: 'blog/', c: '#contact' };
       const section = shortcuts[event.key.toLowerCase()];
       if (!section) return;
       event.preventDefault();
       event.stopImmediatePropagation();
-      document.querySelector(section)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      history.replaceState(null, '', section);
+      if (section.startsWith('#')) {
+        document.querySelector(section)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', section);
+      } else {
+        location.assign(section);
+      }
     });
 
     function closeMenu() {

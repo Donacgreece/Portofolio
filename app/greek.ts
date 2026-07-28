@@ -7,6 +7,7 @@ const translations: Array<[string, string]> = [
   ["> Experience<", "> Εμπειρία<"],
   ["> Projects<", "> Έργα<"],
   ["> Skills<", "> Δεξιότητες<"],
+  ["> Blog<", "> Blog<"],
   ["> Contact<", "> Επικοινωνία<"],
   ["Download CV", "Λήψη CV"],
   ["Open navigation", "Άνοιγμα πλοήγησης"],
@@ -181,7 +182,7 @@ const translations: Array<[string, string]> = [
   ["Download PDF", "Λήψη PDF"],
   ["IT Systems Engineer · Automation · Infrastructure Operations", "Μηχανικός Συστημάτων IT · Αυτοματισμοί · Λειτουργία Υποδομών"],
   ["[A] About", "[A] Σχετικά"], ["[E] Experience", "[E] Εμπειρία"],
-  ["[P] Projects", "[P] Έργα"], ["[S] Skills", "[S] Δεξιότητες"], ["[C] Contact", "[C] Επικοινωνία"],
+  ["[P] Projects", "[P] Έργα"], ["[S] Skills", "[S] Δεξιότητες"], ["[B] Blog", "[B] Blog"], ["[C] Contact", "[C] Επικοινωνία"],
   ["Frontend", "Frontend"], ["Backend", "Backend"], ["Data", "Δεδομένα"], ["Operations", "Λειτουργία"],
   ["Stories", "Ιστορίες"], ["Long-form retrospectives", "Εκτενή αφιερώματα"],
   ["Editorial", "Αρθρογραφία"], ["Opinion and analysis", "Άποψη και ανάλυση"],
@@ -249,6 +250,9 @@ export function translatePortfolioToGreek(source: string) {
   for (const [english, greek] of translations) result = result.replaceAll(english, greek);
   return result
     .replace('<html lang="en">', '<html lang="el">')
+    .replaceAll('href="favicon.ico"', 'href="../favicon.ico"')
+    .replaceAll('href="favicon.svg"', 'href="../favicon.svg"')
+    .replaceAll('href="favicon-64.png"', 'href="../favicon-64.png"')
     .replaceAll('href="Dimitris_Galatsanos_CV.pdf"', 'href="../Dimitris_Galatsanos_CV_GR.pdf"')
     .replace('href="gr/" data-language="el" aria-label="View portfolio in Greek">GR</a>', 'href="../" data-language="en" aria-label="Προβολή portfolio στα Αγγλικά">EN</a>')
     .replace('href="gr/" data-language="el">[GR] Ελληνικά</a>', 'href="../" data-language="en">[EN] English</a>');
