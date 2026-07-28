@@ -2,7 +2,7 @@
 title: Πώς δημιούργησα το PingOS με Python
 date: 2026-07-28
 excerpt: Από την αντιμετώπιση συμβάντων στην προληπτική παρακολούθηση
-category: Monitoring
+category: Projects
 tags:
   - Python
   - PyQt5
