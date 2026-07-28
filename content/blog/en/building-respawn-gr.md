@@ -20,10 +20,6 @@ cover: https://i.ibb.co/svpLWVt7/Chat-GPT-Image-28-2026-03-41-53.png
 featured: false
 translation_key: building-respawn-custom-gaming-platform
 ---
-TITLE
-
-: 
-
 Respawn.gr did not begin simply as an idea for another Greek gaming website. It was the result of a long journey through gaming media, continuous involvement with editorial content, and a growing need to build a platform capable of fully expressing how I understand modern digital publishing.
 
 My own journey began several years earlier through JustGamer.gr and later through its collaboration and merger with Joystick. That experience taught me what it means to operate a gaming publication, organise content, work with writers, cover daily news, and maintain a distinct identity in a highly competitive environment.
