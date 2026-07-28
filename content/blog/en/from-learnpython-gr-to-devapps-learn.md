@@ -19,10 +19,6 @@ cover: https://i.ibb.co/0R43NTmh/Chat-GPT-Image-28-2026-03-14-37.png
 featured: false
 translation_key: from-learnpython-to-devapps-learn
 ---
-TITLE
-
-
-
 LearnPython.gr did not begin as a business plan or an attempt to create another programming education platform. Its starting point was far more personal.
 
 I wanted to introduce my ten year old son to programming, and I believed Python was one of the best languages for his first experience. Its syntax is relatively clear, it allows beginners to see results quickly, and it is used across real fields ranging from web development and automation to data analysis and artificial intelligence.
