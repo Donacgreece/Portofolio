@@ -701,15 +701,19 @@
     .editorial-item { margin-top: 9px; padding: 11px; border-left: 3px solid var(--brand); border-radius: 8px; background: var(--surface); box-shadow: 0 6px 16px rgba(30,32,130,.05); }
     .editorial-item b { display: block; color: var(--brand); font-size: 11px; }
     .editorial-item span { display: block; margin-top: 4px; color: var(--soft); font-size: 9px; line-height: 1.4; }
-    .release-showcase { flex: 1; display: grid; grid-template-rows: 1fr auto; gap: 16px; padding: 20px; }
-    .release-products { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .release-product { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: 0 8px 22px rgba(30,32,130,.06); }
+    .python-releases { grid-template-columns: minmax(0, 1.2fr) minmax(360px, .8fr); }
+    .python-releases .project-content { padding: 34px 38px; }
+    .release-showcase { flex: 0 0 auto; display: grid; grid-template-rows: auto auto; align-content: center; gap: 14px; padding: 18px; }
+    .release-products { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .release-product { min-width: 0; padding: 17px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: 0 8px 22px rgba(30,32,130,.06); }
     .release-product small { color: var(--soft); font: 9px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
     .release-product h4 { margin: 12px 0 7px; color: var(--brand); font-size: 21px; letter-spacing: -.035em; }
     .release-product p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
-    .release-pipeline { display: grid; grid-template-columns: repeat(4,1fr); overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+    .release-pipeline { display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
     .release-stage { padding: 13px; border-right: 1px solid var(--line); }
     .release-stage:last-child { border-right: 0; }
+    .release-stage:nth-child(2) { border-right: 0; }
+    .release-stage:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
     .release-stage b { display: block; color: var(--brand); font: 700 10px var(--mono); }
     .release-stage span { display: block; margin-top: 5px; color: var(--soft); font-size: 9px; line-height: 1.35; }
     .editorial-stage.delivery { background: var(--brand-soft); }
@@ -850,10 +854,7 @@
       .arch-link { margin: 2px 0; }
       .arch-box { min-height: 82px; }
       .process-visual { grid-template-columns: 1fr 1fr; }
-      .release-products { grid-template-columns: 1fr; }
-      .release-pipeline { grid-template-columns: 1fr 1fr; }
-      .release-stage:nth-child(2) { border-right: 0; }
-      .release-stage:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .python-releases .project-content { padding: 26px; }
       .process-step:nth-child(2) { border-right: 0; }
       .process-step:nth-child(2)::after { display: none; }
       .process-step:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -1333,7 +1334,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
               </div>
             </div>
           </article>
-          <article class="project-wide reveal">
+          <article class="project-wide python-releases reveal">
             <div class="project-content">
               <div class="project-meta"><span>05 / PUBLISHED PYTHON SOFTWARE</span><span>Independent releases</span></div>
               <h3>Published Python Applications</h3>
