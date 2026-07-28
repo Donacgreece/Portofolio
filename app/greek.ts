@@ -86,7 +86,7 @@ const translations: Array<[string, string]> = [
   ["Professional snapshot", "Επαγγελματική εικόνα"],
   ["years in technology", "χρόνια στην τεχνολογία"],
   ["operational environments", "επιχειρησιακά περιβάλλοντα"],
-  ["major independent products", "σημαντικά ανεξάρτητα προϊόντα"],
+  ["independent software products", "ανεξάρτητα προϊόντα λογισμικού"],
   ["working languages", "γλώσσες εργασίας"],
   ["Infrastructure scope", "Πεδίο υποδομών"],
   ["Products grounded in real operational needs.", "Λογισμικό για πραγματικές ανάγκες."],
