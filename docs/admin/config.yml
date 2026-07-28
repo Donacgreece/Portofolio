@@ -25,9 +25,9 @@ collections:
     summary: "{{title}} · {{date}}"
     fields: &post_fields
       - { label: Τίτλος, name: title, widget: string }
-      - { label: Ημερομηνία δημοσίευσης, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: Ημερομηνία δημοσίευσης, name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
       - { label: Σύντομη περιγραφή, name: excerpt, widget: text, hint: "Εμφανίζεται στην κάρτα του άρθρου και στις μηχανές αναζήτησης." }
-      - { label: Κατηγορία, name: category, widget: select, options: [Monitoring, Automation, Infrastructure, Networking, Development, Operations] }
+      - { label: Κατηγορία, name: category, widget: string, default: "Technology", hint: "Γράψε υπάρχουσα ή νέα κατηγορία." }
       - { label: Tags, name: tags, widget: list, allow_add: true, collapsed: false }
       - { label: Εικόνα εξωφύλλου, name: cover, widget: image, required: false }
       - { label: Προτεινόμενο άρθρο, name: featured, widget: boolean, default: false }
@@ -43,9 +43,9 @@ collections:
     summary: "{{title}} · {{date}}"
     fields:
       - { label: Title, name: title, widget: string }
-      - { label: Publish date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: Publish date, name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
       - { label: Short description, name: excerpt, widget: text, hint: "Used on the article card and by search engines." }
-      - { label: Category, name: category, widget: select, options: [Monitoring, Automation, Infrastructure, Networking, Development, Operations] }
+      - { label: Category, name: category, widget: string, default: "Technology", hint: "Enter an existing or a new category." }
       - { label: Tags, name: tags, widget: list, allow_add: true, collapsed: false }
       - { label: Cover image, name: cover, widget: image, required: false }
       - { label: Featured article, name: featured, widget: boolean, default: false }
