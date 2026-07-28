@@ -15,7 +15,7 @@ tags:
   - Desktop Application
 cover: https://i.ibb.co/CZNLCLM/dc3248f7-d51d-42a7-b197-ed44e63e7489.png
 featured: true
-translation_key: pos-dimiourgisa-to-pingos-me-python
+translation_key: building-pingos-python-network-monitoring
 ---
 Στην καθημερινή λειτουργία ενός τμήματος IT, πολλά περιστατικά ξεκινούν από μια φαινομενικά απλή ερώτηση. Είναι πράγματι εκτός λειτουργίας η συσκευή που αναφέρθηκε ή το πρόβλημα οφείλεται σε μια προσωρινή απώλεια πακέτων, σε καθυστέρηση του δικτύου ή σε κάποια διαφορετική υπηρεσία της υποδομής;
 
