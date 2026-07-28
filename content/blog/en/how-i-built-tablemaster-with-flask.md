@@ -2,7 +2,7 @@
 title: How I Built TableMaster with Flask
 date: 2026-07-28
 excerpt: From Restaurant Operations to a Complete Platform
-category: Automation
+category: Projects
 tags:
   - Python
   - Flask
