@@ -2,7 +2,7 @@
 title: How I Built PingOS with Python
 date: 2026-07-28
 excerpt: "From Reactive IT Support to Proactive Monitoring "
-category: Monitoring
+category: Projects
 tags:
   - Python
   - PyQt5
