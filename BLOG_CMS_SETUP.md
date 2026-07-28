@@ -17,11 +17,11 @@ Decap CMS uses GitHub as its backend. GitHub requires a small OAuth proxy becaus
 
 1. Deploy the Cloudflare Worker from the Decap-documented proxy template:
    `https://github.com/sterlingwes/decap-proxy`
-2. Copy the final Worker URL, for example:
-   `https://portfolio-cms-auth.<account>.workers.dev`
+2. Worker URL:
+   `https://portfolio-cms-auth.donacgreece.workers.dev`
 3. In GitHub, create an OAuth App under **Settings → Developer settings → OAuth Apps**.
 4. Set the OAuth App homepage to the Worker URL.
-5. Set the authorization callback URL to `<Worker URL>/callback`.
+5. Set the authorization callback URL to `https://portfolio-cms-auth.donacgreece.workers.dev/callback?provider=github`.
 6. Store the GitHub OAuth client ID and secret as Worker secrets named `GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET`.
 7. Replace the placeholder `backend.base_url` in `docs/admin/config.yml` with the Worker URL.
 8. In the repository Actions settings, allow workflows to have read and write permissions so published articles can regenerate the static pages.

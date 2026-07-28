@@ -2,7 +2,7 @@ backend:
   name: github
   repo: Donacgreece/Portofolio
   branch: main
-  base_url: https://portfolio-cms-auth.YOUR-CLOUDFLARE-SUBDOMAIN.workers.dev
+  base_url: https://portfolio-cms-auth.donacgreece.workers.dev
   auth_endpoint: /auth
   use_graphql: true
 
