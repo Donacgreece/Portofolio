@@ -170,7 +170,7 @@ const translations: Array<[string, string]> = [
   ["Education, certifications and professional foundation.", "Σπουδές και πιστοποιήσεις."],
   ["Education", "Εκπαίδευση"],
   ["Hellenic Open University", "Ελληνικό Ανοικτό Πανεπιστήμιο"],
-  ["Undergraduate studies in Computer Engineering, currently in progress since October 2022 and not yet completed.", "Προπτυχιακές σπουδές στη Μηχανική Υπολογιστών, σε εξέλιξη από τον Οκτώβριο του 2022 και χωρίς να έχουν ολοκληρωθεί ακόμη."],
+  ["Undergraduate studies in Computer Engineering, in progress since October 2022.", "Προπτυχιακές σπουδές στη Μηχανική Υπολογιστών, σε εξέλιξη από τον Οκτώβριο του 2022."],
   ["IT Applications Specialist — IEK Chalkidiki, Vocational Training Certification (2002)", "Ειδικός Εφαρμογών Πληροφορικής — Ι.Ε.Κ. Χαλκιδικής, Βεβαίωση Επαγγελματικής Κατάρτισης (2002)"],
   ["Computer Systems and Applications Support — TEE Polygyros, IT and Computer Networks (2001)", "Υποστήριξη Συστημάτων και Εφαρμογών Υπολογιστών — Τ.Ε.Ε. Πολυγύρου, Τομέας Πληροφορικής–Δικτύων Η/Υ (2001)"],
   ["Microsoft certifications", "Πιστοποιήσεις Microsoft"],
