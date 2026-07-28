@@ -383,9 +383,27 @@
       box-shadow: 0 18px 42px color-mix(in srgb, var(--brand) 28%, transparent);
       text-align: center;
       transform: translate(-50%, -50%);
+      overflow: hidden;
     }
-    .system-core b { font-size: 20px; letter-spacing: -.03em; }
-    .system-core span { display: block; margin-top: 5px; font: 11px/1.4 var(--mono); opacity: .75; }
+    .system-core > div { width: 100%; min-width: 0; }
+    .system-core b {
+      display: block;
+      max-width: 100%;
+      font-size: 20px;
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
+    }
+    .system-core span {
+      display: block;
+      max-width: 100%;
+      margin-top: 5px;
+      font: 11px/1.4 var(--mono);
+      opacity: .75;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
+    }
     .system-node {
       position: absolute;
       z-index: 2;
@@ -463,7 +481,7 @@
     html[lang="el"] h1 { max-width: 800px; font-size: clamp(42px, 4.2vw, 62px); line-height: 1.04; letter-spacing: -.045em; }
     html[lang="el"] .section-title { max-width: 860px; font-size: clamp(38px, 4.35vw, 64px); line-height: 1.04; letter-spacing: -.045em; }
     html[lang="el"] .contact h2 { font-size: clamp(46px, 5.2vw, 76px); line-height: 1; }
-    html[lang="el"] .system-core b { font-size: 18px; }
+    html[lang="el"] .system-core b { font-size: 17px; }
     html[lang="el"] .system-core span { font-size: 10px; }
     html[lang="el"] .system-node b { font-size: 12px; }
     html[lang="el"] .system-node span { font-size: 9px; line-height: 1.32; }
@@ -902,8 +920,8 @@
 
     @container system-card (max-width: 500px) {
       .system-canvas { min-height: 410px; }
-      .system-core { width: 116px; height: 116px; padding: 13px; }
-      .system-core b { font-size: 17px; }
+      .system-core { width: 136px; height: 136px; padding: 13px; }
+      .system-core b { font-size: 16px; }
       .system-core span { font-size: 9px; }
       .system-node { width: 100px; min-height: 64px; padding: 9px; }
       .system-node b { font-size: 11px; }
@@ -917,8 +935,9 @@
 
     @container system-card (max-width: 390px) {
       .system-canvas { min-height: 400px; }
-      .system-core { width: 104px; height: 104px; padding: 11px; }
-      .system-core b { font-size: 15px; }
+      .system-core { width: 124px; height: 124px; padding: 10px; }
+      .system-core b { font-size: 14px; }
+      .system-core span { font-size: 8px; line-height: 1.3; }
       .system-node { width: 90px; min-height: 58px; padding: 7px; }
       .system-node b { font-size: 10px; }
       .system-node span { margin-top: 3px; font-size: 7.8px; line-height: 1.28; }
