@@ -16,6 +16,7 @@ tags:
   - SQLite
   - Incident Response
   - Desktop Application
+cover: /Portofolio/blog-media/dc3248f7-d51d-42a7-b197-ed44e63e7489.png
 featured: true
 translation_key: pos-dimiourgisa-to-pingos-me-python
 ---
