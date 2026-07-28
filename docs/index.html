@@ -701,6 +701,17 @@
     .editorial-item { margin-top: 9px; padding: 11px; border-left: 3px solid var(--brand); border-radius: 8px; background: var(--surface); box-shadow: 0 6px 16px rgba(30,32,130,.05); }
     .editorial-item b { display: block; color: var(--brand); font-size: 11px; }
     .editorial-item span { display: block; margin-top: 4px; color: var(--soft); font-size: 9px; line-height: 1.4; }
+    .release-showcase { flex: 1; display: grid; grid-template-rows: 1fr auto; gap: 16px; padding: 20px; }
+    .release-products { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .release-product { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: 0 8px 22px rgba(30,32,130,.06); }
+    .release-product small { color: var(--soft); font: 9px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+    .release-product h4 { margin: 12px 0 7px; color: var(--brand); font-size: 21px; letter-spacing: -.035em; }
+    .release-product p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .release-pipeline { display: grid; grid-template-columns: repeat(4,1fr); overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+    .release-stage { padding: 13px; border-right: 1px solid var(--line); }
+    .release-stage:last-child { border-right: 0; }
+    .release-stage b { display: block; color: var(--brand); font: 700 10px var(--mono); }
+    .release-stage span { display: block; margin-top: 5px; color: var(--soft); font-size: 9px; line-height: 1.35; }
     .editorial-stage.delivery { background: var(--brand-soft); }
 
     .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
@@ -839,6 +850,10 @@
       .arch-link { margin: 2px 0; }
       .arch-box { min-height: 82px; }
       .process-visual { grid-template-columns: 1fr 1fr; }
+      .release-products { grid-template-columns: 1fr; }
+      .release-pipeline { grid-template-columns: 1fr 1fr; }
+      .release-stage:nth-child(2) { border-right: 0; }
+      .release-stage:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
       .process-step:nth-child(2) { border-right: 0; }
       .process-step:nth-child(2)::after { display: none; }
       .process-step:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -1315,6 +1330,39 @@ print(monitor(<span class="str">"network"</span>))</pre>
                 <div class="editorial-stage"><h4>Produce</h4><div class="editorial-item"><b>News</b><span>Daily publishing workflow</span></div><div class="editorial-item"><b>Essentials</b><span>Curated recommendations</span></div></div>
                 <div class="editorial-stage"><h4>Manage</h4><div class="editorial-item"><b>Custom CMS</b><span>Content, access and contributors</span></div><div class="editorial-item"><b>Respawn+</b><span>Member-focused publishing</span></div></div>
                 <div class="editorial-stage delivery"><h4>Deliver</h4><div class="editorial-item"><b>React and PWA</b><span>Responsive web delivery</span></div><div class="editorial-item"><b>Continuous releases</b><span>Features, fixes and UX improvements</span></div></div>
+              </div>
+            </div>
+          </article>
+          <article class="project-wide reveal">
+            <div class="project-content">
+              <div class="project-meta"><span>05 / PUBLISHED PYTHON SOFTWARE</span><span>Independent releases</span></div>
+              <h3>Published Python Applications</h3>
+              <div class="project-subtitle">Software delivery through interactive desktop products</div>
+              <p class="project-description">Two Windows applications engineered with Python and Pygame, released publicly through itch.io and maintained through versioned updates.</p>
+              <ul class="project-points">
+                <li>Designed real-time event loops, input handling, state transitions, scoring, progression, audio and local persistence.</li>
+                <li>Implemented online leaderboards, offline-safe score handling, unlockable content and responsive user feedback.</li>
+                <li>Managed packaging, public releases, changelogs, user feedback and iterative bug fixes.</li>
+              </ul>
+              <div class="tags"><span class="tag">Python</span><span class="tag">Pygame</span><span class="tag">Desktop Software</span><span class="tag">State Management</span><span class="tag">Leaderboards</span><span class="tag">Release Engineering</span></div>
+              <div class="project-actions">
+                <a class="button" href="https://donacgreece.itch.io/blockmaster" target="_blank" rel="noreferrer">View BlockMaster on itch.io <span aria-hidden="true">↗</span></a>
+                <a class="button" href="https://donacgreece.itch.io/flappywings" target="_blank" rel="noreferrer">View Flappy Wings on itch.io <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+            <div class="project-visual-panel">
+              <div class="panel-title"><strong>Python release workflow</strong><span>build to maintenance</span></div>
+              <div class="release-showcase">
+                <div class="release-products">
+                  <div class="release-product"><small>Windows · Python · Pygame</small><h4>BlockMaster</h4><p>Real-time puzzle system with progression, score persistence, global ranking and versioned releases.</p></div>
+                  <div class="release-product"><small>Windows · Python · Pygame</small><h4>Flappy Wings</h4><p>Interactive application with physics, dynamic conditions, unlockable content and local/global scores.</p></div>
+                </div>
+                <div class="release-pipeline">
+                  <div class="release-stage"><b>01 / Build</b><span>Logic, state and interface</span></div>
+                  <div class="release-stage"><b>02 / Package</b><span>Windows distribution</span></div>
+                  <div class="release-stage"><b>03 / Release</b><span>Public version delivery</span></div>
+                  <div class="release-stage"><b>04 / Iterate</b><span>Feedback, fixes and updates</span></div>
+                </div>
               </div>
             </div>
           </article>
