@@ -58,6 +58,13 @@ function safeUrl(url) {
   return /^(https?:\/\/|\/|\.\.?\/)/i.test(value) ? value : "#";
 }
 
+function socialImage(url) {
+  const value = safeUrl(url);
+  if (value === "#") return `${SITE}/og.png`;
+  try { return new URL(value, `${SITE}/`).href; }
+  catch { return `${SITE}/og.png`; }
+}
+
 function inlineMarkdown(source) {
   let text = escapeHtml(source);
   text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => `<img src="${escapeHtml(safeUrl(url))}" alt="${alt}" loading="lazy">`);
@@ -112,8 +119,9 @@ function styles() {
 </style>`;
 }
 
-function head({ title, description, canonical, lang, type = "website" }) {
-  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f5f1"><meta name="description" content="${escapeHtml(description)}"><meta name="robots" content="index,follow"><link rel="canonical" href="${canonical}"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:type" content="${type}"><meta property="og:image" content="${SITE}/og.png"><meta name="twitter:card" content="summary_large_image"><title>${escapeHtml(title)}</title><link rel="icon" href="${SITE}/favicon.svg" type="image/svg+xml">${styles()}</head>`;
+function head({ title, description, canonical, lang, type = "website", image }) {
+  const previewImage = socialImage(image);
+  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f5f1"><meta name="description" content="${escapeHtml(description)}"><meta name="robots" content="index,follow"><link rel="canonical" href="${escapeHtml(canonical)}"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:type" content="${type}"><meta property="og:url" content="${escapeHtml(canonical)}"><meta property="og:image" content="${escapeHtml(previewImage)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${escapeHtml(previewImage)}"><title>${escapeHtml(title)}</title><link rel="icon" href="${SITE}/favicon.svg" type="image/svg+xml">${styles()}</head>`;
 }
 
 function navigation(copy, depth, article = false) {
@@ -143,7 +151,7 @@ function articlePage(post, posts, copy, translations) {
   const languageLink = translation ? (copy.lang === "en" ? `../../gr/blog/${encodeURIComponent(translation.slug)}/` : `../../../blog/${encodeURIComponent(translation.slug)}/`) : null;
   const suggestions = posts.filter(item => item.slug !== post.slug).slice(0, 2);
   const cover = post.cover ? `<img class="article-cover" src="${escapeHtml(safeUrl(post.cover))}" alt="">` : "";
-  return `${head({ title: `${post.title} | Dimitris Galatsanos`, description: post.excerpt, canonical, lang: copy.lang, type: "article" })}<body>${navigation(copy, copy.lang === "en" ? 2 : 3, true)}<header class="article-hero"><div class="shell"><a class="article-back" href="../">← ${copy.back}</a><div class="post-meta"><span class="post-category">${escapeHtml(post.category || "Technology")}</span><time datetime="${escapeHtml(post.date)}">${formatDate(post.date, copy.locale)}</time><span>${readingTime(post.body)} ${copy.minute}</span></div><h1>${escapeHtml(post.title)}</h1><p class="article-lead">${escapeHtml(post.excerpt)}</p></div>${cover}</header><main class="shell article-layout"><article class="article-body">${markdown(post.body)}${suggestions.length ? `<h2>${copy.related}</h2>${suggestions.map(item => `<p><a href="../${encodeURIComponent(item.slug)}/">${escapeHtml(item.title)} →</a></p>`).join("")}` : ""}</article><aside class="article-aside"><b>${copy.author}</b><span>${formatDate(post.date, copy.locale)}</span><span>${readingTime(post.body)} ${copy.minute}</span>${languageLink ? `<a class="blog-button" href="${languageLink}">${copy.language}</a>` : ""}</aside></main>${footer(copy)}</body></html>`;
+  return `${head({ title: `${post.title} | Dimitris Galatsanos`, description: post.excerpt, canonical, lang: copy.lang, type: "article", image: post.cover })}<body>${navigation(copy, copy.lang === "en" ? 2 : 3, true)}<header class="article-hero"><div class="shell"><a class="article-back" href="../">← ${copy.back}</a><div class="post-meta"><span class="post-category">${escapeHtml(post.category || "Technology")}</span><time datetime="${escapeHtml(post.date)}">${formatDate(post.date, copy.locale)}</time><span>${readingTime(post.body)} ${copy.minute}</span></div><h1>${escapeHtml(post.title)}</h1><p class="article-lead">${escapeHtml(post.excerpt)}</p></div>${cover}</header><main class="shell article-layout"><article class="article-body">${markdown(post.body)}${suggestions.length ? `<h2>${copy.related}</h2>${suggestions.map(item => `<p><a href="../${encodeURIComponent(item.slug)}/">${escapeHtml(item.title)} →</a></p>`).join("")}` : ""}</article><aside class="article-aside"><b>${copy.author}</b><span>${formatDate(post.date, copy.locale)}</span><span>${readingTime(post.body)} ${copy.minute}</span>${languageLink ? `<a class="blog-button" href="${languageLink}">${copy.language}</a>` : ""}</aside></main>${footer(copy)}</body></html>`;
 }
 
 function rss(posts, copy) {
