@@ -5,10 +5,6 @@ export const dynamic = "force-static";
 export function GET(request: Request) {
   const origin = new URL(request.url).origin;
   const socialMetadata = `
-  <link rel="canonical" href="${origin}/">
-  <link rel="alternate" hreflang="en" href="${origin}/">
-  <link rel="alternate" hreflang="el" href="${origin}/gr">
-  <link rel="alternate" hreflang="x-default" href="${origin}/">
   <meta property="og:image" content="${origin}/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
