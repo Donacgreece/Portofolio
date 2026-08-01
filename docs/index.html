@@ -839,7 +839,7 @@
     @media (max-width: 760px) {
       .shell { width: min(calc(100% - 28px), var(--max)); }
       .nav { width: min(calc(100% - 24px), 1540px); min-height: 68px; gap: 10px; }
-      .brand span { display: none; }
+      .brand .brand-name { display: none; }
       .nav-actions .button:not(.primary) { display: none; }
       .nav-actions .language-switch { display: inline-flex; }
       .command-backdrop { padding: 82px 12px 24px; }
@@ -995,7 +995,7 @@
     <nav class="nav" aria-label="Primary navigation">
       <a class="brand" href="#top" aria-label="Dimitris Galatsanos home">
         <span class="brand-mark" aria-hidden="true"><span class="brand-layer back"></span><span class="brand-layer middle"></span><span class="brand-face">DG</span></span>
-        <span>Dimitris Galatsanos</span>
+        <span class="brand-name">Dimitris Galatsanos</span>
       </a>
 
       <div class="nav-links">
