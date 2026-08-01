@@ -97,14 +97,21 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 11px;
+      gap: 14px;
       color: var(--brand);
-      font-weight: 800;
-      letter-spacing: -.025em;
+      font-weight: 850;
+      letter-spacing: -.035em;
       text-decoration: none;
       white-space: nowrap;
     }
-    .brand-logo { width: 40px; height: 40px; display: block; flex: 0 0 auto; }
+    .brand-mark { position: relative; width: 46px; height: 44px; flex: 0 0 auto; }
+    .brand-layer,
+    .brand-face { position: absolute; width: 34px; height: 34px; border: 2px solid var(--brand); border-radius: 8px; }
+    .brand-layer.back { left: 0; top: 0; border-color: color-mix(in srgb, var(--brand) 42%, white); background: color-mix(in srgb, var(--brand-soft) 48%, white); }
+    .brand-layer.middle { left: 5px; top: 5px; background: var(--brand-soft); }
+    .brand-face { left: 10px; top: 10px; display: grid; place-items: center; color: #fff; background: var(--brand); box-shadow: 0 7px 16px rgba(36,39,201,.18); font: 800 13px/1 var(--mono); letter-spacing: -.08em; }
+    .brand:hover .brand-face,
+    .brand:focus-visible .brand-face { background: var(--brand-dark); }
     .nav-links {
       min-width: 0;
       display: flex;
@@ -998,14 +1005,7 @@
   <header class="site-header">
     <nav class="nav" aria-label="Κύρια πλοήγηση">
       <a class="brand" href="#top" aria-label="Αρχική σελίδα Δημήτρη Γαλατσάνου">
-        <svg class="brand-logo" viewBox="0 0 64 64" role="img" aria-label="DG logo" xmlns="http://www.w3.org/2000/svg">
-          <rect width="64" height="64" rx="8" fill="#f8f8f6"/>
-          <path d="M14 8h36v6h6v36h-6v6H14v-6H8V14h6V8Z" fill="#2024c8" opacity=".12"/>
-          <rect x="13" y="13" width="38" height="38" fill="#ffffff" stroke="#2024c8" stroke-width="4"/>
-          <path d="M9 17V9h30" fill="none" stroke="#2024c8" stroke-width="3"/>
-          <path d="M55 47v8H25" fill="none" stroke="#2024c8" stroke-width="3"/>
-          <text x="32" y="39" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#2024c8">DG</text>
-        </svg>
+        <span class="brand-mark" aria-hidden="true"><span class="brand-layer back"></span><span class="brand-layer middle"></span><span class="brand-face">DG</span></span>
         <span>Dimitris Galatsanos</span>
       </a>
 
