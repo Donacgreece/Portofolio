@@ -1,0 +1,2019 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f5f1">
+  <meta name="description" content="Dimitris Galatsanos, IT Systems Engineer focused on infrastructure operations, automation, monitoring and practical software products.">
+  <meta property="og:title" content="Dimitris Galatsanos | IT Systems Engineer">
+  <meta property="og:description" content="Infrastructure, automation and software products built for real operations.">
+  <meta property="og:type" content="website">
+  <title>Dimitris Galatsanos | IT Systems Engineer</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon-64.png">
+  <style>
+    :root {
+      --bg: #f5f5f1;
+      --surface: #ffffff;
+      --surface-2: #efeff9;
+      --surface-3: #e7e7f7;
+      --text: #17171a;
+      --muted: #64657f;
+      --soft: #8586a2;
+      --line: #d9d9e9;
+      --line-strong: #c9c9df;
+      --brand: #2427c9;
+      --brand-dark: #171aa4;
+      --brand-soft: #e4e5ff;
+      --success: #138a54;
+      --warning: #c67613;
+      --danger: #c43f54;
+      --shadow: 0 22px 70px rgba(30, 32, 130, .10);
+      --shadow-soft: 0 12px 32px rgba(30, 32, 130, .07);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1320px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    section[id] { scroll-margin-top: 86px; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    img { max-width: 100%; }
+    ::selection { color: #fff; background: var(--brand); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 1000;
+      left: 16px;
+      top: -80px;
+      padding: 12px 16px;
+      color: #fff;
+      background: var(--brand);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: top .2s ease;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .shell {
+      width: min(calc(100% - 48px), var(--max));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 100;
+      top: 0;
+      border-bottom: 1px solid rgba(36, 39, 201, .12);
+      background: rgba(245, 245, 241, .96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .nav {
+      position: relative;
+      width: min(calc(100% - 48px), var(--max));
+      min-height: 74px;
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 28px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--brand);
+      font-weight: 800;
+      letter-spacing: -.025em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .brand-logo { width: 40px; height: 40px; display: block; flex: 0 0 auto; }
+    .nav-links {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 1.7vw, 24px);
+      font: 600 12px/1 var(--mono);
+      color: var(--brand);
+    }
+    .nav-links a { text-decoration: none; white-space: nowrap; }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { text-decoration: underline; text-underline-offset: 5px; }
+    .nav-links span { opacity: .65; }
+    .nav-actions { display: flex; align-items: center; justify-content: flex-end; gap: 9px; }
+    .command-backdrop {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      display: grid;
+      align-items: start;
+      justify-items: center;
+      padding: min(17vh, 150px) 20px 40px;
+      background: rgba(18, 18, 34, .54);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .18s ease, visibility .18s ease;
+    }
+    .command-backdrop.open { opacity: 1; visibility: visible; }
+    .command-palette {
+      width: min(100%, 650px);
+      overflow: hidden;
+      border: 1px solid rgba(201, 201, 223, .9);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: 0 28px 90px rgba(17, 19, 92, .28);
+      transform: translateY(-10px) scale(.985);
+      transition: transform .18s ease;
+    }
+    .command-backdrop.open .command-palette { transform: none; }
+    .command-search-wrap {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 17px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .command-search-icon { color: var(--brand); font: 700 19px/1 var(--mono); }
+    .command-search {
+      width: 100%;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      background: transparent;
+      font: 600 17px/1.4 var(--sans);
+    }
+    .command-search::placeholder { color: var(--soft); }
+    .command-key {
+      padding: 5px 7px;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      color: var(--muted);
+      background: var(--bg);
+      font: 700 10px/1 var(--mono);
+    }
+    .command-list { max-height: min(430px, 55vh); overflow-y: auto; padding: 8px; }
+    .command-item {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 0;
+      border-radius: 10px;
+      color: var(--text);
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+    .command-item:hover,
+    .command-item.active { color: var(--brand-dark); background: var(--brand-soft); }
+    .command-item-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface);
+      font: 800 12px/1 var(--mono);
+    }
+    .command-item-copy { min-width: 0; }
+    .command-item-copy b { display: block; margin-bottom: 3px; font-size: 14px; }
+    .command-item-copy span { display: block; overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .command-item-arrow { color: var(--soft); font: 700 16px/1 var(--mono); }
+    .command-empty { padding: 34px 20px; color: var(--muted); text-align: center; font-size: 14px; }
+    .command-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 18px;
+      border-top: 1px solid var(--line);
+      color: var(--soft);
+      background: var(--bg);
+      font: 600 10px/1.4 var(--mono);
+    }
+    body.command-open { overflow: hidden; }
+    .icon-button,
+    .button {
+      min-height: 42px;
+      border: 1px solid var(--brand);
+      color: var(--brand);
+      background: transparent;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, color .18s ease, background .18s ease;
+    }
+    .icon-button {
+      width: 42px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 750;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .button:hover,
+    .button:focus-visible,
+    .icon-button:hover,
+    .icon-button:focus-visible { transform: translateY(-2px); box-shadow: 4px 4px 0 var(--brand-soft); }
+    .button.primary { color: #fff; background: var(--brand); }
+    .button.primary:hover { background: var(--brand-dark); }
+    .menu-button { display: none; }
+    .mobile-nav {
+      position: absolute;
+      z-index: 110;
+      top: calc(100% + 1px);
+      right: 0;
+      width: min(320px, calc(100vw - 28px));
+      display: none;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 0 0 14px 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .mobile-nav.open { display: grid; }
+    .mobile-nav a {
+      padding: 13px 12px;
+      border-bottom: 1px solid var(--line);
+      color: var(--brand);
+      font: 700 13px var(--mono);
+      text-decoration: none;
+    }
+    .mobile-nav a:last-child { border-bottom: 0; }
+    .mobile-nav a:hover,
+    .mobile-nav a:focus-visible { background: var(--surface-2); }
+
+    main { overflow: clip; }
+
+    .hero {
+      padding: 88px 0 72px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 88% 10%, color-mix(in srgb, var(--brand) 10%, transparent), transparent 27%),
+        linear-gradient(var(--bg), var(--bg));
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(430px, 5fr);
+      gap: 72px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding: 7px 11px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      color: var(--brand);
+      background: color-mix(in srgb, var(--brand-soft) 68%, var(--surface));
+      font: 700 12px/1 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .eyebrow i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 16%, transparent);
+    }
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      color: var(--brand);
+      font-size: clamp(46px, 4.7vw, 70px);
+      line-height: 1.01;
+      letter-spacing: -.052em;
+    }
+    .hero-lead {
+      max-width: 720px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: clamp(18px, 1.35vw, 21px);
+      line-height: 1.58;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+    .system-card {
+      container-name: system-card;
+      container-type: inline-size;
+      min-height: 470px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .window-bar {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      font: 11px/1 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .window-dots { display: flex; gap: 6px; }
+    .window-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); }
+    .system-canvas {
+      position: relative;
+      flex: 1;
+      min-height: 400px;
+      padding: 26px;
+      background:
+        linear-gradient(color-mix(in srgb, var(--brand) 5%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--brand) 5%, transparent) 1px, transparent 1px),
+        var(--surface-2);
+      background-size: 24px 24px;
+    }
+    .system-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 3;
+      width: 158px;
+      height: 158px;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      border: 1px solid var(--brand);
+      border-radius: 50%;
+      color: #fff;
+      background: var(--brand);
+      box-shadow: 0 18px 42px color-mix(in srgb, var(--brand) 28%, transparent);
+      text-align: center;
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+    }
+    .system-core > div { width: 100%; min-width: 0; }
+    .system-core b {
+      display: block;
+      max-width: 100%;
+      font-size: 20px;
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
+    }
+    .system-core span {
+      display: block;
+      max-width: 100%;
+      margin-top: 5px;
+      font: 11px/1.4 var(--mono);
+      opacity: .75;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
+    }
+    .system-node {
+      position: absolute;
+      z-index: 2;
+      width: 142px;
+      min-height: 74px;
+      padding: 13px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      box-shadow: var(--shadow-soft);
+    }
+    .system-node b { display: block; color: var(--brand); font-size: 13px; }
+    .system-node span { display: block; margin-top: 5px; color: var(--soft); font-size: 10px; line-height: 1.35; }
+    .system-node.n1 { left: 24px; top: 40px; }
+    .system-node.n2 { right: 24px; top: 40px; }
+    .system-node.n3 { left: 22px; bottom: 40px; }
+    .system-node.n4 { right: 22px; bottom: 40px; }
+    .system-node.n5 { left: 50%; top: 22px; transform: translateX(-50%); }
+    .system-line {
+      position: absolute;
+      z-index: 1;
+      left: 50%;
+      top: 50%;
+      width: 36%;
+      height: 1px;
+      background: var(--line-strong);
+      transform-origin: left center;
+    }
+    .system-line.l1 { transform: rotate(-145deg); }
+    .system-line.l2 { transform: rotate(-35deg); }
+    .system-line.l3 { transform: rotate(145deg); }
+    .system-line.l4 { transform: rotate(35deg); }
+    .system-line.l5 { width: 25%; transform: rotate(-90deg); }
+    .system-console {
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      background: color-mix(in srgb, var(--surface) 75%, var(--surface-2));
+      color: var(--muted);
+      font: 12px/1.7 var(--mono);
+    }
+    .system-console p { margin: 0; }
+    .system-console .cmd { color: var(--brand); font-weight: 800; }
+    .system-console .ok { color: var(--success); }
+
+    .section { padding: 108px 0; border-top: 1px solid var(--line); }
+    .section-head {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+      gap: 44px;
+      margin-bottom: 50px;
+      align-items: start;
+    }
+    .section-kicker {
+      padding-top: 9px;
+      color: var(--brand);
+      font: 700 13px/1.4 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .section-title {
+      max-width: 920px;
+      margin: 0;
+      color: var(--brand);
+      font-size: clamp(44px, 5vw, 72px);
+      line-height: 1;
+      letter-spacing: -.055em;
+    }
+    .section-copy {
+      max-width: 820px;
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.65;
+    }
+    html[lang="el"] h1 { max-width: 800px; font-size: clamp(42px, 4.2vw, 62px); line-height: 1.04; letter-spacing: -.045em; }
+    html[lang="el"] .section-title { max-width: 860px; font-size: clamp(38px, 4.35vw, 64px); line-height: 1.04; letter-spacing: -.045em; }
+    html[lang="el"] .contact h2 { font-size: clamp(46px, 5.2vw, 76px); line-height: 1; }
+    html[lang="el"] .system-core b { font-size: 17px; }
+    html[lang="el"] .system-core span { font-size: 10px; }
+    html[lang="el"] .system-node b { font-size: 12px; }
+    html[lang="el"] .system-node span { font-size: 9px; line-height: 1.32; }
+
+    .capabilities { padding: 72px 0 108px; }
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .capability-card {
+      min-width: 0;
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+    .capability-index { color: var(--soft); font: 11px var(--mono); }
+    .capability-card h2 { margin: 18px 0 12px; color: var(--brand); font-size: 27px; letter-spacing: -.035em; }
+    .capability-card > p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.58; }
+    .capability-visual {
+      min-height: 210px;
+      margin-top: auto;
+      padding-top: 26px;
+    }
+    .widget {
+      height: 100%;
+      min-height: 184px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+    .widget-title {
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      background: var(--surface);
+      font: 10px var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .widget-title strong { color: var(--brand); }
+    .service-list { padding: 12px; display: grid; gap: 9px; }
+    .service-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 11px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface);
+    }
+    .service-row b { color: var(--text); font-size: 12px; }
+    .service-row span { color: var(--success); font: 10px var(--mono); }
+    .automation-flow { min-height: 146px; display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; padding: 14px; gap: 8px; }
+    .flow-box { min-width: 0; padding: 13px 9px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); text-align: center; }
+    .flow-box b { display: block; color: var(--brand); font-size: 11px; }
+    .flow-box span { display: block; margin-top: 5px; color: var(--soft); font-size: 9px; line-height: 1.35; }
+    .flow-arrow { color: var(--brand); text-align: center; font-weight: 900; }
+    .product-stack { min-height: 146px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px; }
+    .stack-column { display: grid; gap: 8px; }
+    .stack-item { padding: 11px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+    .stack-item b { display: block; color: var(--brand); font-size: 11px; }
+    .stack-item span { display: block; margin-top: 4px; color: var(--soft); font-size: 9px; line-height: 1.35; }
+
+    .experience-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 8fr) minmax(320px, 4fr);
+      gap: 28px;
+      align-items: start;
+    }
+    .timeline { border-top: 1px solid var(--line); }
+    .job {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 26px;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .job-date { color: var(--soft); font: 12px/1.6 var(--mono); }
+    .job h3 { margin: 0; color: var(--brand); font-size: 25px; letter-spacing: -.025em; }
+    .job-company { margin: 5px 0 14px; color: var(--muted); font-weight: 750; }
+    .job p { margin: 0; color: var(--text); font-size: 15px; line-height: 1.72; }
+    .job-highlights { display: grid; gap: 9px; margin: 16px 0 0; padding: 0; list-style: none; }
+    .job-highlights li { position: relative; padding-left: 18px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .job-highlights li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+    .experience-aside {
+      position: sticky;
+      top: 104px;
+      display: grid;
+      gap: 18px;
+    }
+    .profile-card,
+    .scope-card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+    .profile-card h3,
+    .scope-card h3 { margin: 0 0 18px; color: var(--brand); font-size: 19px; }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .metric { min-height: 104px; padding: 15px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface-2); }
+    .metric strong { display: block; color: var(--brand); font-size: 28px; letter-spacing: -.04em; }
+    .metric span { display: block; margin-top: 6px; color: var(--soft); font-size: 11px; line-height: 1.4; }
+    .scope-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .scope-list span { padding: 8px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface-2); font: 11px var(--mono); }
+
+    .projects-list { display: grid; gap: 24px; }
+    .project-wide,
+    .project-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+    .project-wide {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      align-items: stretch;
+      min-height: 0;
+    }
+    .project-content { padding: 38px; display: flex; flex-direction: column; min-width: 0; }
+    .project-meta { display: flex; justify-content: space-between; gap: 16px; color: var(--soft); font: 11px var(--mono); text-transform: uppercase; letter-spacing: .05em; }
+    .project-content h3 { margin: 20px 0 6px; color: var(--brand); font-size: 36px; letter-spacing: -.04em; }
+    .project-content h3 a { color: inherit; text-decoration: none; }
+    .project-content h3 a:hover { text-decoration: underline; text-underline-offset: 6px; }
+    .project-subtitle { color: var(--soft); font: 700 11px/1.5 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+    .project-description { margin: 18px 0 0; color: var(--muted); font-size: 16px; line-height: 1.68; }
+    .project-points { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+    .project-points li { position: relative; padding-left: 20px; color: var(--text); font-size: 14px; line-height: 1.55; }
+    .project-points li::before { content: "✓"; position: absolute; left: 0; color: var(--brand); font-weight: 900; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 24px; padding-top: 0; }
+    .tag { padding: 7px 9px; border-radius: 999px; color: var(--brand); background: var(--brand-soft); font: 10px var(--mono); }
+    .project-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .project-visual-panel {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+    .panel-title {
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--soft);
+      background: var(--surface);
+      font: 10px var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .panel-title strong { color: var(--brand); }
+    .architecture {
+      flex: 1;
+      min-height: 410px;
+      display: grid;
+      grid-template-columns: 1fr 1.12fr 1fr;
+      gap: 14px;
+      padding: 22px;
+      background:
+        linear-gradient(color-mix(in srgb, var(--brand) 5%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--brand) 5%, transparent) 1px, transparent 1px),
+        var(--surface-2);
+      background-size: 24px 24px;
+    }
+    .arch-column { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+    .arch-label { margin-bottom: 2px; color: var(--soft); font: 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+    .arch-box { flex: 1; min-height: 86px; padding: 14px; border: 1px solid var(--line-strong); border-radius: 11px; background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: 0 8px 20px rgba(30,32,130,.05); }
+    .arch-box b { display: block; color: var(--brand); font-size: 12px; }
+    .arch-box span { display: block; margin-top: 6px; color: var(--soft); font-size: 10px; line-height: 1.45; }
+    .arch-box.core { border-color: color-mix(in srgb, var(--brand) 45%, var(--line)); background: var(--brand-soft); }
+    .arch-box.queue { border-left: 4px solid var(--warning); }
+    .arch-box.audit { border-left: 4px solid var(--success); }
+    .arch-link { display: flex; align-items: center; gap: 8px; color: var(--soft); font: 9px var(--mono); }
+    .arch-link::before,
+    .arch-link::after { content: ""; flex: 1; height: 1px; background: var(--line-strong); }
+
+    .projects-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+    .project-card { min-height: 630px; display: flex; flex-direction: column; }
+    .project-card .project-content { flex: 1; }
+    .project-card .project-visual-panel { min-height: 245px; border-left: 0; border-top: 1px solid var(--line); }
+    .project-card .panel-title { min-height: 44px; }
+    .process-visual { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); min-height: 200px; }
+    .process-step { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 18px 14px; border-right: 1px solid var(--line); }
+    .process-step:last-child { border-right: 0; }
+    .process-step small { color: var(--soft); font: 10px var(--mono); }
+    .process-step b { color: var(--brand); font-size: 12px; }
+    .process-step span { color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .process-step::after { content: "→"; position: absolute; z-index: 2; right: -11px; top: 50%; width: 22px; height: 22px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--brand); background: var(--surface); transform: translateY(-50%); }
+    .process-step:last-child::after { display: none; }
+    .learn-visual { flex: 1; display: grid; grid-template-columns: 1.05fr .95fr; min-height: 200px; }
+    .code-pane { padding: 18px; color: #eeeefe; background: #171827; }
+    .code-pane small { color: #999bd5; font: 10px var(--mono); text-transform: uppercase; }
+    .code-pane pre { margin: 16px 0 0; white-space: pre-wrap; color: #e9eaff; font: 11px/1.7 var(--mono); }
+    .code-pane .kw { color: #a8aaff; }
+    .code-pane .str { color: #9ce2b8; }
+    .tutor-pane { display: flex; flex-direction: column; gap: 9px; padding: 16px; border-left: 1px solid var(--line); background: var(--surface-2); }
+    .tutor-pane b { color: var(--brand); font-size: 12px; }
+    .bubble { padding: 10px 11px; border: 1px solid var(--line); border-radius: 9px; color: var(--muted); background: var(--surface); font-size: 10px; line-height: 1.45; }
+    .bubble.answer { margin-left: 12px; color: var(--brand); background: var(--brand-soft); }
+    .tutor-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+    .tutor-tags span { padding: 5px 7px; border: 1px solid var(--line); border-radius: 999px; color: var(--soft); background: var(--surface); font: 9px var(--mono); }
+
+    .editorial-map {
+      flex: 1;
+      min-height: 360px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 22px;
+      background: var(--surface-2);
+    }
+    .respawn-project .project-content { justify-content: center; }
+    .respawn-project .project-visual-panel { min-height: 0; }
+    .editorial-stage { min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--surface) 90%, transparent); }
+    .editorial-stage h4 { margin: 0 0 12px; color: var(--soft); font: 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+    .editorial-item { margin-top: 9px; padding: 11px; border-left: 3px solid var(--brand); border-radius: 8px; background: var(--surface); box-shadow: 0 6px 16px rgba(30,32,130,.05); }
+    .editorial-item b { display: block; color: var(--brand); font-size: 11px; }
+    .editorial-item span { display: block; margin-top: 4px; color: var(--soft); font-size: 9px; line-height: 1.4; }
+    .python-releases { grid-template-columns: minmax(0, 1.2fr) minmax(360px, .8fr); }
+    .python-releases .project-content { padding: 34px 38px; }
+    .release-showcase { flex: 0 0 auto; display: grid; grid-template-rows: auto auto; align-content: center; gap: 14px; padding: 18px; }
+    .release-products { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .release-product { min-width: 0; padding: 17px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: 0 8px 22px rgba(30,32,130,.06); }
+    .release-product small { color: var(--soft); font: 9px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+    .release-product h4 { margin: 12px 0 7px; color: var(--brand); font-size: 21px; letter-spacing: -.035em; }
+    .release-product p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .release-pipeline { display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+    .release-stage { padding: 13px; border-right: 1px solid var(--line); }
+    .release-stage:last-child { border-right: 0; }
+    .release-stage:nth-child(2) { border-right: 0; }
+    .release-stage:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .release-stage b { display: block; color: var(--brand); font: 700 10px var(--mono); }
+    .release-stage span { display: block; margin-top: 5px; color: var(--soft); font-size: 9px; line-height: 1.35; }
+    .editorial-stage.delivery { background: var(--brand-soft); }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+    .skill-card {
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+    .skill-card-header { display: flex; align-items: center; gap: 12px; }
+    .skill-icon { width: 42px; height: 42px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 11px; color: var(--brand); background: var(--brand-soft); font: 800 14px var(--mono); }
+    .skill-card h3 { margin: 0; color: var(--brand); font-size: 19px; letter-spacing: -.025em; }
+    .skill-chip-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
+    .skill-chip { padding: 7px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface-2); font: 10px var(--mono); }
+    .skill-focus { display: grid; gap: 12px; margin-top: auto; padding-top: 24px; }
+    .focus-row { padding-top: 12px; border-top: 1px solid var(--line); }
+    .focus-row b { display: block; color: var(--text); font-size: 12px; }
+    .focus-row p { margin: 5px 0 0; color: var(--soft); font-size: 11px; line-height: 1.5; }
+
+    .credentials-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .credential-card { min-height: 260px; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow-soft); }
+    .credential-card span { color: var(--soft); font: 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+    .credential-card h3 { margin: 16px 0 10px; color: var(--brand); font-size: 22px; }
+    .credential-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .credential-list { display: grid; gap: 9px; margin: 16px 0 0; padding: 0; list-style: none; }
+    .credential-list li { padding-top: 9px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    .contact { padding: 104px 0; color: #fff; background: var(--brand); }
+    .contact-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(320px, 5fr); gap: 72px; align-items: end; }
+    .contact h2 { max-width: 850px; margin: 0; font-size: clamp(54px, 6vw, 88px); line-height: .96; letter-spacing: -.06em; }
+    .contact p { max-width: 760px; margin: 22px 0 0; color: #dfe0ff; font-size: 19px; line-height: 1.62; }
+    .contact-links { display: grid; border-top: 1px solid rgba(255,255,255,.38); }
+    .contact-links a { display: flex; justify-content: space-between; gap: 18px; padding: 19px 0; border-bottom: 1px solid rgba(255,255,255,.38); color: #fff; text-decoration: none; font-weight: 750; }
+    .contact-links a:hover span:last-child { transform: translateX(4px); }
+    .contact-links span:last-child { transition: transform .18s ease; }
+
+    .ping-runner { padding: 104px 0; color: var(--text); background: var(--bg); overflow: hidden; }
+    .runner-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(280px, 4fr); gap: 56px; align-items: end; margin-bottom: 34px; }
+    .runner-kicker { color: var(--brand); font: 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .runner-head h2 { max-width: 800px; margin: 12px 0 0; color: var(--brand); font-size: clamp(48px, 6vw, 82px); line-height: .92; letter-spacing: -.055em; }
+    .runner-head p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.65; }
+    .runner-shell { position: relative; border: 1px solid var(--line-strong); border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+    .runner-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 18px; border-bottom: 1px solid var(--line-strong); background: var(--brand-soft); font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .runner-status { display: flex; align-items: center; gap: 9px; color: var(--brand-dark); }
+    .runner-status::before { width: 8px; height: 8px; border-radius: 50%; background: #63f2b0; box-shadow: 0 0 14px rgba(99,242,176,.8); content: ""; }
+    .runner-stats { display: flex; gap: 28px; color: var(--soft); }
+    .runner-stats strong { margin-left: 8px; color: var(--brand); font-weight: 700; }
+    .runner-stage { position: relative; aspect-ratio: 16 / 6.4; min-height: 310px; cursor: pointer; touch-action: manipulation; }
+    #pingRunnerCanvas { display: block; width: 100%; height: 100%; }
+    .runner-overlay { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; padding: 28px; text-align: center; background: linear-gradient(180deg, rgba(23,26,164,.05), rgba(23,26,164,.28)); transition: opacity .2s ease, visibility .2s ease; }
+    .runner-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .runner-mark { display: grid; width: 66px; height: 66px; margin-bottom: 18px; place-items: center; border: 3px solid #fff; color: #fff; background: var(--brand); box-shadow: 8px 8px 0 rgba(228,229,255,.42); font: 800 28px var(--mono); }
+    .runner-overlay h3 { margin: 0; color: #fff; font: 800 clamp(34px, 5vw, 66px)/.9 var(--mono); letter-spacing: -.08em; text-transform: uppercase; }
+    .runner-overlay p { margin: 16px 0 22px; color: #e4e5ff; font: 13px/1.55 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+    .runner-play { min-width: 190px; padding: 14px 20px; border: 1px solid #fff; color: var(--brand-dark); background: #fff; cursor: pointer; font: 800 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; box-shadow: 6px 6px 0 #8f92ff; transition: transform .16s ease, box-shadow .16s ease; }
+    .runner-play:hover { transform: translate(2px,2px); box-shadow: 4px 4px 0 #8f92ff; }
+    .runner-play:focus-visible, .runner-control:focus-visible { outline: 3px solid #63f2b0; outline-offset: 3px; }
+    .runner-controls { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 16px 18px; border-top: 1px solid var(--line-strong); color: var(--muted); background: var(--surface); font: 11px var(--mono); }
+    .runner-keymap { display: flex; flex-wrap: wrap; gap: 18px; }
+    .runner-keymap span { display: inline-flex; align-items: center; gap: 8px; }
+    .runner-keymap kbd { min-width: 32px; padding: 6px 8px; border: 1px solid var(--brand); border-bottom-width: 3px; border-radius: 5px; color: #fff; background: var(--brand); text-align: center; font: 10px var(--mono); }
+    .runner-control { padding: 9px 13px; border: 1px solid var(--brand); border-radius: 5px; color: var(--brand); background: transparent; cursor: pointer; font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .runner-control-actions { display: flex; align-items: center; gap: 9px; }
+    .runner-sound[aria-pressed="true"] { color: #fff; background: var(--brand); }
+    .runner-note { margin: 18px 0 0; color: var(--soft); font: 10px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+
+    footer { color: var(--soft); background: var(--bg); }
+    .footer-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font: 11px var(--mono); }
+
+    .reveal { opacity: 1; transform: none; animation: revealIn .55s ease both; }
+    @keyframes revealIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 1080px) {
+      .nav-links { display: none; }
+      .menu-button { display: grid; }
+      .nav { grid-template-columns: auto minmax(0, 1fr); }
+      .nav-actions { justify-self: end; }
+      .hero-grid,
+      .experience-layout,
+      .project-wide,
+      .contact-grid,
+      .runner-head { grid-template-columns: 1fr; }
+      .hero-grid { gap: 48px; }
+      .system-card { min-height: 470px; }
+      .capabilities-grid { grid-template-columns: 1fr 1fr; }
+      .capability-card:last-child { grid-column: 1 / -1; min-height: 390px; }
+      .experience-aside { position: static; grid-template-columns: 1fr 1fr; }
+      .project-visual-panel { border-left: 0; border-top: 1px solid var(--line); }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: min(calc(100% - 28px), var(--max)); }
+      .nav { width: min(calc(100% - 24px), 1540px); min-height: 68px; gap: 10px; }
+      .brand span { display: none; }
+      .nav-actions .button:not(.primary) { display: none; }
+      .nav-actions .language-switch { display: inline-flex; }
+      .command-backdrop { padding: 82px 12px 24px; }
+      .command-footer span:last-child { display: none; }
+      .mobile-nav { right: -2px; }
+      .hero { padding: 58px 0 54px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+      h1 { font-size: clamp(40px, 11.5vw, 56px); }
+      .hero-lead { font-size: 17px; }
+      .system-card { min-height: 460px; }
+      .system-canvas { min-height: 382px; padding: 16px; }
+      .system-core { width: 132px; height: 132px; }
+      .system-node { width: 116px; min-height: 68px; padding: 10px; }
+      .system-node.n1 { left: 12px; top: 34px; }
+      .system-node.n2 { right: 12px; top: 34px; }
+      .system-node.n3 { left: 12px; bottom: 34px; }
+      .system-node.n4 { right: 12px; bottom: 34px; }
+      .system-node.n5 { top: 16px; }
+      .system-node span { font-size: 9px; }
+      .section { padding: 78px 0; }
+      .section-head { grid-template-columns: 1fr; gap: 12px; margin-bottom: 34px; }
+      .section-title { font-size: 47px; }
+      .section-copy { font-size: 17px; }
+      .capabilities { padding: 52px 0 78px; }
+      .capabilities-grid,
+      .projects-pair,
+      .skills-grid,
+      .credentials-grid,
+      .experience-aside { grid-template-columns: 1fr; }
+      .capability-card:last-child { grid-column: auto; }
+      .capability-card { min-height: 430px; padding: 24px; }
+      .job { grid-template-columns: 1fr; gap: 8px; }
+      .project-content { padding: 26px; }
+      .project-content h3 { font-size: 31px; }
+      .project-card { min-height: 0; }
+      .architecture { grid-template-columns: 1fr; min-height: 0; }
+      .arch-link { margin: 2px 0; }
+      .arch-box { min-height: 82px; }
+      .process-visual { grid-template-columns: 1fr 1fr; }
+      .python-releases .project-content { padding: 26px; }
+      .process-step:nth-child(2) { border-right: 0; }
+      .process-step:nth-child(2)::after { display: none; }
+      .process-step:nth-child(n+3) { border-top: 1px solid var(--line); }
+      .learn-visual { grid-template-columns: 1fr; }
+      .tutor-pane { border-left: 0; border-top: 1px solid var(--line); }
+      .editorial-map { grid-template-columns: 1fr; min-height: 0; }
+      .skill-card { min-height: 360px; }
+      .contact { padding: 78px 0; }
+      .contact-grid { gap: 42px; }
+      .ping-runner { padding: 78px 0; }
+      .runner-head { gap: 20px; }
+      .runner-stage { min-height: 300px; aspect-ratio: auto; }
+      .runner-toolbar { align-items: flex-start; }
+      .runner-stats { gap: 14px; }
+      .runner-controls { align-items: stretch; flex-direction: column; }
+      .runner-control-actions { width: 100%; }
+      .runner-control-actions .runner-control { flex: 1; }
+      .runner-control { min-height: 44px; }
+      .footer-inner { padding: 24px 0; flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 430px) {
+      .nav-actions .button.primary { padding-inline: 13px; }
+      .system-node { width: 104px; }
+      .system-core { width: 116px; height: 116px; padding: 14px; }
+      .system-core b { font-size: 17px; }
+      .automation-flow { grid-template-columns: 1fr; }
+      .flow-arrow { transform: rotate(90deg); }
+      .product-stack { grid-template-columns: 1fr; }
+      .editorial-map { grid-template-columns: 1fr; }
+    }
+
+    @container system-card (max-width: 640px) {
+      .system-canvas { min-height: 430px; padding: 0; }
+      .system-core { width: 140px; height: 140px; padding: 17px; }
+      .system-node { width: 120px; min-height: 70px; padding: 11px; }
+      .system-node.n1 { left: 14px; top: 56px; }
+      .system-node.n2 { right: 14px; top: 56px; }
+      .system-node.n3 { left: 14px; bottom: 48px; }
+      .system-node.n4 { right: 14px; bottom: 48px; }
+      .system-node.n5 { top: 16px; }
+      .system-line { width: 34%; }
+      .system-line.l5 { width: 23%; }
+    }
+
+    @container system-card (max-width: 500px) {
+      .system-canvas { min-height: 410px; }
+      .system-core { width: 136px; height: 136px; padding: 13px; }
+      .system-core b { font-size: 16px; }
+      .system-core span { font-size: 9px; }
+      .system-node { width: 100px; min-height: 64px; padding: 9px; }
+      .system-node b { font-size: 11px; }
+      .system-node span { font-size: 8.5px; }
+      .system-node.n1 { left: 8px; top: 64px; }
+      .system-node.n2 { right: 8px; top: 64px; }
+      .system-node.n3 { left: 8px; bottom: 42px; }
+      .system-node.n4 { right: 8px; bottom: 42px; }
+      .system-node.n5 { top: 12px; }
+    }
+
+    @container system-card (max-width: 390px) {
+      .system-canvas { min-height: 400px; }
+      .system-core { width: 124px; height: 124px; padding: 10px; }
+      .system-core b { font-size: 14px; }
+      .system-core span { font-size: 8px; line-height: 1.3; }
+      .system-node { width: 90px; min-height: 58px; padding: 7px; }
+      .system-node b { font-size: 10px; }
+      .system-node span { margin-top: 3px; font-size: 7.8px; line-height: 1.28; }
+      .system-node.n1 { left: 5px; top: 68px; }
+      .system-node.n2 { right: 5px; top: 68px; }
+      .system-node.n3 { left: 5px; bottom: 38px; }
+      .system-node.n4 { right: 5px; bottom: 38px; }
+      .system-node.n5 { top: 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Dimitris Galatsanos",
+    "jobTitle": "IT Systems Engineer",
+    "email": "mailto:galatsanos@gmail.com",
+    "sameAs": [
+      "https://www.linkedin.com/in/dgalatsanos/",
+      "https://learnpython.ai",
+      "https://respawn.gr"
+    ]
+  }
+  </script>
+
+  <link rel="canonical" href="http://localhost:3000/">
+  <link rel="alternate" hreflang="en" href="http://localhost:3000/">
+  <link rel="alternate" hreflang="el" href="http://localhost:3000/gr">
+  <link rel="alternate" hreflang="x-default" href="http://localhost:3000/">
+  <meta property="og:image" content="http://localhost:3000/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:3000/og.png">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <div class="command-backdrop" id="commandBackdrop" aria-hidden="true">
+    <div class="command-palette" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
+      <h2 class="sr-only" id="commandTitle">Quick navigation</h2>
+      <div class="command-search-wrap">
+        <span class="command-search-icon" aria-hidden="true">&gt;_</span>
+        <input class="command-search" id="commandSearch" type="search" autocomplete="off" spellcheck="false" aria-controls="commandList">
+        <kbd class="command-key">ESC</kbd>
+      </div>
+      <div class="command-list" id="commandList" role="listbox"></div>
+      <div class="command-footer"><span id="commandHint"></span><span>Ctrl K &nbsp;·&nbsp; ↑↓ &nbsp;·&nbsp; Enter</span></div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Dimitris Galatsanos home">
+        <svg class="brand-logo" viewBox="0 0 64 64" role="img" aria-label="DG logo" xmlns="http://www.w3.org/2000/svg">
+          <rect width="64" height="64" rx="8" fill="#f8f8f6"/>
+          <path d="M14 8h36v6h6v36h-6v6H14v-6H8V14h6V8Z" fill="#2024c8" opacity=".12"/>
+          <rect x="13" y="13" width="38" height="38" fill="#ffffff" stroke="#2024c8" stroke-width="4"/>
+          <path d="M9 17V9h30" fill="none" stroke="#2024c8" stroke-width="3"/>
+          <path d="M55 47v8H25" fill="none" stroke="#2024c8" stroke-width="3"/>
+          <text x="32" y="39" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#2024c8">DG</text>
+        </svg>
+        <span>Dimitris Galatsanos</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#about"><span>[A]</span> About</a>
+        <a href="#experience"><span>[E]</span> Experience</a>
+        <a href="#projects"><span>[P]</span> Projects</a>
+        <a href="#skills"><span>[S]</span> Skills</a>
+        <a href="blog/"><span>[B]</span> Blog</a>
+        <a href="#contact"><span>[C]</span> Contact</a>
+      </div>
+
+      <div class="nav-actions">
+        <a class="button language-switch" href="gr/" data-language="el" aria-label="View portfolio in Greek">GR</a>
+        <a class="button" href="https://www.linkedin.com/in/dgalatsanos/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a class="button primary" href="Dimitris_Galatsanos_CV.pdf" download>Download CV</a>
+        <button class="icon-button menu-button" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+
+      <div class="mobile-nav" id="mobileNav">
+        <a href="#about">[A] About</a>
+        <a href="#experience">[E] Experience</a>
+        <a href="#projects">[P] Projects</a>
+        <a href="#skills">[S] Skills</a>
+        <a href="blog/">[B] Blog</a>
+        <a href="#contact">[C] Contact</a>
+        <a href="gr/" data-language="el">[GR] Ελληνικά</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section class="hero" id="top">
+      <div class="shell hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><i></i> IT systems, infrastructure and automation</div>
+          <h1>Reliable infrastructure. Practical automation. Useful products.</h1>
+          <p class="hero-lead">IT Systems Engineer with more than 20 years of technology experience, combining hands-on infrastructure operations, monitoring, incident response and software development in business-critical environments.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">Explore projects</a>
+            <a class="button" href="mailto:galatsanos@gmail.com">Contact me</a>
+          </div>
+        </div>
+
+        <div class="system-card reveal" aria-label="IT operations system map">
+          <div class="window-bar"><span>operations.profile</span><div class="window-dots"><i></i><i></i><i></i></div></div>
+          <div class="system-canvas">
+            <span class="system-line l1"></span><span class="system-line l2"></span><span class="system-line l3"></span><span class="system-line l4"></span><span class="system-line l5"></span>
+            <div class="system-core"><div><b>IT Operations</b><span>reliability · ownership · delivery</span></div></div>
+            <div class="system-node n1"><b>Identity</b><span>Windows Server, Active Directory, Microsoft 365, Entra ID</span></div>
+            <div class="system-node n2"><b>Networking</b><span>VLANs, switching, Wi-Fi, VoIP, LAN and WAN</span></div>
+            <div class="system-node n3"><b>Monitoring</b><span>Zabbix, PingOS, alerting and service visibility</span></div>
+            <div class="system-node n4"><b>Automation</b><span>PowerShell, Python, Power Automate and APIs</span></div>
+            <div class="system-node n5"><b>Products</b><span>Flask, React, SQLite, PWA and custom CMS platforms</span></div>
+          </div>
+          <div class="system-console">
+            <p><span class="cmd">$ profile --status</span></p>
+            <p><span class="ok">✓</span> systems mindset loaded</p>
+            <p><span class="ok">✓</span> operational ownership enabled</p>
+            <p><span class="ok">✓</span> automation and product thinking connected</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="about">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-kicker">[A] What I do</div>
+          <div>
+            <h2 class="section-title">Three disciplines, one operational mindset.</h2>
+            <p class="section-copy">I work across infrastructure, automation and software because the most useful solutions often sit between those areas. The goal is always the same, reduce friction, improve visibility and keep services dependable.</p>
+          </div>
+        </div>
+
+        <div class="capabilities-grid">
+          <article class="capability-card reveal">
+            <span class="capability-index">01 / OPERATE</span>
+            <h2>Keep critical services stable.</h2>
+            <p>Own incidents from detection to restoration across endpoints, identity, switching, wireless, telephony, printers and business applications.</p>
+            <div class="capability-visual">
+              <div class="widget">
+                <div class="widget-title"><strong>Service health</strong><span>live operational view</span></div>
+                <div class="service-list">
+                  <div class="service-row"><b>Identity and access</b><span>HEALTHY</span></div>
+                  <div class="service-row"><b>Network and wireless</b><span>HEALTHY</span></div>
+                  <div class="service-row"><b>Guest-facing systems</b><span>HEALTHY</span></div>
+                  <div class="service-row"><b>Printing and telephony</b><span>HEALTHY</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="capability-card reveal">
+            <span class="capability-index">02 / AUTOMATE</span>
+            <h2>Turn repetitive work into workflows.</h2>
+            <p>Use PowerShell, Python, monitoring and notification tools to replace manual checks with repeatable and observable processes.</p>
+            <div class="capability-visual">
+              <div class="widget">
+                <div class="widget-title"><strong>Automation path</strong><span>detect to action</span></div>
+                <div class="automation-flow">
+                  <div class="flow-box"><b>Observe</b><span>Zabbix, logs, service checks</span></div>
+                  <div class="flow-arrow">→</div>
+                  <div class="flow-box"><b>Decide</b><span>PowerShell and Python logic</span></div>
+                  <div class="flow-arrow">→</div>
+                  <div class="flow-box"><b>Notify</b><span>Teams, email and reports</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="capability-card reveal">
+            <span class="capability-index">03 / BUILD</span>
+            <h2>Create practical software products.</h2>
+            <p>Translate real operational needs into maintainable applications, from desktop monitoring tools to hospitality platforms and custom publishing systems.</p>
+            <div class="capability-visual">
+              <div class="widget">
+                <div class="widget-title"><strong>Product stack</strong><span>idea to operation</span></div>
+                <div class="product-stack">
+                  <div class="stack-column">
+                    <div class="stack-item"><b>Frontend</b><span>React, JavaScript, responsive UI and PWA</span></div>
+                    <div class="stack-item"><b>Backend</b><span>Python, Flask, APIs and business logic</span></div>
+                  </div>
+                  <div class="stack-column">
+                    <div class="stack-item"><b>Data</b><span>SQLite, Firebase, Firestore and audit trails</span></div>
+                    <div class="stack-item"><b>Operations</b><span>Deployments, monitoring, backups and support</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-kicker">[E] Experience</div>
+          <div>
+            <h2 class="section-title">Operational ownership with engineering depth.</h2>
+            <p class="section-copy">My work combines hands-on infrastructure support, incident leadership, vendor coordination, automation and technical documentation in environments where downtime has immediate business impact.</p>
+          </div>
+        </div>
+
+        <div class="experience-layout">
+          <div class="timeline">
+            <article class="job reveal">
+              <div class="job-date">JAN 2024<br>TO PRESENT</div>
+              <div>
+                <h3>IT Manager</h3>
+                <div class="job-company">Sani/Ikos Group</div>
+                <p>Lead day-to-day IT operations and infrastructure support in a high-availability hospitality environment, covering business-critical and guest-facing technology services.</p>
+                <ul class="job-highlights">
+                  <li>Administer Windows Server, Microsoft 365, identities, endpoints, printers, telephony, network devices and operational applications.</li>
+                  <li>Perform root-cause analysis across VLANs, switching, Aruba wireless infrastructure, VoIP, WAN and ISP connectivity, property systems and third-party services.</li>
+                  <li>Develop PowerShell and Python automations for monitoring, notifications, recurring checks and support workflows.</li>
+                  <li>Supported IT readiness and opening operations for Ikos Kissamos across infrastructure, network, endpoints, telephony, printing and applications.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="job reveal">
+              <div class="job-date">MAR 2023<br>TO DEC 2023</div>
+              <div>
+                <h3>IT Support Specialist</h3>
+                <div class="job-company">Sani/Ikos Group</div>
+                <p>Provided onsite and remote support for Windows endpoints, Microsoft 365, user access, printers, telephony, connectivity and line-of-business applications.</p>
+                <ul class="job-highlights">
+                  <li>Resolved escalated Wi-Fi, switching, VLAN, VoIP and peripheral incidents, coordinating external providers when required.</li>
+                  <li>Documented repeatable fixes and troubleshooting procedures to improve consistency and reduce restoration time.</li>
+                  <li>Worked directly with operational teams to translate business impact into clear technical actions.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="job reveal">
+              <div class="job-date">JAN 2019<br>TO PRESENT</div>
+              <div>
+                <h3>Founder, Editor and Platform Administrator</h3>
+                <div class="job-company">Respawn.gr and earlier Joystickgr</div>
+                <p>Own the editorial, technical and operational lifecycle of an independent Greek gaming publication, including contributor coordination, publishing workflows and continuous platform development.</p>
+                <ul class="job-highlights">
+                  <li>Administer a custom React frontend and custom CMS with PWA functionality.</li>
+                  <li>Coordinate deployments, contributor access, content operations, issue resolution and feature planning.</li>
+                  <li>Combine product ownership with editorial leadership and community development.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <aside class="experience-aside reveal">
+            <div class="profile-card">
+              <h3>Professional snapshot</h3>
+              <div class="metrics">
+                <div class="metric"><strong>20+</strong><span>years in technology</span></div>
+                <div class="metric"><strong>24/7</strong><span>operational environments</span></div>
+                <div class="metric"><strong>6</strong><span>independent software products</span></div>
+                <div class="metric"><strong>GR / EN</strong><span>working languages</span></div>
+              </div>
+            </div>
+            <div class="scope-card">
+              <h3>Infrastructure scope</h3>
+              <div class="scope-list">
+                <span>Windows Server</span><span>Active Directory</span><span>Microsoft 365</span><span>Azure</span><span>Entra ID</span><span>VLANs</span><span>Managed switches</span><span>Aruba Central</span><span>VoIP</span><span>WAN</span><span>Zabbix</span><span>PowerShell</span><span>Python</span><span>Incident response</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-kicker">[P] Projects</div>
+          <div>
+            <h2 class="section-title">Products grounded in real operational needs.</h2>
+            <p class="section-copy">Each project started from a practical problem. The result is software designed around reliability, usability, maintainability and the realities of day-to-day operations.</p>
+          </div>
+        </div>
+
+        <div class="projects-list">
+          <article class="project-wide reveal">
+            <div class="project-content">
+              <div class="project-meta"><span>01 / FLAGSHIP PRODUCT</span><span>Private hospitality platform</span></div>
+              <h3>TableMaster</h3>
+              <div class="project-subtitle">Hospitality ordering and table operations</div>
+              <p class="project-description">A full-stack Flask application built to manage restaurant tables, reservations, users, orders, products, VAT, reporting and network printing from one operational interface.</p>
+              <ul class="project-points">
+                <li>Implements PIN-based users and roles, configurable sessions, table status, reservations, product management, order history, payments and audit logging.</li>
+                <li>Routes order items to the correct ESC/POS network printer by category, checks printer availability and stores failed jobs in persistent retry queues.</li>
+                <li>Uses SQLite for operational and audit data, Excel imports for catalogue maintenance, scheduled background jobs, backups, restore safeguards and PWA support.</li>
+                <li>Includes MAC-bound encrypted licensing built with Fernet for controlled application deployment.</li>
+              </ul>
+              <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">Jinja2</span><span class="tag">APScheduler</span><span class="tag">ESC/POS</span><span class="tag">PWA</span><span class="tag">Audit Logs</span></div>
+              <div class="project-actions"><a class="button" href="https://github.com/Donacgreece/Tablemaster" target="_blank" rel="noreferrer">View source on GitHub <span aria-hidden="true">↗</span></a></div>
+            </div>
+            <div class="project-visual-panel">
+              <div class="panel-title"><strong>Operational architecture</strong><span>application workflow</span></div>
+              <div class="architecture">
+                <div class="arch-column">
+                  <span class="arch-label">Front of house</span>
+                  <div class="arch-box"><b>Tables and reservations</b><span>Capacity, spaces, availability and daily bookings</span></div>
+                  <div class="arch-box"><b>Orders and payments</b><span>Products, quantities, notes, status and history</span></div>
+                  <div class="arch-box"><b>Users and sessions</b><span>PIN access, roles and inactivity timeout</span></div>
+                </div>
+                <div class="arch-column">
+                  <span class="arch-label">Application core</span>
+                  <div class="arch-box core"><b>Flask service layer</b><span>Routes, validation, business rules and JSON actions</span></div>
+                  <div class="arch-link">SQLite transactions</div>
+                  <div class="arch-box core"><b>Operational database</b><span>Products, VAT, orders, printers, settings and receipts</span></div>
+                  <div class="arch-box audit"><b>Audit and recovery</b><span>Deletion logs, backups, exports and restore safeguards</span></div>
+                </div>
+                <div class="arch-column">
+                  <span class="arch-label">Kitchen and services</span>
+                  <div class="arch-box"><b>Category routing</b><span>Send each item to the correct network printer</span></div>
+                  <div class="arch-box queue"><b>Persistent retry queues</b><span>Store unavailable print jobs and recover automatically</span></div>
+                  <div class="arch-box"><b>Background scheduler</b><span>Pending jobs, receipts and recurring checks</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <div class="projects-pair">
+            <article class="project-card reveal">
+              <div class="project-content">
+                <div class="project-meta"><span>02 / MONITORING</span><span>Desktop application</span></div>
+                <h3>PingOS</h3>
+                <div class="project-subtitle">Network and device status monitoring</div>
+                <p class="project-description">A Python and PyQt5 desktop application created for practical infrastructure monitoring and operational reporting.</p>
+                <ul class="project-points">
+                  <li>Imports multi-sheet Excel inventories and creates a monitoring tab for every device category.</li>
+                  <li>Runs concurrent checks with QThread and ping3, showing availability, latency, packet loss and timestamps.</li>
+                  <li>Provides configurable polling, searchable status history, manual checks, dark mode and CSV, Excel or PDF exports.</li>
+                </ul>
+                <div class="tags"><span class="tag">Python</span><span class="tag">PyQt5</span><span class="tag">QThread</span><span class="tag">pandas</span><span class="tag">ping3</span></div>
+                <div class="project-actions"><a class="button" href="https://github.com/Donacgreece/PingOS" target="_blank" rel="noreferrer">View source on GitHub <span aria-hidden="true">↗</span></a></div>
+              </div>
+              <div class="project-visual-panel">
+                <div class="panel-title"><strong>Monitoring workflow</strong><span>four stages</span></div>
+                <div class="process-visual">
+                  <div class="process-step"><small>01</small><b>Load</b><span>Excel device inventory</span></div>
+                  <div class="process-step"><small>02</small><b>Check</b><span>Concurrent ping workers</span></div>
+                  <div class="process-step"><small>03</small><b>Track</b><span>Status, latency and logs</span></div>
+                  <div class="process-step"><small>04</small><b>Report</b><span>CSV, Excel and PDF</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card reveal">
+              <div class="project-content">
+                <div class="project-meta"><span>03 / EDTECH</span><span>Live product</span></div>
+                <h3><a href="https://learnpython.ai" target="_blank" rel="noreferrer">LearnPython.ai</a></h3>
+                <div class="project-subtitle">Interactive learning and contextual AI tutoring</div>
+                <p class="project-description">A bilingual learning platform designed around hands-on programming practice, immediate feedback and personalized support.</p>
+                <ul class="project-points">
+                  <li>Provides browser-based coding so learners can write and run code without local setup.</li>
+                  <li>Uses an AI tutor for explanations, hints, debugging guidance and feedback during exercises.</li>
+                  <li>Supports personal notes, PDFs and learning material as context, with a mobile-optimized interface.</li>
+                </ul>
+                <div class="tags"><span class="tag">React</span><span class="tag">Firebase</span><span class="tag">Firestore</span><span class="tag">Gemini API</span><span class="tag">AI Tutor</span></div>
+              </div>
+              <div class="project-visual-panel">
+                <div class="panel-title"><strong>Learning workspace</strong><span>code and tutor</span></div>
+                <div class="learn-visual">
+                  <div class="code-pane">
+                    <small>lesson.py</small>
+                    <pre><span class="kw">def</span> monitor(service):
+    status = check(service)
+    <span class="kw">return</span> <span class="str">f"{service}: {status}"</span>
+
+print(monitor(<span class="str">"network"</span>))</pre>
+                  </div>
+                  <div class="tutor-pane">
+                    <b>AI tutor</b>
+                    <div class="bubble">Why return a value instead of printing inside the function?</div>
+                    <div class="bubble answer">Returning keeps the function reusable. You can print, test or store the result later.</div>
+                    <div class="tutor-tags"><span>Run in browser</span><span>Immediate feedback</span><span>Personal context</span></div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <article class="project-wide respawn-project reveal">
+            <div class="project-content">
+              <div class="project-meta"><span>04 / MEDIA PLATFORM</span><span>2019 to present</span></div>
+              <h3><a href="https://respawn.gr" target="_blank" rel="noreferrer">Respawn.gr</a></h3>
+              <div class="project-subtitle">Founder, editor and platform administrator</div>
+              <p class="project-description">An independent Greek gaming publication developed as a complete editorial and technology product, not as a standard WordPress installation.</p>
+              <ul class="project-points">
+                <li>Publishes news, reviews, previews, Shorts and long-form Respawn Stories, plus Essentials, Editorial and Respawn+ content.</li>
+                <li>Runs on a custom React frontend and custom CMS with PWA delivery, contributor access and tailored publishing workflows.</li>
+                <li>Own the full operational lifecycle across editorial direction, content administration, deployments, issue resolution, feature planning and user-experience improvements.</li>
+              </ul>
+              <div class="tags"><span class="tag">React</span><span class="tag">Custom CMS</span><span class="tag">PWA</span><span class="tag">Editorial Ops</span><span class="tag">Product Ownership</span><span class="tag">Community</span></div>
+            </div>
+            <div class="project-visual-panel">
+              <div class="panel-title"><strong>Editorial product lifecycle</strong><span>plan to delivery</span></div>
+              <div class="editorial-map">
+                <div class="editorial-stage"><h4>Plan</h4><div class="editorial-item"><b>Stories</b><span>Long-form retrospectives</span></div><div class="editorial-item"><b>Editorial</b><span>Opinion and analysis</span></div></div>
+                <div class="editorial-stage"><h4>Produce</h4><div class="editorial-item"><b>News</b><span>Daily publishing workflow</span></div><div class="editorial-item"><b>Essentials</b><span>Curated recommendations</span></div></div>
+                <div class="editorial-stage"><h4>Manage</h4><div class="editorial-item"><b>Custom CMS</b><span>Content, access and contributors</span></div><div class="editorial-item"><b>Respawn+</b><span>Member-focused publishing</span></div></div>
+                <div class="editorial-stage delivery"><h4>Deliver</h4><div class="editorial-item"><b>React and PWA</b><span>Responsive web delivery</span></div><div class="editorial-item"><b>Continuous releases</b><span>Features, fixes and UX improvements</span></div></div>
+              </div>
+            </div>
+          </article>
+          <article class="project-wide python-releases reveal">
+            <div class="project-content">
+              <div class="project-meta"><span>05 / PUBLISHED PYTHON SOFTWARE</span><span>Independent releases</span></div>
+              <h3>Published Python Applications</h3>
+              <div class="project-subtitle">Software delivery through interactive desktop products</div>
+              <p class="project-description">Two Windows applications engineered with Python and Pygame, released publicly through itch.io and maintained through versioned updates.</p>
+              <ul class="project-points">
+                <li>Designed real-time event loops, input handling, state transitions, scoring, progression, audio and local persistence.</li>
+                <li>Implemented online leaderboards, offline-safe score handling, unlockable content and responsive user feedback.</li>
+                <li>Managed packaging, public releases, changelogs, user feedback and iterative bug fixes.</li>
+              </ul>
+              <div class="tags"><span class="tag">Python</span><span class="tag">Pygame</span><span class="tag">Desktop Software</span><span class="tag">State Management</span><span class="tag">Leaderboards</span><span class="tag">Release Engineering</span></div>
+              <div class="project-actions">
+                <a class="button" href="https://donacgreece.itch.io/blockmaster" target="_blank" rel="noreferrer">View BlockMaster on itch.io <span aria-hidden="true">↗</span></a>
+                <a class="button" href="https://donacgreece.itch.io/flappywings" target="_blank" rel="noreferrer">View Flappy Wings on itch.io <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+            <div class="project-visual-panel">
+              <div class="panel-title"><strong>Python release workflow</strong><span>build to maintenance</span></div>
+              <div class="release-showcase">
+                <div class="release-products">
+                  <div class="release-product"><small>Windows · Python · Pygame</small><h4>BlockMaster</h4><p>Real-time puzzle system with progression, score persistence, global ranking and versioned releases.</p></div>
+                  <div class="release-product"><small>Windows · Python · Pygame</small><h4>Flappy Wings</h4><p>Interactive application with physics, dynamic conditions, unlockable content and local/global scores.</p></div>
+                </div>
+                <div class="release-pipeline">
+                  <div class="release-stage"><b>01 / Build</b><span>Logic, state and interface</span></div>
+                  <div class="release-stage"><b>02 / Package</b><span>Windows distribution</span></div>
+                  <div class="release-stage"><b>03 / Release</b><span>Public version delivery</span></div>
+                  <div class="release-stage"><b>04 / Iterate</b><span>Feedback, fixes and updates</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-kicker">[S] Skills</div>
+          <div>
+            <h2 class="section-title">A complete stack for systems, networks, automation and software.</h2>
+            <p class="section-copy">The strongest part of my profile is the combination. I can diagnose infrastructure, coordinate incidents, automate recurring work and build software that directly supports operations.</p>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-card reveal">
+            <div class="skill-card-header"><div class="skill-icon">MS</div><h3>Microsoft ecosystem</h3></div>
+            <div class="skill-chip-list"><span class="skill-chip">Windows Server</span><span class="skill-chip">Active Directory</span><span class="skill-chip">Group Policy</span><span class="skill-chip">Microsoft 365</span><span class="skill-chip">Entra ID</span><span class="skill-chip">Azure</span></div>
+            <div class="skill-focus">
+              <div class="focus-row"><b>Identity and access</b><p>User, group, permission and account lifecycle administration.</p></div>
+              <div class="focus-row"><b>Tenant operations</b><p>Licensing, access, endpoint support and security fundamentals.</p></div>
+              <div class="focus-row"><b>Service troubleshooting</b><p>Practical diagnosis across Windows and Microsoft cloud environments.</p></div>
+            </div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card-header"><div class="skill-icon">NET</div><h3>Networking and connectivity</h3></div>
+            <div class="skill-chip-list"><span class="skill-chip">TCP/IP</span><span class="skill-chip">DHCP</span><span class="skill-chip">DNS</span><span class="skill-chip">VLANs</span><span class="skill-chip">Switching</span><span class="skill-chip">Aruba Central</span><span class="skill-chip">VoIP</span><span class="skill-chip">LAN/WAN</span></div>
+            <div class="skill-focus">
+              <div class="focus-row"><b>VLAN and port diagnosis</b><p>Access, trunk and incorrect VLAN assignment troubleshooting.</p></div>
+              <div class="focus-row"><b>Wireless operations</b><p>Client issues, access points, service degradation and monitoring.</p></div>
+              <div class="focus-row"><b>Provider coordination</b><p>WAN, ISP outages, escalation and continuity support.</p></div>
+            </div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card-header"><div class="skill-icon">OPS</div><h3>Monitoring and automation</h3></div>
+            <div class="skill-chip-list"><span class="skill-chip">Zabbix</span><span class="skill-chip">PowerShell</span><span class="skill-chip">Python</span><span class="skill-chip">Power Automate</span><span class="skill-chip">Teams Alerts</span><span class="skill-chip">SMTP</span><span class="skill-chip">Logging</span></div>
+            <div class="skill-focus">
+              <div class="focus-row"><b>Proactive visibility</b><p>Availability checks, alert interpretation and operational monitoring.</p></div>
+              <div class="focus-row"><b>Workflow automation</b><p>Recurring checks, notifications, reporting and support tasks.</p></div>
+              <div class="focus-row"><b>Incident response</b><p>Detection, root-cause analysis, communication and restoration.</p></div>
+            </div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card-header"><div class="skill-icon">INF</div><h3>Infrastructure operations</h3></div>
+            <div class="skill-chip-list"><span class="skill-chip">Endpoints</span><span class="skill-chip">Printers</span><span class="skill-chip">Telephony</span><span class="skill-chip">Business Apps</span><span class="skill-chip">Vendor Support</span><span class="skill-chip">Documentation</span></div>
+            <div class="skill-focus">
+              <div class="focus-row"><b>Business continuity</b><p>Support for business-critical and guest-facing technology services.</p></div>
+              <div class="focus-row"><b>Operational ownership</b><p>Issues managed from first report through full restoration.</p></div>
+              <div class="focus-row"><b>Standards and handover</b><p>Repeatable procedures, technical notes and knowledge sharing.</p></div>
+            </div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card-header"><div class="skill-icon">DEV</div><h3>Software and data</h3></div>
+            <div class="skill-chip-list"><span class="skill-chip">Flask</span><span class="skill-chip">React</span><span class="skill-chip">JavaScript</span><span class="skill-chip">SQLite</span><span class="skill-chip">Firebase</span><span class="skill-chip">Firestore</span><span class="skill-chip">APIs</span><span class="skill-chip">PWA</span></div>
+            <div class="skill-focus">
+              <div class="focus-row"><b>Full-stack products</b><p>Responsive interfaces, backend logic and operational workflows.</p></div>
+              <div class="focus-row"><b>Relational data</b><p>Schema design, transactions, reporting, audit data and backups.</p></div>
+              <div class="focus-row"><b>Background services</b><p>Threaded tasks, schedulers, retry queues and network printing.</p></div>
+            </div>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-card-header"><div class="skill-icon">LEAD</div><h3>Leadership and delivery</h3></div>
+            <div class="skill-chip-list"><span class="skill-chip">Root Cause Analysis</span><span class="skill-chip">Stakeholders</span><span class="skill-chip">Vendors</span><span class="skill-chip">Documentation</span><span class="skill-chip">Product Ownership</span><span class="skill-chip">Continuous Improvement</span></div>
+            <div class="skill-focus">
+              <div class="focus-row"><b>Clear communication</b><p>Translate technical incidents into business impact and next steps.</p></div>
+              <div class="focus-row"><b>Cross-team coordination</b><p>Work with central teams, departments, providers and external partners.</p></div>
+              <div class="focus-row"><b>Practical improvement</b><p>Identify recurring friction and build repeatable solutions.</p></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="credentials">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-kicker">[Q] Credentials</div>
+          <div><h2 class="section-title">Education, certifications and professional foundation.</h2></div>
+        </div>
+        <div class="credentials-grid">
+          <article class="credential-card reveal">
+            <span>Education</span>
+            <h3>Hellenic Open University</h3>
+            <p>Undergraduate studies in Computer Engineering, in progress since October 2022.</p>
+            <ul class="credential-list">
+              <li>IT Applications Specialist — IEK Chalkidiki, Vocational Training Certification (2002)</li>
+              <li>Computer Systems and Applications Support — TEE Polygyros, IT and Computer Networks (2001)</li>
+            </ul>
+          </article>
+          <article class="credential-card reveal">
+            <span>Microsoft certifications</span>
+            <h3>Microsoft 365 and security</h3>
+            <ul class="credential-list">
+              <li>MS-102: Configure Your Microsoft 365 Tenant</li>
+              <li>Manage Your Microsoft 365 Tenant</li>
+              <li>Security, Compliance and Identity Fundamentals</li>
+            </ul>
+          </article>
+          <article class="credential-card reveal">
+            <span>Additional development</span>
+            <h3>Python and continuous learning</h3>
+            <ul class="credential-list">
+              <li>Hands-on development across Python, Flask, React and infrastructure automation</li>
+              <li>Greek native speaker, comfortable communicating in English</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="ping-runner" id="ping-runner" aria-labelledby="runner-title">
+      <div class="shell">
+        <div class="runner-head reveal">
+          <div>
+            <div class="runner-kicker">[PLAY] Interactive system check</div>
+            <h2 id="runner-title">Ping Runner</h2>
+          </div>
+          <p>Keep the network alive. Jump over outages, collect clean signals and stay online for as long as you can.</p>
+        </div>
+
+        <div class="runner-shell reveal">
+          <div class="runner-toolbar">
+            <div class="runner-status">Network online</div>
+            <div class="runner-stats">
+              <span>Score<strong id="runnerScore">00000</strong></span>
+              <span>Best<strong id="runnerBest">00000</strong></span>
+            </div>
+          </div>
+          <div class="runner-stage" id="runnerStage">
+            <canvas id="pingRunnerCanvas" width="1280" height="500" aria-label="Ping Runner game area"></canvas>
+            <div class="runner-overlay" id="runnerOverlay">
+              <div class="runner-mark" aria-hidden="true">P</div>
+              <h3 id="runnerMessage">Keep it online</h3>
+              <p id="runnerPrompt">Jump over outages. Collect signal packets.</p>
+              <button class="runner-play" id="runnerPlay" type="button">Start run</button>
+            </div>
+          </div>
+          <div class="runner-controls">
+            <div class="runner-keymap" aria-label="Game controls">
+              <span><kbd>Space</kbd> Jump</span>
+              <span><kbd>↑</kbd> Jump</span>
+              <span><kbd>P</kbd> Pause</span>
+              <span><kbd>Tap</kbd> Mobile</span>
+            </div>
+            <div class="runner-control-actions">
+              <button class="runner-control runner-sound" id="runnerSound" type="button" aria-pressed="false">Sound off</button>
+              <button class="runner-control" id="runnerPause" type="button">Pause</button>
+            </div>
+          </div>
+        </div>
+        <p class="runner-note">Runs locally in your browser · No tracking · Best score stays on this device</p>
+        <div class="sr-only" id="runnerAnnouncement" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="shell contact-grid">
+        <div class="reveal">
+          <h2>Let’s build systems that work better.</h2>
+          <p>Available for IT systems, infrastructure operations, automation and technical product roles where reliability, ownership and practical engineering matter.</p>
+        </div>
+        <div class="contact-links reveal">
+          <a href="mailto:galatsanos@gmail.com"><span>Email</span><span>galatsanos@gmail.com ↗</span></a>
+          <a href="https://www.linkedin.com/in/dgalatsanos/" target="_blank" rel="noreferrer"><span>LinkedIn</span><span>Open profile ↗</span></a>
+          <a href="Dimitris_Galatsanos_CV.pdf" download><span>Curriculum Vitae</span><span>Download PDF ↓</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <span>© <span id="year"></span> Dimitris Galatsanos</span>
+      <span>IT Systems Engineer · Automation · Infrastructure Operations</span>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+
+    (() => {
+      const backdrop = document.getElementById('commandBackdrop');
+      const palette = backdrop.querySelector('.command-palette');
+      const search = document.getElementById('commandSearch');
+      const list = document.getElementById('commandList');
+      const title = document.getElementById('commandTitle');
+      const hint = document.getElementById('commandHint');
+      const isGreek = document.documentElement.lang.toLowerCase().startsWith('el') || location.pathname.split('/').includes('gr');
+      const text = isGreek ? {
+        title: 'Γρήγορη πλοήγηση', placeholder: 'Αναζήτηση στο portfolio…', hint: 'Πλοήγηση με το πληκτρολόγιο', empty: 'Δεν βρέθηκαν αποτελέσματα',
+        section: 'Μετάβαση στην ενότητα', external: 'Άνοιγμα εξωτερικού συνδέσμου', download: 'Λήψη αρχείου'
+      } : {
+        title: 'Quick navigation', placeholder: 'Search portfolio…', hint: 'Keyboard navigation', empty: 'No results found',
+        section: 'Go to section', external: 'Open external link', download: 'Download file'
+      };
+      const commands = isGreek ? [
+        { label: 'Έργα', detail: text.section, icon: 'PR', target: '#projects' },
+        { label: 'Εμπειρία', detail: text.section, icon: 'EX', target: '#experience' },
+        { label: 'Δεξιότητες', detail: text.section, icon: 'SK', target: '#skills' },
+        { label: 'Άρθρα', detail: text.section, icon: 'BL', target: 'blog/' },
+        { label: 'Λήψη βιογραφικού', detail: text.download, icon: 'CV', action: 'cv' },
+        { label: 'GitHub', detail: text.external, icon: 'GH', target: 'https://github.com/Donacgreece', external: true },
+        { label: 'Επικοινωνία', detail: text.section, icon: 'CO', target: '#contact' }
+      ] : [
+        { label: 'Projects', detail: text.section, icon: 'PR', target: '#projects' },
+        { label: 'Experience', detail: text.section, icon: 'EX', target: '#experience' },
+        { label: 'Skills', detail: text.section, icon: 'SK', target: '#skills' },
+        { label: 'Blog', detail: text.section, icon: 'BL', target: 'blog/' },
+        { label: 'Download CV', detail: text.download, icon: 'CV', action: 'cv' },
+        { label: 'GitHub', detail: text.external, icon: 'GH', target: 'https://github.com/Donacgreece', external: true },
+        { label: 'Contact', detail: text.section, icon: 'CO', target: '#contact' }
+      ];
+      let visible = commands;
+      let activeIndex = 0;
+      let previousFocus = null;
+
+      title.textContent = text.title;
+      search.placeholder = text.placeholder;
+      search.setAttribute('aria-label', text.placeholder);
+      hint.textContent = text.hint;
+
+      function render() {
+        if (!visible.length) {
+          list.innerHTML = `<div class="command-empty">${text.empty}</div>`;
+          return;
+        }
+        list.innerHTML = visible.map((command, index) => `
+          <button class="command-item${index === activeIndex ? ' active' : ''}" type="button" role="option" aria-selected="${index === activeIndex}" data-index="${index}">
+            <span class="command-item-icon" aria-hidden="true">${command.icon}</span>
+            <span class="command-item-copy"><b>${command.label}</b><span>${command.detail}</span></span>
+            <span class="command-item-arrow" aria-hidden="true">${command.external ? '↗' : command.action === 'cv' ? '↓' : '→'}</span>
+          </button>`).join('');
+        list.querySelector('.active')?.scrollIntoView({ block: 'nearest' });
+      }
+
+      function openPalette() {
+        previousFocus = document.activeElement;
+        backdrop.classList.add('open');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('command-open');
+        search.value = '';
+        visible = commands;
+        activeIndex = 0;
+        render();
+        requestAnimationFrame(() => search.focus());
+      }
+
+      function closePalette() {
+        backdrop.classList.remove('open');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('command-open');
+        previousFocus?.focus();
+      }
+
+      function run(command) {
+        closePalette();
+        if (command.action === 'cv') {
+          document.querySelector('a[download][href*="Dimitris_Galatsanos_CV"]')?.click();
+        } else if (command.external) {
+          window.open(command.target, '_blank', 'noopener,noreferrer');
+        } else if (command.target.startsWith('#')) {
+          document.querySelector(command.target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', command.target);
+        } else {
+          location.assign(command.target);
+        }
+      }
+
+      search.addEventListener('input', () => {
+        const query = search.value.trim().toLocaleLowerCase(document.documentElement.lang);
+        visible = commands.filter(command => `${command.label} ${command.detail}`.toLocaleLowerCase(document.documentElement.lang).includes(query));
+        activeIndex = 0;
+        render();
+      });
+      list.addEventListener('mousemove', event => {
+        const item = event.target.closest('.command-item');
+        if (!item) return;
+        activeIndex = Number(item.dataset.index);
+        render();
+      });
+      list.addEventListener('click', event => {
+        const item = event.target.closest('.command-item');
+        if (item) run(visible[Number(item.dataset.index)]);
+      });
+      backdrop.addEventListener('mousedown', event => { if (!palette.contains(event.target)) closePalette(); });
+      document.addEventListener('keydown', event => {
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+          event.preventDefault();
+          backdrop.classList.contains('open') ? closePalette() : openPalette();
+          return;
+        }
+        if (!backdrop.classList.contains('open')) return;
+        if (event.key === 'Escape') { event.preventDefault(); closePalette(); }
+        if (event.key === 'ArrowDown' && visible.length) { event.preventDefault(); activeIndex = (activeIndex + 1) % visible.length; render(); }
+        if (event.key === 'ArrowUp' && visible.length) { event.preventDefault(); activeIndex = (activeIndex - 1 + visible.length) % visible.length; render(); }
+        if (event.key === 'Enter' && visible[activeIndex]) { event.preventDefault(); run(visible[activeIndex]); }
+        if (event.key === 'Tab') {
+          const focusable = [search, ...list.querySelectorAll('button')];
+          const next = event.shiftKey ? focusable.indexOf(document.activeElement) - 1 : focusable.indexOf(document.activeElement) + 1;
+          if (next < 0 || next >= focusable.length) { event.preventDefault(); focusable[event.shiftKey ? focusable.length - 1 : 0]?.focus(); }
+        }
+      });
+      render();
+    })();
+
+    document.addEventListener('keydown', event => {
+      if (event.repeat || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+      if (document.getElementById('commandBackdrop').classList.contains('open')) return;
+      const target = event.target;
+      if (target instanceof HTMLElement && (target.matches('input, textarea, select') || target.isContentEditable)) return;
+      const shortcuts = { a: '#about', e: '#experience', p: '#projects', s: '#skills', b: 'blog/', c: '#contact' };
+      const section = shortcuts[event.key.toLowerCase()];
+      if (!section) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      if (section.startsWith('#')) {
+        document.querySelector(section)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', section);
+      } else {
+        location.assign(section);
+      }
+    });
+
+    function closeMenu() {
+      mobileNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open navigation');
+      menuToggle.textContent = '☰';
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const open = mobileNav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+      menuToggle.textContent = open ? '×' : '☰';
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+
+    document.addEventListener('click', event => {
+      if (!mobileNav.contains(event.target) && !menuToggle.contains(event.target)) closeMenu();
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeMenu();
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1080) closeMenu();
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const pathParts = location.pathname.split('/').filter(Boolean);
+    const portfolioBase = location.hostname.endsWith('.github.io') ? `/${pathParts[0] || 'Portofolio'}/` : '/';
+    const languagePositionKey = 'portfolio-language-position';
+    const captureLanguagePosition = () => {
+      const headerOffset = document.querySelector('.site-header')?.offsetHeight || 0;
+      const sections = [...document.querySelectorAll('main section[id]')];
+      const section = sections.filter(item => item.offsetTop <= window.scrollY + headerOffset + 2).at(-1);
+      sessionStorage.setItem(languagePositionKey, JSON.stringify({ section: section?.id || 'top', offset: window.scrollY - (section?.offsetTop || 0), createdAt: Date.now() }));
+    };
+    let savedLanguagePosition = null;
+    try { savedLanguagePosition = JSON.parse(sessionStorage.getItem(languagePositionKey) || 'null'); } catch {}
+    sessionStorage.removeItem(languagePositionKey);
+    const restoreLanguagePosition = () => {
+      if (!savedLanguagePosition || Date.now() - savedLanguagePosition.createdAt > 15000) return;
+      const section = document.getElementById(savedLanguagePosition.section);
+      window.scrollTo({ top: Math.max(0, (section?.offsetTop || 0) + Number(savedLanguagePosition.offset || 0)), behavior: 'instant' });
+    };
+    if (savedLanguagePosition) {
+      history.scrollRestoration = 'manual';
+      requestAnimationFrame(() => requestAnimationFrame(restoreLanguagePosition));
+      window.addEventListener('load', restoreLanguagePosition, { once: true });
+    }
+    document.querySelectorAll('[data-language]').forEach(link => link.addEventListener('click', event => {
+      event.preventDefault();
+      captureLanguagePosition();
+      const language = link.dataset.language;
+      localStorage.setItem('portfolio-language', language);
+      location.assign(language === 'el' ? `${portfolioBase}gr/` : portfolioBase);
+    }));
+    if (document.documentElement.lang === 'en' && localStorage.getItem('portfolio-language') === 'el') location.replace(`${portfolioBase}gr/`);
+
+    (() => {
+      const canvas = document.getElementById('pingRunnerCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const stage = document.getElementById('runnerStage');
+      const overlay = document.getElementById('runnerOverlay');
+      const playButton = document.getElementById('runnerPlay');
+      const pauseButton = document.getElementById('runnerPause');
+      const soundButton = document.getElementById('runnerSound');
+      const scoreNode = document.getElementById('runnerScore');
+      const bestNode = document.getElementById('runnerBest');
+      const messageNode = document.getElementById('runnerMessage');
+      const promptNode = document.getElementById('runnerPrompt');
+      const announcement = document.getElementById('runnerAnnouncement');
+      const W = canvas.width;
+      const H = canvas.height;
+      const groundY = 405;
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const lang = document.documentElement.lang === 'el' ? 'el' : 'en';
+      const copy = lang === 'el' ? {
+        ready: 'Κράτησέ το online', prompt: 'Πήδα πάνω από βλάβες. Μάζεψε πακέτα σήματος.', start: 'Έναρξη',
+        over: 'Η σύνδεση χάθηκε', final: 'Τελικό σκορ', retry: 'Νέα προσπάθεια', pause: 'Παύση', resume: 'Συνέχεια', paused: 'Σε παύση', soundOn: 'Ήχος on', soundOff: 'Ήχος off'
+      } : {
+        ready: 'Keep it online', prompt: 'Jump over outages. Collect signal packets.', start: 'Start run',
+        over: 'Connection lost', final: 'Final score', retry: 'Run again', pause: 'Pause', resume: 'Resume', paused: 'Paused', soundOn: 'Sound on', soundOff: 'Sound off'
+      };
+      let audioContext = null;
+      let soundEnabled = localStorage.getItem('ping-runner-sound') === 'on';
+
+      function ensureAudio() {
+        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioContext.state === 'suspended') audioContext.resume();
+        return audioContext;
+      }
+
+      function tone(frequency, duration, options = {}) {
+        if (!soundEnabled) return;
+        const audio = ensureAudio();
+        const oscillator = audio.createOscillator();
+        const gain = audio.createGain();
+        const startAt = audio.currentTime + (options.delay || 0);
+        oscillator.type = options.type || 'square';
+        oscillator.frequency.setValueAtTime(frequency, startAt);
+        if (options.endFrequency) oscillator.frequency.exponentialRampToValueAtTime(options.endFrequency, startAt + duration);
+        gain.gain.setValueAtTime(.0001, startAt);
+        gain.gain.exponentialRampToValueAtTime(options.volume || .055, startAt + .012);
+        gain.gain.exponentialRampToValueAtTime(.0001, startAt + duration);
+        oscillator.connect(gain).connect(audio.destination);
+        oscillator.start(startAt);
+        oscillator.stop(startAt + duration + .02);
+      }
+
+      function playSound(name) {
+        if (!soundEnabled) return;
+        if (name === 'start') { tone(260, .09, { endFrequency: 390 }); tone(390, .11, { endFrequency: 560, delay: .08 }); }
+        if (name === 'jump') tone(230, .13, { endFrequency: 620, type: 'square', volume: .045 });
+        if (name === 'collect') { tone(660, .07, { endFrequency: 880, volume: .045 }); tone(990, .1, { delay: .065, volume: .04 }); }
+        if (name === 'collision') { tone(170, .24, { endFrequency: 65, type: 'sawtooth', volume: .06 }); tone(92, .28, { delay: .08, type: 'square', volume: .035 }); }
+        if (name === 'pause') tone(280, .08, { endFrequency: 210, volume: .035 });
+        if (name === 'resume') tone(220, .09, { endFrequency: 340, volume: .035 });
+        if (name === 'best') { tone(520, .09, { delay: .28 }); tone(660, .09, { delay: .37 }); tone(880, .18, { delay: .46 }); }
+      }
+
+      function updateSoundButton() {
+        soundButton.textContent = soundEnabled ? copy.soundOn : copy.soundOff;
+        soundButton.setAttribute('aria-pressed', String(soundEnabled));
+      }
+      let best = Number(localStorage.getItem('ping-runner-best') || 0);
+      let state = 'ready';
+      let score = 0;
+      let speed = 355;
+      let spawnTimer = 1.2;
+      let signalTimer = 2.4;
+      let last = performance.now();
+      let active = false;
+      let obstacles = [];
+      let signals = [];
+      let sparks = [];
+      let clouds = [
+        { x: 170, y: 110, s: 1 }, { x: 610, y: 76, s: .7 }, { x: 1010, y: 132, s: 1.15 }
+      ];
+      const player = { x: 150, y: groundY - 58, w: 50, h: 58, vy: 0, grounded: true, frame: 0 };
+
+      const pad = value => String(Math.max(0, Math.floor(value))).padStart(5, '0');
+      const updateHud = () => { scoreNode.textContent = pad(score); bestNode.textContent = pad(best); };
+
+      function reset() {
+        score = 0; speed = reducedMotion ? 315 : 355; spawnTimer = 1.1; signalTimer = 2.2;
+        obstacles = []; signals = []; sparks = [];
+        Object.assign(player, { y: groundY - 58, vy: 0, grounded: true, frame: 0 });
+        updateHud();
+      }
+
+      function start() {
+        reset(); state = 'running'; overlay.classList.add('hidden'); pauseButton.textContent = copy.pause;
+        announcement.textContent = copy.start; last = performance.now(); active = true; playSound('start');
+      }
+
+      function end() {
+        state = 'over'; active = false;
+        const isNewBest = Math.floor(score) > best;
+        best = Math.max(best, Math.floor(score));
+        localStorage.setItem('ping-runner-best', String(best)); updateHud();
+        messageNode.textContent = copy.over; promptNode.textContent = `${copy.final}: ${pad(score)}`; playButton.textContent = copy.retry;
+        overlay.classList.remove('hidden'); announcement.textContent = `${copy.over}. ${copy.final}: ${pad(score)}`;
+        playSound('collision'); if (isNewBest) playSound('best');
+      }
+
+      function togglePause() {
+        if (state === 'running') {
+          state = 'paused'; active = false; pauseButton.textContent = copy.resume;
+          messageNode.textContent = copy.paused; promptNode.textContent = copy.prompt; playButton.textContent = copy.resume;
+          overlay.classList.remove('hidden'); announcement.textContent = copy.paused; playSound('pause');
+        } else if (state === 'paused') {
+          state = 'running'; active = true; last = performance.now(); pauseButton.textContent = copy.pause; overlay.classList.add('hidden'); playSound('resume');
+        }
+      }
+
+      function jump() {
+        if (state === 'ready' || state === 'over') return start();
+        if (state === 'paused') return togglePause();
+        if (player.grounded) {
+          player.vy = reducedMotion ? -700 : -790; player.grounded = false;
+          playSound('jump');
+          for (let i = 0; i < 7; i++) sparks.push({ x: player.x + 12, y: groundY - 5, vx: -60 - Math.random() * 90, vy: -30 - Math.random() * 70, life: .45 });
+        }
+      }
+
+      function spawnObstacle() {
+        const tall = Math.random() > .58;
+        const h = tall ? 80 : 52;
+        obstacles.push({ x: W + 30, y: groundY - h, w: tall ? 48 : 62, h, type: tall ? 'server' : 'outage' });
+        spawnTimer = Math.max(.68, 1.42 - speed / 820) + Math.random() * .7;
+      }
+
+      function spawnSignal() {
+        signals.push({ x: W + 30, y: groundY - 110 - Math.random() * 95, r: 15, pulse: Math.random() * Math.PI * 2 });
+        signalTimer = 2.6 + Math.random() * 2.4;
+      }
+
+      function hit(a, b, inset = 0) {
+        return a.x + inset < b.x + b.w && a.x + a.w - inset > b.x && a.y + inset < b.y + b.h && a.y + a.h - inset > b.y;
+      }
+
+      function update(dt) {
+        if (state !== 'running') return;
+        score += dt * 10; speed = Math.min(620, speed + dt * 5.2); spawnTimer -= dt; signalTimer -= dt;
+        if (spawnTimer <= 0) spawnObstacle(); if (signalTimer <= 0) spawnSignal();
+        player.vy += 2050 * dt; player.y += player.vy * dt;
+        if (player.y >= groundY - player.h) { player.y = groundY - player.h; player.vy = 0; player.grounded = true; }
+        player.frame += dt * (speed / 55);
+        obstacles.forEach(item => item.x -= speed * dt);
+        signals.forEach(item => { item.x -= speed * dt; item.pulse += dt * 5; });
+        sparks.forEach(p => { p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 300 * dt; p.life -= dt; });
+        clouds.forEach(c => { c.x -= speed * dt * .035; if (c.x < -150) c.x = W + 100 + Math.random() * 200; });
+        const playerBox = { x: player.x + 7, y: player.y + 5, w: player.w - 14, h: player.h - 8 };
+        if (obstacles.some(item => hit(playerBox, item, 3))) return end();
+        signals = signals.filter(item => {
+          const box = { x: item.x - item.r, y: item.y - item.r, w: item.r * 2, h: item.r * 2 };
+          if (hit(playerBox, box)) {
+            score += 25;
+            playSound('collect');
+            for (let i = 0; i < 10; i++) sparks.push({ x: item.x, y: item.y, vx: (Math.random() - .5) * 260, vy: (Math.random() - .5) * 240, life: .5 });
+            return false;
+          }
+          return item.x > -40;
+        });
+        obstacles = obstacles.filter(item => item.x > -100);
+        sparks = sparks.filter(p => p.life > 0);
+        updateHud();
+      }
+
+      function pixelRect(x, y, w, h, color) { ctx.fillStyle = color; ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); }
+
+      function drawCloud(c) {
+        const x = c.x, y = c.y, s = c.s;
+        pixelRect(x, y + 18*s, 120*s, 18*s, '#777bf0'); pixelRect(x + 18*s, y + 8*s, 70*s, 18*s, '#777bf0'); pixelRect(x + 42*s, y, 32*s, 14*s, '#9b9eff');
+      }
+
+      function drawPlayer() {
+        const bob = player.grounded && state === 'running' ? Math.sin(player.frame) * 2 : 0;
+        const x = player.x, y = player.y + bob;
+        pixelRect(x + 8, y, 30, 7, '#c9caff'); pixelRect(x, y + 7, 45, 35, '#f5f5f1'); pixelRect(x + 7, y + 14, 31, 19, '#171aa4');
+        pixelRect(x + 13, y + 20, 5, 6, '#63f2b0'); pixelRect(x + 27, y + 20, 5, 6, '#63f2b0');
+        pixelRect(x + 8, y + 42, 10, 14, '#bfc1ff'); pixelRect(x + 30, y + 42, 10, 14, '#bfc1ff');
+        pixelRect(x + 45, y + 15, 6, 15, '#8f92ff');
+      }
+
+      function drawObstacle(o) {
+        if (o.type === 'server') {
+          pixelRect(o.x, o.y, o.w, o.h, '#9b9eff'); pixelRect(o.x + 6, o.y + 8, o.w - 12, 16, '#171aa4'); pixelRect(o.x + 10, o.y + 13, 6, 6, '#ff7890');
+          pixelRect(o.x + 6, o.y + 31, o.w - 12, 16, '#171aa4'); pixelRect(o.x + 10, o.y + 36, 6, 6, '#ff7890'); pixelRect(o.x + 6, o.y + 54, o.w - 12, 16, '#171aa4');
+        } else {
+          pixelRect(o.x + 7, o.y + 12, o.w - 14, o.h - 12, '#8f92ff'); pixelRect(o.x, o.y + 23, o.w, o.h - 23, '#666be1');
+          pixelRect(o.x + 22, o.y, 7, 29, '#ff667e'); pixelRect(o.x + 34, o.y + 35, 7, 7, '#ff667e');
+        }
+      }
+
+      function drawSignal(s) {
+        const glow = 3 + Math.sin(s.pulse) * 2;
+        ctx.strokeStyle = '#63f2b0'; ctx.lineWidth = 4; ctx.strokeRect(Math.round(s.x - 11 - glow/2), Math.round(s.y - 11 - glow/2), 22 + glow, 22 + glow);
+        pixelRect(s.x - 4, s.y - 4, 8, 8, '#f6f6ff');
+      }
+
+      function draw() {
+        ctx.imageSmoothingEnabled = false;
+        const gradient = ctx.createLinearGradient(0,0,0,H); gradient.addColorStop(0,'#2d31d4'); gradient.addColorStop(1,'#171aa4'); ctx.fillStyle = gradient; ctx.fillRect(0,0,W,H);
+        ctx.globalAlpha = .45; clouds.forEach(drawCloud); ctx.globalAlpha = 1;
+        for (let x = -((score * 9) % 90); x < W; x += 90) pixelRect(x, groundY + 42, 48, 5, '#777bf0');
+        pixelRect(0, groundY, W, 7, '#f5f5f1'); pixelRect(0, groundY + 7, W, 4, '#8f92ff');
+        obstacles.forEach(drawObstacle); signals.forEach(drawSignal); drawPlayer();
+        sparks.forEach(p => { ctx.globalAlpha = Math.max(0, p.life * 2); pixelRect(p.x, p.y, 5, 5, '#63f2b0'); }); ctx.globalAlpha = 1;
+      }
+
+      function loop(now) {
+        const dt = Math.min(.032, (now - last) / 1000); last = now;
+        if (active) update(dt); draw(); requestAnimationFrame(loop);
+      }
+
+      playButton.addEventListener('click', () => state === 'paused' ? togglePause() : start());
+      pauseButton.addEventListener('click', togglePause);
+      soundButton.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        localStorage.setItem('ping-runner-sound', soundEnabled ? 'on' : 'off');
+        updateSoundButton();
+        if (soundEnabled) { ensureAudio(); playSound('resume'); }
+      });
+      stage.addEventListener('pointerdown', event => { if (!event.target.closest('button')) jump(); });
+      document.addEventListener('keydown', event => {
+        if (event.code === 'Space' || event.code === 'ArrowUp' || event.code === 'KeyW') {
+          const rect = stage.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < innerHeight) { event.preventDefault(); jump(); }
+        }
+        if (event.code === 'KeyP' && state !== 'ready' && state !== 'over') togglePause();
+      });
+      document.addEventListener('visibilitychange', () => { if (document.hidden && state === 'running') togglePause(); });
+      messageNode.textContent = copy.ready; promptNode.textContent = copy.prompt; playButton.textContent = copy.start; pauseButton.textContent = copy.pause; updateSoundButton();
+      updateHud(); draw(); requestAnimationFrame(loop);
+    })();
+  </script>
+</body>
+</html>
