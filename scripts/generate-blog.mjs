@@ -153,7 +153,7 @@ function card(post, copy) {
   const search = escapeHtml(`${post.title} ${post.excerpt} ${post.category} ${post.tags.join(" ")}`.toLocaleLowerCase(copy.locale));
   const category = String(post.category || "Technology").toLocaleLowerCase(copy.locale);
   const cover = post.cover ? `<img class="post-cover" src="${escapeHtml(safeUrl(post.cover))}" alt="" loading="lazy">` : "";
-  return `<article class="post-card${post.featured ? " featured" : ""}" data-search="${search}" data-category="${escapeHtml(category)}">${cover}<div class="post-meta"><span class="post-category">${escapeHtml(post.category || "Technology")}</span><time datetime="${escapeHtml(post.date)}">${formatDate(post.date, copy.locale)}</time><span>${readingTime(post.body)} ${copy.minute}</span></div><h3>${escapeHtml(post.title)}</h3><p>${escapeHtml(post.excerpt)}</p><div class="post-tags">${tags}</div><a class="post-link" href="${encodeURIComponent(post.slug)}/">${copy.read} →</a></article>`;
+  return `<article class="post-card" data-search="${search}" data-category="${escapeHtml(category)}">${cover}<div class="post-meta"><span class="post-category">${escapeHtml(post.category || "Technology")}</span><time datetime="${escapeHtml(post.date)}">${formatDate(post.date, copy.locale)}</time><span>${readingTime(post.body)} ${copy.minute}</span></div><h3>${escapeHtml(post.title)}</h3><p>${escapeHtml(post.excerpt)}</p><div class="post-tags">${tags}</div><a class="post-link" href="${encodeURIComponent(post.slug)}/">${copy.read} →</a></article>`;
 }
 
 function indexPage(posts, copy) {
