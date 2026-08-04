@@ -26,6 +26,12 @@ The interface is responsive and designed to work across desktop, tablet and mobi
 
 ## Selected projects
 
+### SharePoint Intranet Toolkit
+
+A production-ready Microsoft 365 intranet toolkit with 15 responsive SPFx web parts in one deployable package. It combines internal communication, employee discovery, onboarding, compliance, recognition and engagement reporting through SharePoint Online, Microsoft Graph and Microsoft Entra ID.
+
+[View SharePoint Intranet Toolkit on GitHub](https://github.com/Donacgreece/sharepoint-intranet-toolkit)
+
 ### TableMaster
 
 A restaurant operations platform built with Flask. It combines order management, table handling, network printing, bill splitting, product administration, audit records and database backups in one system.
