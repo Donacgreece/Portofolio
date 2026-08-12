@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   description:
     "Infrastructure, automation and software products built for real operations.",
   icons: {
-    icon: [{ url: "/favicon.png", type: "image/png", sizes: "64x64" }],
-    shortcut: "/favicon.png",
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
   },
 };
 
