@@ -622,6 +622,38 @@
       align-items: stretch;
       min-height: 0;
     }
+    .portivo-project {
+      grid-template-columns: minmax(0, 1.08fr) minmax(420px, .92fr);
+      border-color: color-mix(in srgb, var(--brand) 38%, var(--line));
+      box-shadow: 0 24px 60px rgba(30,32,130,.12);
+    }
+    .portivo-project .project-content { padding: 46px; }
+    .portivo-project .project-content h3 { font-size: clamp(42px, 5vw, 64px); }
+    .portivo-project .project-description { font-size: 17px; }
+    .portivo-console {
+      flex: 1;
+      min-height: 520px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 14px;
+      padding: 22px;
+      background:
+        linear-gradient(color-mix(in srgb, var(--brand) 6%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--brand) 6%, transparent) 1px, transparent 1px),
+        var(--surface-2);
+      background-size: 24px 24px;
+    }
+    .portivo-status { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .portivo-stat { padding: 14px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); }
+    .portivo-stat strong { display: block; color: var(--brand); font-size: 22px; }
+    .portivo-stat span { display: block; margin-top: 4px; color: var(--soft); font: 9px/1.4 var(--mono); text-transform: uppercase; }
+    .portivo-workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .portivo-module { padding: 15px; border: 1px solid var(--line); border-radius: 11px; background: color-mix(in srgb, var(--surface) 95%, transparent); }
+    .portivo-module b { display: block; color: var(--brand); font-size: 12px; }
+    .portivo-module span { display: block; margin-top: 6px; color: var(--soft); font-size: 10px; line-height: 1.45; }
+    .portivo-module.primary { border-color: color-mix(in srgb, var(--brand) 42%, var(--line)); background: var(--brand-soft); }
+    .portivo-safety { display: flex; flex-wrap: wrap; gap: 7px; }
+    .portivo-safety span { padding: 7px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface); font: 9px var(--mono); }
     .project-content { padding: 38px; display: flex; flex-direction: column; min-width: 0; }
     .project-meta { display: flex; justify-content: space-between; gap: 16px; color: var(--soft); font: 11px var(--mono); text-transform: uppercase; letter-spacing: .05em; }
     .project-content h3 { margin: 20px 0 6px; color: var(--brand); font-size: 36px; letter-spacing: -.04em; }
@@ -873,6 +905,9 @@
       .project-content { padding: 26px; }
       .project-content h3 { font-size: 31px; }
       .project-card { min-height: 0; }
+      .portivo-project { grid-template-columns: 1fr; }
+      .portivo-project .project-content { padding: 32px; }
+      .portivo-console { min-height: 0; }
       .architecture { grid-template-columns: 1fr; min-height: 0; }
       .arch-link { margin: 2px 0; }
       .arch-box { min-height: 82px; }
@@ -1190,7 +1225,7 @@
               <div class="metrics">
                 <div class="metric"><strong>20+</strong><span>years in technology</span></div>
                 <div class="metric"><strong>24/7</strong><span>operational environments</span></div>
-                <div class="metric"><strong>7</strong><span>independent software products</span></div>
+                <div class="metric"><strong>8</strong><span>independent software products</span></div>
                 <div class="metric"><strong>GR / EN</strong><span>working languages</span></div>
               </div>
             </div>
@@ -1216,9 +1251,50 @@
         </div>
 
         <div class="projects-list">
+          <article class="project-wide portivo-project reveal" style="order:-2">
+            <div class="project-content">
+              <div class="project-meta"><span>01 / FLAGSHIP PLATFORM</span><span>Open-source · v2.0.0</span></div>
+              <h3><a href="https://portivo.org/" target="_blank" rel="noreferrer">Portivo</a></h3>
+              <div class="project-subtitle">Network operations and controlled automation</div>
+              <p class="project-description">A self-hosted Network Operations platform created to centralize infrastructure visibility, troubleshooting and controlled automation for compatible Alcatel-Lucent Enterprise OmniSwitch environments running AOS 6 and AOS 8.</p>
+              <ul class="project-points">
+                <li>Unifies switch inventory, live port visibility, endpoint discovery, port troubleshooting, monitoring, incidents, UPS infrastructure and operational history in one bilingual web interface.</li>
+                <li>Runs safe single-device and fleet-wide operations through exact command previews, dry runs, explicit confirmation, per-device FIFO SSH coordination and detailed per-target results.</li>
+                <li>Provides nine evidence-rich Fleet Audits, topology-aware Find Device correlation, PDF reporting and read-only diagnostics without hiding the underlying commands from the engineer.</li>
+                <li>Supports granular RBAC with Site and Group scope, personal SSH sessions, encrypted monitoring credentials, searchable Jobs and Audit Logs, notifications and approved Runbook automation.</li>
+                <li>Ships as a managed Windows or Linux service with installation health checks, pinned dependencies, release checksums, an SPDX SBOM and AGPL-3.0 source availability.</li>
+              </ul>
+              <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">SSH</span><span class="tag">Netmiko</span><span class="tag">SNMPv3</span><span class="tag">RBAC</span><span class="tag">Network Automation</span><span class="tag">AOS 6 / 8</span></div>
+              <div class="project-actions">
+                <a class="button" href="https://portivo.org/" target="_blank" rel="noreferrer">Visit Portivo <span aria-hidden="true">↗</span></a>
+                <a class="button secondary" href="https://portivo.org/docs/" target="_blank" rel="noreferrer">Documentation <span aria-hidden="true">↗</span></a>
+                <a class="button secondary" href="https://github.com/Donacgreece/Portivo" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+            <div class="project-visual-panel">
+              <div class="panel-title"><strong>Portivo Control Center</strong><span>control without complexity</span></div>
+              <div class="portivo-console">
+                <div class="portivo-status">
+                  <div class="portivo-stat"><strong>Fleet</strong><span>central inventory</span></div>
+                  <div class="portivo-stat"><strong>Live</strong><span>ports and incidents</span></div>
+                  <div class="portivo-stat"><strong>Safe</strong><span>controlled execution</span></div>
+                </div>
+                <div class="portivo-workspace">
+                  <div class="portivo-module primary"><b>Operations and Jobs</b><span>Preview, dry run, bounded execution and per-target evidence</span></div>
+                  <div class="portivo-module"><b>Find Device</b><span>MAC, IP, hostname, UNP and topology-aware correlation</span></div>
+                  <div class="portivo-module"><b>Fleet Audits</b><span>Read-only health assessment with actionable PDF reports</span></div>
+                  <div class="portivo-module"><b>Port Troubleshooter</b><span>Link, errors, VLAN, PoE, LLDP and endpoint evidence</span></div>
+                  <div class="portivo-module"><b>Monitoring and Power</b><span>Switch, stack and UPS visibility with incident correlation</span></div>
+                  <div class="portivo-module"><b>Runbooks and Access</b><span>Approved automation, scheduling and scoped capabilities</span></div>
+                </div>
+                <div class="portivo-safety"><span>Command preview</span><span>Personal SSH</span><span>FIFO coordination</span><span>Audit trail</span><span>Windows + Linux</span></div>
+              </div>
+            </div>
+          </article>
+
           <article class="project-wide reveal">
             <div class="project-content">
-              <div class="project-meta"><span>02 / FLAGSHIP PRODUCT</span><span>Private hospitality platform</span></div>
+              <div class="project-meta"><span>03 / HOSPITALITY PLATFORM</span><span>Private hospitality platform</span></div>
               <h3>TableMaster</h3>
               <div class="project-subtitle">Hospitality ordering and table operations</div>
               <p class="project-description">A full-stack Flask application built to manage restaurant tables, reservations, users, orders, products, VAT, reporting and network printing from one operational interface.</p>
@@ -1260,7 +1336,7 @@
           <div class="projects-pair">
             <article class="project-card reveal">
               <div class="project-content">
-                <div class="project-meta"><span>03 / MONITORING</span><span>Desktop application</span></div>
+                <div class="project-meta"><span>04 / MONITORING</span><span>Desktop application</span></div>
                 <h3>PingOS</h3>
                 <div class="project-subtitle">Network and device status monitoring</div>
                 <p class="project-description">A Python and PyQt5 desktop application created for practical infrastructure monitoring and operational reporting.</p>
@@ -1285,7 +1361,7 @@
 
             <article class="project-card reveal">
               <div class="project-content">
-                <div class="project-meta"><span>04 / EDTECH</span><span>Live product</span></div>
+                <div class="project-meta"><span>05 / EDTECH</span><span>Live product</span></div>
                 <h3><a href="https://learnpython.ai" target="_blank" rel="noreferrer">LearnPython.ai</a></h3>
                 <div class="project-subtitle">Interactive learning and contextual AI tutoring</div>
                 <p class="project-description">A bilingual learning platform designed around hands-on programming practice, immediate feedback and personalized support.</p>
@@ -1320,7 +1396,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
 
           <article class="project-wide reveal" style="order:-1">
             <div class="project-content">
-              <div class="project-meta"><span>01 / MICROSOFT 365</span><span>Enterprise intranet toolkit</span></div>
+              <div class="project-meta"><span>02 / MICROSOFT 365</span><span>Enterprise intranet toolkit</span></div>
               <h3>SharePoint Intranet Toolkit</h3>
               <div class="project-subtitle">Modern employee experiences for SharePoint Online</div>
               <p class="project-description">A production-ready Microsoft 365 intranet toolkit that delivers 15 responsive SPFx web parts in one deployable package for communication, employee discovery, onboarding, compliance, recognition and engagement reporting.</p>
@@ -1359,7 +1435,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
 
           <article class="project-wide respawn-project reveal">
             <div class="project-content">
-              <div class="project-meta"><span>05 / MEDIA PLATFORM</span><span>2019 to present</span></div>
+              <div class="project-meta"><span>06 / MEDIA PLATFORM</span><span>2019 to present</span></div>
               <h3><a href="https://respawn.gr" target="_blank" rel="noreferrer">Respawn.gr</a></h3>
               <div class="project-subtitle">Founder, editor and platform administrator</div>
               <p class="project-description">An independent Greek gaming publication developed as a complete editorial and technology product, not as a standard WordPress installation.</p>
@@ -1382,7 +1458,7 @@ print(monitor(<span class="str">"network"</span>))</pre>
           </article>
           <article class="project-wide python-releases reveal">
             <div class="project-content">
-              <div class="project-meta"><span>06 / PUBLISHED PYTHON SOFTWARE</span><span>Independent releases</span></div>
+              <div class="project-meta"><span>07 / PUBLISHED PYTHON SOFTWARE</span><span>Independent releases</span></div>
               <h3>Published Python Applications</h3>
               <div class="project-subtitle">Software delivery through interactive desktop products</div>
               <p class="project-description">Two Windows applications engineered with Python and Pygame, released publicly through itch.io and maintained through versioned updates.</p>
