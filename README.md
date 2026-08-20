@@ -26,6 +26,12 @@ The interface is responsive and designed to work across desktop, tablet and mobi
 
 ## Selected projects
 
+### Portivo Control Center
+
+Portivo is a self-hosted Network Operations platform for compatible Alcatel-Lucent Enterprise OmniSwitch environments running AOS 6 and AOS 8. It combines fleet inventory, controlled operations, live port visibility, endpoint discovery, troubleshooting, audits, monitoring, UPS infrastructure, notifications, Runbooks, granular access control and complete operational traceability in one bilingual interface.
+
+[Visit Portivo](https://portivo.org/) · [Read the documentation](https://portivo.org/docs/) · [View Portivo on GitHub](https://github.com/Donacgreece/Portivo)
+
 ### SharePoint Intranet Toolkit
 
 A production-ready Microsoft 365 intranet toolkit with 15 responsive SPFx web parts in one deployable package. It combines internal communication, employee discovery, onboarding, compliance, recognition and engagement reporting through SharePoint Online, Microsoft Graph and Microsoft Entra ID.
